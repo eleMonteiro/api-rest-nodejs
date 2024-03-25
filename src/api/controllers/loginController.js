@@ -2,10 +2,10 @@ const loginService = require("../services/loginService");
 
 const login = async (req, res) => {
   const resultado = await loginService.login(req.body);
-  const { status, error, token } = resultado;
+  const { status, error, token, user } = resultado;
 
   if (token == undefined) res.status(status).json(error);
-  return res.status(status).json(token);
+  return res.status(status).json({ user: { name: user.name }, token: token });
 };
 
 module.exports = {

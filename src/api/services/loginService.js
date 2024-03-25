@@ -22,7 +22,7 @@ const login = async (data) => {
         expiresIn: "5h",
       }
     );
-    return { status: 200, token: token };
+    return { status: 200, token: token, user: user };
   } catch (error) {
     return { status: 500, error: "Login failed" };
   }
