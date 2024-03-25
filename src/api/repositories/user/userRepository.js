@@ -24,6 +24,19 @@ const addRoles = async (user, roles) => {
   });
 };
 
+const getRoles = async (user) => {
+  const roles = await user.getRoles({ joinTableAttributes: ["userId"] });
+
+  const roleAdmin = roles.filter((role) => role.id == "admin");
+  const roleClient = roles.filter((role) => role.id == "cliente");
+
+  var role = "";
+  if (roleAdmin.length > 0) role = roleAdmin.pop();
+  else role = roleClient.pop();
+
+  return role;
+};
+
 const create = async (user) => {
   const { roles, addresses, ..._user } = user;
   _user.password = encrypt.encrypt(_user.password);
@@ -50,14 +63,7 @@ const findByEmail = async (email) => {
     includeIgnoreAttributes: false,
     where: { email: email },
   });
-  const roles = await user.getRoles({ joinTableAttributes: ["userId"] });
-
-  const roleAdmin = roles.filter((role) => role.id == "admin");
-  const roleClient = roles.filter((role) => role.id == "cliente");
-
-  if (roleAdmin.length > 0) user.role = roleAdmin.pop();
-  else user.role = roleClient.pop();
-
+  user.role = getRoles(user);
   return user;
 };
 
