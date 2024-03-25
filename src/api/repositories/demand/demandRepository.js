@@ -4,7 +4,7 @@ const userRepository = require("../user/userRepository");
 const dishRepository = require("../dish/dishRepository");
 
 const findAll = async () => {
-  const demands = await Demand.findAll();
+  const demands = await Demand.findAll({ include: ["itens"] });
   return demands;
 };
 
