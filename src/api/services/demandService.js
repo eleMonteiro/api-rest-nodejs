@@ -1,7 +1,13 @@
 const demandRepository = require("../repositories/demand/demandRepository");
-const { OBJECT_UNDEFINED } = require("../../utils/messagesErro");
+const validatorDemand = require("../../utils/validatorDemand");
+const {
+  OBJECT_UNDEFINED,
+  PRICE_DEMAND_INCORRECT,
+} = require("../../utils/messagesErro");
 
 const create = async (demand) => {
+  if (validatorDemand.validPriceDemand(demand))
+    return { message: "Price: " + PRICE_DEMAND_INCORRECT };
   if (Object.values(demand).length == 0) return { message: OBJECT_UNDEFINED };
   return await demandRepository.create(demand);
 };
