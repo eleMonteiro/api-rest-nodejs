@@ -4,7 +4,7 @@ const login = async (req, res) => {
   const resultado = await loginService.login(req.body);
   const { status, error, token, user } = resultado;
 
-  if (token == undefined) res.status(status).json(error);
+  if (token == undefined) return res.status(status).json(error);
   return res.status(status).json({ user: { name: user.name }, token: token });
 };
 
