@@ -299,7 +299,7 @@
 >
 > - POST Demand
 >
-> To test `POST` to create a dish, create a request to the following route`localhost:3000/api/v1/dishes/`
+> To test `POST` to create a dish, create a request to the following route`localhost:3000/api/v1/demands/`
 >
 > - Body
 >
