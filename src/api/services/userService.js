@@ -1,5 +1,5 @@
 const userRepository = require("../repositories/user/userRepository");
-const validator = require("../../utils/validators");
+const validator = require("../../utils/validatorUser");
 const {
   FIELD_NOT_SPECIFIED,
   INVALID_FIELD,
