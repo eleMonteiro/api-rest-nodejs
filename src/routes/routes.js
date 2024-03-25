@@ -13,28 +13,28 @@ routes.get("/", (_req, res) => {
   return res.json({ message: "Hello from API" });
 });
 
-routes.post("/login", loginController.login);
+routes.post("/api/v1/login", loginController.login);
 
 routes.use(verifyToken);
 routes.use(acl.authorize);
 
-routes.get("/users", userController.findAll);
-routes.get("/users/:id", userController.findById);
-routes.get("/users", userController.findByCPF);
-routes.post("/users", userController.create);
-routes.delete("/users/:id", userController.remove);
-routes.put("/users/:id", userController.update);
+routes.get("/api/v1/users", userController.findAll);
+routes.get("/api/v1/users/:id", userController.findById);
+routes.get("/api/v1/users", userController.findByCPF);
+routes.post("/api/v1/users", userController.create);
+routes.delete("/api/v1/users/:id", userController.remove);
+routes.put("/api/v1/users/:id", userController.update);
 
-routes.get("/dishes/", dishController.findAll);
-routes.get("/dishes/:id", dishController.findById);
-routes.post("/dishes", dishController.create);
-routes.delete("/dishes/:id", dishController.remove);
-routes.put("/dishes/:id", dishController.update);
+routes.get("/api/v1/dishes/", dishController.findAll);
+routes.get("/api/v1/dishes/:id", dishController.findById);
+routes.post("/api/v1/dishes", dishController.create);
+routes.delete("/api/v1/dishes/:id", dishController.remove);
+routes.put("/api/v1/dishes/:id", dishController.update);
 
-routes.get("/demands", demandController.findAll);
-routes.get("/demands/:id", demandController.findById);
-routes.get("/demands", demandController.findByUser);
-routes.post("/demands", demandController.create);
-routes.delete("/demands/:id", demandController.remove);
+routes.get("/api/v1/demands", demandController.findAll);
+routes.get("/api/v1/demands/:id", demandController.findById);
+routes.get("/api/v1/demands", demandController.findByUser);
+routes.post("/api/v1/demands", demandController.create);
+routes.delete("/api/v1/demands/:id", demandController.remove);
 
 module.exports = routes;
