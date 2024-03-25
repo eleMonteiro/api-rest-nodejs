@@ -34,7 +34,7 @@ const getRoles = async (user) => {
   if (roleAdmin.length > 0) role = roleAdmin.pop();
   else role = roleClient.pop();
 
-  return role;
+  return role.id;
 };
 
 const create = async (user) => {
@@ -63,7 +63,8 @@ const findByEmail = async (email) => {
     includeIgnoreAttributes: false,
     where: { email: email },
   });
-  user.role = getRoles(user);
+  const role = await getRoles(user);
+  user.role = role;
   return user;
 };
 
