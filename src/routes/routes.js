@@ -9,7 +9,7 @@ const verifyToken = require("../middlewares/auth");
 
 const routes = new Router();
 
-routes.get("/", (_req, res) => {
+routes.get("/api/v1/", (_req, res) => {
   return res.json({ message: "Hello from API" });
 });
 
