@@ -1,9 +1,9 @@
-const CAMPO_NAO_INFORMADO = "Campo não informado";
-const CAMPO_INVALIDO = "Campo invalido";
-const OBJETO_UNDEFINED = "Objeto não foi informado";
+const FIELD_NOT_SPECIFIED = "Field not specified";
+const INVALID_FIELD = "Invalid field";
+const OBJECT_UNDEFINED = "Object was not reported";
 
 module.exports = {
-  CAMPO_NAO_INFORMADO,
-  CAMPO_INVALIDO,
-  OBJETO_UNDEFINED,
+  FIELD_NOT_SPECIFIED,
+  INVALID_FIELD,
+  OBJECT_UNDEFINED,
 };

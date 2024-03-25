@@ -1,8 +1,8 @@
 const dishRepository = require("../repositories/dish/dishRepository");
-const { OBJETO_UNDEFINED } = require("../../utils/messagesErro");
+const { OBJECT_UNDEFINED } = require("../../utils/messagesErro");
 
 const create = async (dish) => {
-  if (Object.values(dish).length == 0) return { message: OBJETO_UNDEFINED };
+  if (Object.values(dish).length == 0) return { message: OBJECT_UNDEFINED };
   return await dishRepository.create(dish);
 };
 
@@ -11,7 +11,7 @@ const remove = async (id) => {
 };
 
 const update = async (id, dish) => {
-  if (Object.values(dish).length == 0) return { message: OBJETO_UNDEFINED };
+  if (Object.values(dish).length == 0) return { message: OBJECT_UNDEFINED };
   await dishRepository.update(id, dish);
 };
 

@@ -1,8 +1,8 @@
 const demandRepository = require("../repositories/demand/demandRepository");
-const { OBJETO_UNDEFINED } = require("../../utils/messagesErro");
+const { OBJECT_UNDEFINED } = require("../../utils/messagesErro");
 
 const create = async (demand) => {
-  if (Object.values(demand).length == 0) return { message: OBJETO_UNDEFINED };
+  if (Object.values(demand).length == 0) return { message: OBJECT_UNDEFINED };
   return await demandRepository.create(demand);
 };
 
