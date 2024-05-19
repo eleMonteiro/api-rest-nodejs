@@ -5,6 +5,7 @@ const {
   INVALID_FIELD,
   OBJECT_UNDEFINED,
 } = require("../../utils/messagesErro");
+const date = require("../../utils/date");
 
 const create = async (user) => {
   if (Object.values(user).length == 0) return { message: OBJECT_UNDEFINED };
@@ -30,27 +31,43 @@ const remove = async (id) => {
 
 const update = async (id, user) => {
   if (Object.values(user).length == 0) return { message: OBJECT_UNDEFINED };
+  user.dateOfBirth = new Date(date.reverse(user.dateOfBirth));
   await userRepository.update(id, user);
 };
 
 const findAll = async () => {
   const users = await userRepository.findAll();
+  users.forEach((user) => {
+    adjustDate(user);
+  });
   return users ? users : [];
 };
 
 const findById = async (id) => {
   const user = await userRepository.findById(id);
+  adjustDate(user);
   return user ? user : [];
 };
 
 const findByCPF = async (cpf) => {
   const user = await userRepository.findByCFP(cpf);
+  adjustDate(user);
   return user ? user : [];
 };
 
 const findByEmail = async (email) => {
   const user = await userRepository.findByEmail(email);
+  adjustDate(user);
   return user ? user : [];
+};
+
+const adjustDate = (user) => {
+  const { dataValues } = user;
+  dataValues.dateOfBirth = date.formatDate(
+    dataValues.dateOfBirth,
+    "DD/MM/YYYY"
+  );
+  return user;
 };
 
 module.exports = {

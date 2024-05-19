@@ -6,7 +6,7 @@ const addressRepository = require("../address/addressRepository");
 const roleUsersRepository = require("../role/roleUsersRepository");
 
 const findAll = async () => {
-  const users = await User.findAll({ include: ["addresses", "roles"] });
+  const users = await User.findAll();
   return users;
 };
 
