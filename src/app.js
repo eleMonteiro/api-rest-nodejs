@@ -1,8 +1,8 @@
 const express = require("express");
 const acl = require("express-acl");
 
-const routes = require("./routes/routes");
-const { config, responseObject } = require("./config/acl");
+const routes = require("@routes/routes");
+const { config, responseObject } = require("@config/acl");
 
 const app = express();
 

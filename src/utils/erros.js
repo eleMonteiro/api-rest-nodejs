@@ -7,7 +7,7 @@ class ValidationError extends Error {
 }
 
 const createValidationError = (messageKey, params = {}) => {
-  const errorMessages = require("./errorMessages");
+  const errorMessages = require("@utils/errorMessages");
   let message = errorMessages.validation[messageKey] || "Unknown error";
 
   Object.keys(params).forEach((key) => {

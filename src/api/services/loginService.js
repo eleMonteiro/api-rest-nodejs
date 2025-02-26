@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const encrypt = require("../../utils/encrypt");
-const userService = require("../services/userService");
-const { createValidationError } = require("../../utils/erros");
+const encrypt = require("@utils/encrypt");
+const userService = require("@services/userService");
+const { createValidationError, ValidationError } = require("@utils/erros");
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "your-secret-key";
 

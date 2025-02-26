@@ -1,7 +1,7 @@
-const Demand = require("../../models/demand");
-const itemRepository = require("../item/itemRepository");
-const userRepository = require("../user/userRepository");
-const dishRepository = require("../dish/dishRepository");
+const Demand = require("@models/demand");
+const itemRepository = require("@repositories/item/itemRepository");
+const userRepository = require("@repositories/user/userRepository");
+const dishRepository = require("@repositories/dish/dishRepository");
 
 const findAll = async () => {
   const demands = await Demand.findAll({ include: ["itens"] });

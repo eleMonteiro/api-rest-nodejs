@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../repositories/db");
-const Role = require("./role");
-const User = require("./user");
+const sequelize = require("@repositories/db");
+const Role = require("@models/role");
+const User = require("@models/user");
 
 const RoleUsers = sequelize.define("roleUsers", {
   id: {

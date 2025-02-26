@@ -1,9 +1,9 @@
-const User = require("../../models/user");
-const encrypt = require("../../../utils/encrypt");
+const User = require("@models/user");
+const encrypt = require("@utils/encrypt");
 
-const roleRepository = require("../role/roleRepository");
-const addressRepository = require("../address/addressRepository");
-const roleUsersRepository = require("../role/roleUsersRepository");
+const roleRepository = require("@repositories/role/roleRepository");
+const addressRepository = require("@repositories/address/addressRepository");
+const roleUsersRepository = require("@repositories/role/roleUsersRepository");
 
 const findAll = async () => {
   const users = await User.findAll();

@@ -1,5 +1,5 @@
-const itemRepository = require("../repositories/item/itemRepository");
-const { createValidationError } = require("../../utils/erros");
+const itemRepository = require("@repositories/item/itemRepository");
+const { createValidationError } = require("@utils/erros");
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 

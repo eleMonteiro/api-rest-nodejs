@@ -1,4 +1,4 @@
-const Dish = require("../../models/dish");
+const Dish = require("@models/dish");
 
 const create = async (dish) => {
   const _dish = await Dish.create(dish);

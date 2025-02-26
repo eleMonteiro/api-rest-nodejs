@@ -1,4 +1,4 @@
-const Item = require("../../models/item");
+const Item = require("@models/item");
 
 const findAll = async () => {
   const itens = await Item.findAll({ include: ["dishes"] });

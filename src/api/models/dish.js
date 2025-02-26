@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../repositories/db");
-const Item = require("./item");
+const sequelize = require("@repositories/db");
+const Item = require("@models/item");
 
 const Dish = sequelize.define("dishes", {
   id: {

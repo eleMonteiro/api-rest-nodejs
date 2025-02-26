@@ -1,4 +1,4 @@
-const RoleUsers = require("../../models/roleUsers");
+const RoleUsers = require("@models/roleUsers");
 
 const create = async (roleUsers) => {
   const _roleUsers = await RoleUsers.create(roleUsers);

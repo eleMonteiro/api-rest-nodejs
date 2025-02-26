@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const acl = require("express-acl");
-const userController = require("../api/controllers/userController");
-const dishController = require("../api/controllers/dishController");
-const demandController = require("../api/controllers/demandController");
-const loginController = require("../api/controllers/loginController");
+const userController = require("@controllers/userController");
+const dishController = require("@controllers/dishController");
+const demandController = require("@controllers/demandController");
+const loginController = require("@controllers/loginController");
 
-const verifyToken = require("../middlewares/auth");
+const verifyToken = require("@middlewares/auth");
 
 const routes = new Router();
 
@@ -18,11 +18,11 @@ routes.get("/api/v1/", (_req, res) => {
 routes.post("/api/v1/login", loginController.login);
 
 // Middleware for token authentication and authorization
-routes.use(verifyToken);  // Verifies the authentication token
-routes.use(acl.authorize);  // Verifies the user's permissions
+routes.use(verifyToken); // Verifies the authentication token
+routes.use(acl.authorize); // Verifies the user's permissions
 
 // Routes for Users
-routes.get("/api/v1/users", userController.findAll); 
+routes.get("/api/v1/users", userController.findAll);
 routes.get("/api/v1/users/cpf", userController.findByCPF);
 routes.get("/api/v1/users/:id", userController.findById);
 routes.post("/api/v1/users", userController.create);

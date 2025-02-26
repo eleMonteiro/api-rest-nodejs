@@ -1,5 +1,5 @@
-const dishRepository = require("../repositories/dish/dishRepository");
-const { createValidationError } = require("../../utils/erros");
+const dishRepository = require("@repositories/dish/dishRepository");
+const { createValidationError } = require("@utils/erros");
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 

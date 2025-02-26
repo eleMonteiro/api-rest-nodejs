@@ -1,4 +1,4 @@
-const itemService = require("../services/itemService");
+const itemService = require("@services/itemService");
 
 const create = async (req, res) => {
   try {

@@ -1,6 +1,6 @@
 const { isEmail } = require("validator");
 const validatorCPF = require("validar-cpf");
-const { ADMIN, CLIENTE, AUTH } = require("./roles");
+const { ADMIN, CLIENTE, AUTH } = require("@utils/roles");
 
 const validEmail = (email) => {
   return email && isEmail(email);

@@ -1,7 +1,7 @@
-const userRepository = require("../repositories/user/userRepository");
-const validator = require("../../utils/validatorUser");
-const { createValidationError } = require("../../utils/erros");
-const date = require("../../utils/date");
+const userRepository = require("@repositories/user/userRepository");
+const validator = require("@utils/validatorUser");
+const { createValidationError } = require("@utils/erros");
+const date = require("@utils/date");
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
