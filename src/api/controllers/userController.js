@@ -1,33 +1,63 @@
 const userService = require("../services/userService");
 
 const create = async (req, res) => {
-  const user = await userService.create(req.body);
-  res.status(200).json(user);
+  try {
+    const user = await userService.create(req.body);
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: "Error creating user", error: error.message });
+  }
 };
 
 const remove = async (req, res) => {
-  await userService.remove(req.params.id);
-  res.status(204).json();
+  try {
+    await userService.remove(req.params.id);
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ message: "Error removing user", error: error.message });
+  }
 };
 
 const update = async (req, res) => {
-  await userService.update(req.params.id, req.body);
-  res.status(204).json();
+  try {
+    await userService.update(req.params.id, req.body);
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ message: "Error updating user", error: error.message });
+  }
 };
 
 const findAll = async (_req, res) => {
-  const users = await userService.findAll();
-  res.status(200).json(users);
+  try {
+    const users = await userService.findAll();
+    return res.status(200).json(users);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
 };
 
 const findById = async (req, res) => {
-  const user = await userService.findById(req.params.id);
-  res.status(200).json(user);
+  try {
+    const user = await userService.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching user", error: error.message });
+  }
 };
 
 const findByCPF = async (req, res) => {
-  const user = await userService.findById(req.query.cpf);
-  res.status(200).json(user);
+  try {
+    const user = await userService.findByCPF(req.query.cpf);
+    if (!user) {
+      return res.status(404).json({ message: "User not found by CPF" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching user by CPF", error: error.message });
+  }
 };
 
 module.exports = {
