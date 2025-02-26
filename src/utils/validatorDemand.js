@@ -1,13 +1,11 @@
 const validPriceDemand = (demand) => {
+  if (!demand || !Array.isArray(demand.itens)) {
+    throw new Error("Invalid demand structure");
+  }
+
   const { total, itens } = demand;
-  var totalItens = 0.0;
-
-  itens.forEach((element) => {
-    totalItens += element.amount * element.totalPrice;
-  });
-
-  if (total < totalItens) return false;
-  return true;
+  const totalItens = itens.reduce((sum, element) => sum + (element.amount * element.totalPrice), 0);
+  return total >= totalItens;
 };
 
 module.exports = {

@@ -1,8 +1,12 @@
 const dishRepository = require("../repositories/dish/dishRepository");
-const { OBJECT_UNDEFINED } = require("../../utils/messagesErro");
+const { createValidationError } = require("../utils/errors");
+
+const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 const create = async (dish) => {
-  if (Object.values(dish).length == 0) return { message: OBJECT_UNDEFINED };
+  if (isEmptyObject(dish)) {
+    throw createValidationError("OBJECT_UNDEFINED");
+  }
   return await dishRepository.create(dish);
 };
 
@@ -11,7 +15,9 @@ const remove = async (id) => {
 };
 
 const update = async (id, dish) => {
-  if (Object.values(dish).length == 0) return { message: OBJECT_UNDEFINED };
+  if (isEmptyObject(dish)) {
+    throw createValidationError("OBJECT_UNDEFINED");
+  }
   await dishRepository.update(id, dish);
 };
 

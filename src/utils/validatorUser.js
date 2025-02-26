@@ -3,19 +3,17 @@ const validatorCPF = require("validar-cpf");
 const { ADMIN, CLIENTE, AUTH } = require("./roles");
 
 const validEmail = (email) => {
-  return isEmail(email);
+  return email && isEmail(email);
 };
 
 const validCPF = (cpf) => {
-  return validatorCPF(cpf);
+  return cpf && validatorCPF(cpf);
 };
 
 const validRole = (role) => {
   return (
     role &&
-    ADMIN.toLowerCase(role) &&
-    CLIENTE.toLowerCase(role) &&
-    AUTH.toLowerCase(role)
+    [ADMIN, CLIENTE, AUTH].map((r) => r.toLowerCase()).includes(role.toLowerCase())
   );
 };
 

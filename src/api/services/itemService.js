@@ -1,8 +1,12 @@
 const itemRepository = require("../repositories/item/itemRepository");
-const { OBJECT_UNDEFINED } = require("../../utils/messagesErro");
+const { createValidationError } = require("../utils/errors");
+
+const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 const create = async (item) => {
-  if (Object.values(item).length == 0) return { message: OBJECT_UNDEFINED };
+  if (isEmptyObject(item)) {
+    throw createValidationError("OBJECT_UNDEFINED");
+  }
   return await itemRepository.create(item);
 };
 
