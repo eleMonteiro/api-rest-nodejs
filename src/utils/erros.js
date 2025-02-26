@@ -18,4 +18,7 @@ const createValidationError = (messageKey, params = {}) => {
   return new ValidationError(message, 400);
 };
 
-module.exports = createValidationError;
+module.exports = {
+  createValidationError,
+  ValidationError
+};
