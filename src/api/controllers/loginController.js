@@ -1,8 +1,8 @@
-const loginService = require("@services/loginService");
+import { login as _login } from "@services/loginService";
 
 const login = async (req, res) => {
   try {
-    const result = await loginService.login(req.body);
+    const result = await _login(req.body);
     const { status, error, token, user } = result;
 
     if (!token) {
@@ -15,6 +15,6 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   login,
 };

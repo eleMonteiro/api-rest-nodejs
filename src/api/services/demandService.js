@@ -1,6 +1,6 @@
-const demandRepository = require("@repositories/demand/demandRepository");
-const validatorDemand = require("@utils/validatorDemand");
-const { createValidationError } = require("@utils/erros");
+import { create as _create, findById as _findById, remove as _remove, findAll as _findAll, findByUser as _findByUser } from "@repositories/demand/demandRepository";
+import { validPriceDemand } from "@utils/validatorDemand";
+import { createValidationError } from "@utils/erros";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
@@ -11,7 +11,7 @@ const checkObjectExistence = (object, errorKey) => {
 };
 
 const create = async (demand) => {
-  if (validatorDemand.validPriceDemand(demand)) {
+  if (validPriceDemand(demand)) {
     throw createValidationError("PRICE_DEMAND_INCORRECT");
   }
 
@@ -19,34 +19,34 @@ const create = async (demand) => {
     throw createValidationError("OBJECT_UNDEFINED");
   }
 
-  return await demandRepository.create(demand);
+  return await _create(demand);
 };
 
 const remove = async (id) => {
-  const demand = await demandRepository.findById(id);
+  const demand = await _findById(id);
   checkObjectExistence(demand, "OBJECT_NOT_FOUND");
-  await demandRepository.remove(id);
+  await _remove(id);
 };
 
 const findAll = async () => {
-  const demands = await demandRepository.findAll();
+  const demands = await _findAll();
   checkObjectExistence(demands, "OBJECT_NOT_FOUND");
   return demands;
 };
 
 const findByUser = async (userId) => {
-  const demands = await demandRepository.findByUser(userId);
+  const demands = await _findByUser(userId);
   checkObjectExistence(demands, "OBJECT_NOT_FOUND");
   return demands;
 };
 
 const findById = async (id) => {
-  const demand = await demandRepository.findById(id);
+  const demand = await _findById(id);
   checkObjectExistence(demand, "OBJECT_NOT_FOUND");
   return demand;
 };
 
-module.exports = {
+export default {
   create,
   remove,
   findAll,

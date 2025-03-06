@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("@repositories/db");
-const Item = require("@models/item");
+import { DataTypes } from "sequelize";
+import { define } from "@repositories/db";
+import Item from "@models/item";
 
-const Demand = sequelize.define("demands", {
+const Demand = define("demands", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -25,4 +25,4 @@ const Demand = sequelize.define("demands", {
 
 Demand.hasMany(Item);
 
-module.exports = Demand;
+export default Demand;

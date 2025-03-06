@@ -1,10 +1,10 @@
-const Address = require("@models/address");
+import { create as _create } from "@models/address";
 
 const create = async (address) => {
-  const _address = await Address.create(address);
+  const _address = await _create(address);
   return _address;
 };
 
-module.exports = {
+export default {
   create,
 };

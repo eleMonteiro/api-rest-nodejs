@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("@repositories/db");
+import { DataTypes } from "sequelize";
+import { define } from "@repositories/db";
 
-const Role = sequelize.define("roles", {
+const Role = define("roles", {
   id: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -9,4 +9,4 @@ const Role = sequelize.define("roles", {
   },
 });
 
-module.exports = Role;
+export default Role;

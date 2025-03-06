@@ -1,9 +1,9 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("@repositories/db");
-const Role = require("@models/role");
-const User = require("@models/user");
+import { DataTypes } from "sequelize";
+import { define } from "@repositories/db";
+import Role from "@models/role";
+import User from "@models/user";
 
-const RoleUsers = sequelize.define("roleUsers", {
+const RoleUsers = define("roleUsers", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -28,4 +28,4 @@ const RoleUsers = sequelize.define("roleUsers", {
   },
 });
 
-module.exports = RoleUsers;
+export default RoleUsers;

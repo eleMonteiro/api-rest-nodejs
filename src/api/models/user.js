@@ -1,11 +1,11 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("@repositories/db");
-const Addresses = require("@models/address");
-const Role = require("@models/role");
-const RoleUsers = require("@models/roleUsers");
-const Demand = require("@models/demand");
+import { DataTypes } from "sequelize";
+import { define } from "@repositories/db";
+import Addresses from "@models/address";
+import Role, { belongsToMany } from "@models/role";
+import RoleUsers from "@models/roleUsers";
+import Demand from "@models/demand";
 
-const User = sequelize.define("user", {
+const User = define("user", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -37,6 +37,6 @@ const User = sequelize.define("user", {
 User.hasMany(Addresses);
 User.hasMany(Demand);
 User.belongsToMany(Role, { through: RoleUsers });
-Role.belongsToMany(User, { through: RoleUsers });
+belongsToMany(User, { through: RoleUsers });
 
-module.exports = User;
+export default User;

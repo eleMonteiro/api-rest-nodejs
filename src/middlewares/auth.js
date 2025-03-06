@@ -1,5 +1,5 @@
 require("dotenv").config();
-const jwt = require("jsonwebtoken");
+import { verify } from "jsonwebtoken";
 
 const verifyToken = (req, res, next) => {
   const token = req.header("Authorization");
@@ -11,7 +11,7 @@ const verifyToken = (req, res, next) => {
     : token;
 
   try {
-    const decoded = jwt.verify(
+    const decoded = verify(
       tokenWithoutBearer,
       process.env.JWT_SECRET_KEY || "your-secret-key"
     );
@@ -23,4 +23,4 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-module.exports = verifyToken;
+export default verifyToken;

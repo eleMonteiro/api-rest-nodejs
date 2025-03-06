@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const encrypt = require("@utils/encrypt");
-const userService = require("@services/userService");
-const { createValidationError, ValidationError } = require("@utils/erros");
+import { sign } from "jsonwebtoken";
+import { encrypt as _encrypt } from "@utils/encrypt";
+import { findByEmail } from "@services/userService";
+import { createValidationError, ValidationError } from "@utils/erros";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "your-secret-key";
 
@@ -13,18 +13,18 @@ const login = async (data) => {
   }
 
   try {
-    const user = await userService.findByEmail(email);
+    const user = await findByEmail(email);
 
     if (!user) {
       throw createValidationError("INVALID_FIELD", { field: "email" });
     }
 
-    const passwordMatch = encrypt.encrypt(password) === user.password;
+    const passwordMatch = _encrypt(password) === user.password;
     if (!passwordMatch) {
       throw createValidationError("INVALID_FIELD", { field: "password" });
     }
 
-    const token = jwt.sign(
+    const token = sign(
       { userId: user.id, role: user.role },
       JWT_SECRET_KEY,
       {
@@ -46,6 +46,6 @@ const login = async (data) => {
   }
 };
 
-module.exports = {
+export default {
   login,
 };

@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("@repositories/db");
+import { DataTypes } from "sequelize";
+import { define } from "@repositories/db";
 
-const Address = sequelize.define("addresses", {
+const Address = define("addresses", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -30,4 +30,4 @@ const Address = sequelize.define("addresses", {
   },
 });
 
-module.exports = Address;
+export default Address;

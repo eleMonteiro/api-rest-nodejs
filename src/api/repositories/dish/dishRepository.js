@@ -1,7 +1,7 @@
-const Dish = require("@models/dish");
+import { create as _create, findAll as _findAll, findByPk } from "@models/dish";
 
 const create = async (dish) => {
-  const _dish = await Dish.create(dish);
+  const _dish = await _create(dish);
   return _dish;
 };
 
@@ -16,16 +16,16 @@ const update = async (id, dish) => {
 };
 
 const findAll = async () => {
-  const dishes = await Dish.findAll();
+  const dishes = await _findAll();
   return dishes;
 };
 
 const findById = async (id) => {
-  const user = await Dish.findByPk(id);
+  const user = await findByPk(id);
   return user;
 };
 
-module.exports = {
+export default {
   create,
   remove,
   update,

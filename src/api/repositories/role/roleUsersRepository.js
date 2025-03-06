@@ -1,12 +1,12 @@
-const RoleUsers = require("@models/roleUsers");
+import { create as _create, findAll } from "@models/roleUsers";
 
 const create = async (roleUsers) => {
-  const _roleUsers = await RoleUsers.create(roleUsers);
+  const _roleUsers = await _create(roleUsers);
   return _roleUsers;
 };
 
 const findByUser = async (userId) => {
-  const roles = await RoleUsers.findAll(
+  const roles = await findAll(
     { order: [["userId", "ASC"]], attributes: ["roleId", "userId"] },
     {
       where: { userId: userId },
@@ -25,7 +25,7 @@ const getRoles = async (user) => {
   }
 };
 
-module.exports = {
+export default {
   create,
   findByUser,
   getRoles,

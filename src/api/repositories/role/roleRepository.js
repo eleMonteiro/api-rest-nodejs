@@ -1,11 +1,11 @@
-const Role = require("@models/role");
+import { findByPk } from "@models/role";
 
 const find = async (role) => {
   const { id } = role;
-  const _role = await Role.findByPk(id);
+  const _role = await findByPk(id);
   return _role;
 };
 
-module.exports = {
+export default {
   find,
 };

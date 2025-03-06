@@ -1,34 +1,34 @@
-const User = require("@models/user");
-const encrypt = require("@utils/encrypt");
+import { findAll as _findAll, create as _create, findByPk, findOne } from "@models/user";
+import { encrypt as _encrypt } from "@utils/encrypt";
 
-const roleRepository = require("@repositories/role/roleRepository");
-const addressRepository = require("@repositories/address/addressRepository");
-const roleUsersRepository = require("@repositories/role/roleUsersRepository");
+import { find } from "@repositories/role/roleRepository";
+import { create as __create } from "@repositories/address/addressRepository";
+import { create as ___create, getRoles } from "@repositories/role/roleUsersRepository";
 
 const findAll = async () => {
-  const users = await User.findAll();
+  const users = await _findAll();
   return users;
 };
 
 const addAddress = async (user, addresses) => {
   addresses.forEach(async (element) => {
-    const address = await addressRepository.create(element);
+    const address = await __create(element);
     await user.addAddresses(address);
   });
 };
 
 const addRoles = async (user, roles) => {
   roles.forEach(async (element) => {
-    const role = await roleRepository.find(element);
-    await roleUsersRepository.create({ userId: user.id, roleId: role.id });
+    const role = await find(element);
+    await ___create({ userId: user.id, roleId: role.id });
   });
 };
 
 const create = async (user) => {
   const { roles, addresses, ..._user } = user;
-  _user.password = encrypt.encrypt(_user.password);
+  _user.password = _encrypt(_user.password);
 
-  const _user_ = await User.create(_user);
+  const _user_ = await _create(_user);
   await addRoles(_user_, roles);
   await addAddress(_user_, addresses);
 
@@ -36,21 +36,21 @@ const create = async (user) => {
 };
 
 const findById = async (id) => {
-  const user = await User.findByPk(id);
+  const user = await findByPk(id);
   return user;
 };
 
 const findByCFP = async (cpf) => {
-  const user = await User.findOne({ where: { cpf: cpf } });
+  const user = await findOne({ where: { cpf: cpf } });
   return user;
 };
 
 const findByEmail = async (email) => {
-  const user = await User.findOne({
+  const user = await findOne({
     includeIgnoreAttributes: false,
     where: { email: email },
   });
-  const role = await roleUsersRepository.getRoles(user);
+  const role = await getRoles(user);
   user.role = role;
   return user;
 };
@@ -67,7 +67,7 @@ const update = async (id, user) => {
   await _user.update({ ...user });
 };
 
-module.exports = {
+export default {
   create,
   remove,
   update,

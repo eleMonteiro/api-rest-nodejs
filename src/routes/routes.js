@@ -1,11 +1,11 @@
-const { Router } = require("express");
-const acl = require("express-acl");
-const userController = require("@controllers/userController");
-const dishController = require("@controllers/dishController");
-const demandController = require("@controllers/demandController");
-const loginController = require("@controllers/loginController");
+import { Router } from "express";
+import { authorize } from "express-acl";
+import { findAll, findByCPF, findById, create, remove, update } from "@controllers/userController";
+import { findAll as _findAll, findById as _findById, create as _create, remove as _remove, update as _update } from "@controllers/dishController";
+import { findAll as __findAll, findById as __findById, findByUser, create as __create, remove as __remove } from "@controllers/demandController";
+import { login } from "@controllers/loginController";
 
-const verifyToken = require("@middlewares/auth");
+import verifyToken from "@middlewares/auth";
 
 const routes = new Router();
 
@@ -15,32 +15,32 @@ routes.get("/api/v1/", (_req, res) => {
 });
 
 // Login route (no authentication required)
-routes.post("/api/v1/login", loginController.login);
+routes.post("/api/v1/login", login);
 
 // Middleware for token authentication and authorization
 routes.use(verifyToken); // Verifies the authentication token
-routes.use(acl.authorize); // Verifies the user's permissions
+routes.use(authorize); // Verifies the user's permissions
 
 // Routes for Users
-routes.get("/api/v1/users", userController.findAll);
-routes.get("/api/v1/users/cpf", userController.findByCPF);
-routes.get("/api/v1/users/:id", userController.findById);
-routes.post("/api/v1/users", userController.create);
-routes.delete("/api/v1/users/:id", userController.remove);
-routes.put("/api/v1/users/:id", userController.update);
+routes.get("/api/v1/users", findAll);
+routes.get("/api/v1/users/cpf", findByCPF);
+routes.get("/api/v1/users/:id", findById);
+routes.post("/api/v1/users", create);
+routes.delete("/api/v1/users/:id", remove);
+routes.put("/api/v1/users/:id", update);
 
 // Routes for Dishes
-routes.get("/api/v1/dishes", dishController.findAll);
-routes.get("/api/v1/dishes/:id", dishController.findById);
-routes.post("/api/v1/dishes", dishController.create);
-routes.delete("/api/v1/dishes/:id", dishController.remove);
-routes.put("/api/v1/dishes/:id", dishController.update);
+routes.get("/api/v1/dishes", _findAll);
+routes.get("/api/v1/dishes/:id", _findById);
+routes.post("/api/v1/dishes", _create);
+routes.delete("/api/v1/dishes/:id", _remove);
+routes.put("/api/v1/dishes/:id", _update);
 
 // Routes for Demands
-routes.get("/api/v1/demands", demandController.findAll);
-routes.get("/api/v1/demands/:id", demandController.findById);
-routes.get("/api/v1/demands/user", demandController.findByUser);
-routes.post("/api/v1/demands", demandController.create);
-routes.delete("/api/v1/demands/:id", demandController.remove);
+routes.get("/api/v1/demands", __findAll);
+routes.get("/api/v1/demands/:id", __findById);
+routes.get("/api/v1/demands/user", findByUser);
+routes.post("/api/v1/demands", __create);
+routes.delete("/api/v1/demands/:id", __remove);
 
-module.exports = routes;
+export default routes;

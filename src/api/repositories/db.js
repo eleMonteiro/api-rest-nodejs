@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+import Sequelize, { authenticate } from "sequelize";
 
 require("dotenv").config();
 
@@ -14,10 +14,10 @@ const sequelize = new Sequelize(
 
 (async () => {
   try {
-    await Sequelize.authenticate();
+    await authenticate();
   } catch (error) {
     /* empty */
   }
 })();
 
-module.exports = sequelize;
+export default sequelize;

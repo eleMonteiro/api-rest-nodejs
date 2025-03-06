@@ -1,5 +1,5 @@
-const itemRepository = require("@repositories/item/itemRepository");
-const { createValidationError } = require("@utils/erros");
+import { create as _create, remove as _remove, findAll as _findAll, findByDemand as _findByDemand, findById as _findById } from "@repositories/item/itemRepository";
+import { createValidationError } from "@utils/erros";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
@@ -7,29 +7,29 @@ const create = async (item) => {
   if (isEmptyObject(item)) {
     throw createValidationError("OBJECT_UNDEFINED");
   }
-  return await itemRepository.create(item);
+  return await _create(item);
 };
 
 const remove = async (id) => {
-  await itemRepository.remove(id);
+  await _remove(id);
 };
 
 const findAll = async () => {
-  const itens = await itemRepository.findAll();
+  const itens = await _findAll();
   return itens ? itens : [];
 };
 
 const findByDemand = async (demandId) => {
-  const itens = itemRepository.findByDemand(demandId);
+  const itens = _findByDemand(demandId);
   return itens ? itens : [];
 };
 
 const findById = async (id) => {
-  const item = await itemRepository.findById(id);
+  const item = await _findById(id);
   return item ? item : [];
 };
 
-module.exports = {
+export default {
   create,
   remove,
   findAll,
