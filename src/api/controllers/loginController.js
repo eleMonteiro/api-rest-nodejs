@@ -9,7 +9,16 @@ export const login = async (req, res) => {
       return res.status(status).json({ message: error });
     }
 
-    return res.status(status).json({ user: { name: user.name }, token: token });
+    return res.status(status).json({
+      user: {
+        name: user.name,
+        cpf: user.cpf,
+        dateOfBirth: user.dateOfBirth,
+        email: user.email,
+        role: user.role,
+      },
+      token: token,
+    });
   } catch (error) {
     return res
       .status(500)
