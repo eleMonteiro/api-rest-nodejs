@@ -1,7 +1,5 @@
 import { DataTypes } from "sequelize";
-import { define } from "@repositories/db";
-import Role from "@models/role";
-import User from "@models/user";
+import { define } from "../repositories/db.js";
 
 const RoleUsers = define("roleUsers", {
   id: {
@@ -13,17 +11,15 @@ const RoleUsers = define("roleUsers", {
   userId: {
     type: DataTypes.INTEGER,
     references: {
-      model: User,
+      model: "users",
       key: "id",
-      primaryKey: true,
     },
   },
   roleId: {
     type: DataTypes.STRING,
     references: {
-      model: Role,
+      model: "roles",
       key: "id",
-      primaryKey: true,
     },
   },
 });

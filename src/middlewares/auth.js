@@ -1,7 +1,10 @@
-require("dotenv").config();
-import { verify } from "jsonwebtoken";
+import dotenv from "dotenv";
+import pkg from "jsonwebtoken";
+const { verify } = pkg;
 
-const verifyToken = (req, res, next) => {
+dotenv.config();
+
+export const verifyToken = (req, res, next) => {
   const token = req.header("Authorization");
 
   if (!token) return res.status(401).json({ error: "Access denied" });
@@ -22,5 +25,3 @@ const verifyToken = (req, res, next) => {
     res.status(401).json({ error: "Invalid token" });
   }
 };
-
-export default verifyToken;

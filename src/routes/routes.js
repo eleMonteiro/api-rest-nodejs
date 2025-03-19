@@ -1,11 +1,30 @@
 import { Router } from "express";
 import { authorize } from "express-acl";
-import { findAll, findByCPF, findById, create, remove, update } from "@controllers/userController";
-import { findAll as _findAll, findById as _findById, create as _create, remove as _remove, update as _update } from "@controllers/dishController";
-import { findAll as __findAll, findById as __findById, findByUser, create as __create, remove as __remove } from "@controllers/demandController";
-import { login } from "@controllers/loginController";
+import {
+  findAll,
+  findByCPF,
+  findById,
+  create,
+  remove,
+  update,
+} from "../api/controllers/userController.js";
+import {
+  findAll as _findAll,
+  findById as _findById,
+  create as _create,
+  remove as _remove,
+  update as _update,
+} from "../api/controllers/dishController.js";
+import {
+  findAll as __findAll,
+  findById as __findById,
+  findByUser as __findByUser,
+  create as __create,
+  remove as __remove,
+} from "../api/controllers/demandController.js";
+import { login } from "../api/controllers/loginController.js";
 
-import verifyToken from "@middlewares/auth";
+import { verifyToken } from "../middlewares/auth.js";
 
 const routes = new Router();
 
@@ -39,7 +58,7 @@ routes.put("/api/v1/dishes/:id", _update);
 // Routes for Demands
 routes.get("/api/v1/demands", __findAll);
 routes.get("/api/v1/demands/:id", __findById);
-routes.get("/api/v1/demands/user", findByUser);
+routes.get("/api/v1/demands/user", __findByUser);
 routes.post("/api/v1/demands", __create);
 routes.delete("/api/v1/demands/:id", __remove);
 

@@ -1,52 +1,55 @@
-import { findAll as _findAll, create as _create, findByPk, findOne } from "@models/user";
-import { encrypt as _encrypt } from "@utils/encrypt";
+import User from "../../models/user.js";
+import { encrypt as _encrypt } from "../../../utils/encrypt.js";
 
-import { find } from "@repositories/role/roleRepository";
-import { create as __create } from "@repositories/address/addressRepository";
-import { create as ___create, getRoles } from "@repositories/role/roleUsersRepository";
+import { find } from "../../repositories/role/roleRepository.js";
+import { create as __create } from "../../repositories/address/addressRepository.js";
+import {
+  create as ___create,
+  getRoles,
+} from "../../repositories/role/roleUsersRepository.js";
 
-const findAll = async () => {
-  const users = await _findAll();
+export const findAll = async () => {
+  const users = await User.findAll();
   return users;
 };
 
-const addAddress = async (user, addresses) => {
+export const addAddress = async (user, addresses) => {
   addresses.forEach(async (element) => {
     const address = await __create(element);
     await user.addAddresses(address);
   });
 };
 
-const addRoles = async (user, roles) => {
+export const addRoles = async (user, roles) => {
   roles.forEach(async (element) => {
     const role = await find(element);
     await ___create({ userId: user.id, roleId: role.id });
   });
 };
 
-const create = async (user) => {
+export const create = async (user) => {
   const { roles, addresses, ..._user } = user;
   _user.password = _encrypt(_user.password);
 
-  const _user_ = await _create(_user);
+  const _user_ = await User.create(_user);
   await addRoles(_user_, roles);
   await addAddress(_user_, addresses);
 
   return _user_;
 };
 
-const findById = async (id) => {
-  const user = await findByPk(id);
+export const findById = async (id) => {
+  const user = await user.findByPk(id);
   return user;
 };
 
-const findByCFP = async (cpf) => {
-  const user = await findOne({ where: { cpf: cpf } });
+export const findByCFP = async (cpf) => {
+  const user = await User.findOne({ where: { cpf: cpf } });
   return user;
 };
 
-const findByEmail = async (email) => {
-  const user = await findOne({
+export const findByEmail = async (email) => {
+  const user = await User.findOne({
     includeIgnoreAttributes: false,
     where: { email: email },
   });
@@ -55,24 +58,14 @@ const findByEmail = async (email) => {
   return user;
 };
 
-const remove = async (id) => {
+export const remove = async (id) => {
   const user = await findById(id);
   await user.destroy();
 };
 
-const update = async (id, user) => {
+export const update = async (id, user) => {
   const _user = await findById(id);
   user.password = _user.password;
   user.email = _user.email;
   await _user.update({ ...user });
-};
-
-export default {
-  create,
-  remove,
-  update,
-  findAll,
-  findById,
-  findByCFP,
-  findByEmail,
 };

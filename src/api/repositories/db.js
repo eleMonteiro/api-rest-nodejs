@@ -1,8 +1,9 @@
-import Sequelize, { authenticate } from "sequelize";
+import dotenv from "dotenv";
+import Sequelize from "sequelize";
 
-require("dotenv").config();
+dotenv.config();
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   process.env.MYSQL_DB,
   process.env.MYSQL_USER,
   process.env.MYSQL_PASSWORD,
@@ -12,12 +13,15 @@ const sequelize = new Sequelize(
   }
 );
 
+export const define = (modelName, attributes) => {
+  return sequelize.define(modelName, attributes);
+};
+
 (async () => {
   try {
-    await authenticate();
+    await sequelize.authenticate();
+    console.log("Conexão com o banco de dados estabelecida com sucesso.");
   } catch (error) {
-    /* empty */
+    console.error("Erro ao conectar ao banco de dados:", error);
   }
 })();
-
-export default sequelize;

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { define } from "@repositories/db";
+import { define } from "../repositories/db.js";
 
 const Address = define("addresses", {
   id: {

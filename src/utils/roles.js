@@ -1,9 +1,3 @@
-const ADMIN = "admin";
-const CLIENTE = "cliente";
-const AUTH = "auth";
-
-module.exports = {
-  ADMIN,
-  CLIENTE,
-  AUTH,
-};
+export const ADMIN = "admin";
+export const CLIENTE = "cliente";
+export const AUTH = "auth";

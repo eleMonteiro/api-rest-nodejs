@@ -1,13 +1,14 @@
-class ValidationError extends Error {
+import { errorMessages } from "../utils/errorMessages.js";
+
+export class ValidationError extends Error {
   constructor(message, code = 400) {
     super(message);
     this.name = "ValidationError";
-    this.code = code; 
+    this.code = code;
   }
 }
 
-const createValidationError = (messageKey, params = {}) => {
-  const errorMessages = require("@utils/errorMessages");
+export const createValidationError = (messageKey, params = {}) => {
   let message = errorMessages.validation[messageKey] || "Unknown error";
 
   Object.keys(params).forEach((key) => {
@@ -16,9 +17,4 @@ const createValidationError = (messageKey, params = {}) => {
   });
 
   return new ValidationError(message, 400);
-};
-
-module.exports = {
-  createValidationError,
-  ValidationError
 };

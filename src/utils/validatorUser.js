@@ -1,24 +1,20 @@
-const { isEmail } = require("validator");
-const validatorCPF = require("validar-cpf");
-const { ADMIN, CLIENTE, AUTH } = require("@utils/roles");
+import validator from "validator";
+import validarCpf from "validar-cpf";
+import { ADMIN, CLIENTE, AUTH } from "../utils/roles.js";
 
-const validEmail = (email) => {
-  return email && isEmail(email);
+export const validEmail = (email) => {
+  return email && validator.isEmail(email);
 };
 
-const validCPF = (cpf) => {
-  return cpf && validatorCPF(cpf);
+export const validCPF = (cpf) => {
+  return cpf && validarCpf(cpf);
 };
 
-const validRole = (role) => {
+export const validRole = (role) => {
   return (
     role &&
-    [ADMIN, CLIENTE, AUTH].map((r) => r.toLowerCase()).includes(role.toLowerCase())
+    [ADMIN, CLIENTE, AUTH]
+      .map((r) => r.toLowerCase())
+      .includes(role.toLowerCase())
   );
-};
-
-module.exports = {
-  validEmail,
-  validCPF,
-  validRole,
 };

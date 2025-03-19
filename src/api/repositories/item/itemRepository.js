@@ -1,34 +1,26 @@
-import { findAll as _findAll, findOne, findByPk, create as _create } from "@models/item";
+import Item from "../../models/item.js";
 
-const findAll = async () => {
-  const itens = await _findAll({ include: ["dishes"] });
+export const findAll = async () => {
+  const itens = await Item.findAll({ include: ["dishes"] });
   return itens;
 };
 
-const findByDemand = async (demandId) => {
-  const item = await findOne({ where: { demandId: demandId } });
+export const findByDemand = async (demandId) => {
+  const item = await Item.findOne({ where: { demandId: demandId } });
   return item;
 };
 
-const findById = async (id) => {
-  const item = await findByPk(id);
+export const findById = async (id) => {
+  const item = await Item.findByPk(id);
   return item;
 };
 
-const create = async (item) => {
-  const _item = await _create(item);
+export const create = async (item) => {
+  const _item = await Item.create(item);
   return _item;
 };
 
-const remove = async (id) => {
+export const remove = async (id) => {
   const item = await findById(id);
   await item.destroy();
-};
-
-export default {
-  create,
-  remove,
-  findAll,
-  findByDemand,
-  findById,
 };

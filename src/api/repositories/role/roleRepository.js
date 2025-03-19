@@ -1,11 +1,7 @@
-import { findByPk } from "@models/role";
+import Role from "../../models/role.js";
 
-const find = async (role) => {
+export const find = async (role) => {
   const { id } = role;
-  const _role = await findByPk(id);
+  const _role = await Role.findByPk(id);
   return _role;
-};
-
-export default {
-  find,
 };

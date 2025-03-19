@@ -1,10 +1,6 @@
-import { create as _create } from "@models/address";
+import Address from "../../models/address.js";
 
-const create = async (address) => {
-  const _address = await _create(address);
+export const create = async (address) => {
+  const _address = await Address.create(address);
   return _address;
-};
-
-export default {
-  create,
 };

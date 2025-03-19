@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { define } from "@repositories/db";
+import { define } from "../repositories/db.js";
 
 const Role = define("roles", {
   id: {

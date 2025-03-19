@@ -1,12 +1,12 @@
-import { create as _create, findAll } from "@models/roleUsers";
+import RoleUser from "../../models/roleUsers.js";
 
-const create = async (roleUsers) => {
-  const _roleUsers = await _create(roleUsers);
+export const create = async (roleUsers) => {
+  const _roleUsers = await RoleUser.create(roleUsers);
   return _roleUsers;
 };
 
-const findByUser = async (userId) => {
-  const roles = await findAll(
+export const findByUser = async (userId) => {
+  const roles = await RoleUser.findAll(
     { order: [["userId", "ASC"]], attributes: ["roleId", "userId"] },
     {
       where: { userId: userId },
@@ -16,17 +16,11 @@ const findByUser = async (userId) => {
   return roles;
 };
 
-const getRoles = async (user) => {
+export const getRoles = async (user) => {
   const roles = await findByUser(user.id);
   for (let i = 0; i < roles.length; i++) {
     const element = roles[i];
     if (element.roleId == "admin") return element.roleId;
     if (element.roleId == "cliente") return element.roleId;
   }
-};
-
-export default {
-  create,
-  findByUser,
-  getRoles,
 };

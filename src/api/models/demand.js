@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { define } from "@repositories/db";
-import Item from "@models/item";
+import { define } from "../repositories/db.js";
+import Item from "./item.js";
 
 const Demand = define("demands", {
   id: {
