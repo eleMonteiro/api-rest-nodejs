@@ -8,7 +8,7 @@ import {
   findByEmail as _findByEmail,
 } from "../repositories/user/userRepository.js";
 import { validCPF, validRole, validEmail } from "../../utils/validatorUser.js";
-import { createValidationError } from "../../utils/erros.js";
+import { createValidationError } from "../../utils/responses.js";
 import { formatDate, reverse } from "../../utils/date.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;

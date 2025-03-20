@@ -3,7 +3,7 @@ const { sign } = pkg;
 
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
 import { findByEmail } from "../services/userService.js";
-import { createValidationError, ValidationError } from "../../utils/erros.js";
+import { createValidationError, ValidationError } from "../../utils/responses.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "your-secret-key";
 
