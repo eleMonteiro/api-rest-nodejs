@@ -28,19 +28,51 @@ import { verifyToken } from "../middlewares/auth.js";
 
 const routes = new Router();
 
-// Initial API route, returns a greeting message
 routes.get("/api/v1/", (_req, res) => {
   return res.json({ message: "Hello from API" });
 });
 
-// Login route (no authentication required)
+/**
+ * @swagger
+ * /api/v1/login:
+ *   post:
+ *     summary: Autentica um usuário
+ *     description: Realiza login e retorna um token de autenticação.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: Nome de usuário do usuário
+ *                 example: "seu_usuario"
+ *               password:
+ *                 type: string
+ *                 description: Senha do usuário
+ *                 example: "sua_senha"
+ *     responses:
+ *       200:
+ *         description: Autenticação bem-sucedida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   description: Token de autenticação JWT
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5hbWUiOiJNYWNyb25lIiwiaWF0IjoxNjU4MzY0NjA3fQ.S0t7-R-t77d7aP4g9r9XqI1eW7p6Y-sR3Z-9x_G-Y"
+ *       401:
+ *         description: Credenciais inválidas
+ */
 routes.post("/api/v1/login", login);
 
-// Middleware for token authentication and authorization
-routes.use(verifyToken); // Verifies the authentication token
-routes.use(authorize); // Verifies the user's permissions
+routes.use(verifyToken);
+routes.use(authorize); 
 
-// Routes for Users
 routes.get("/api/v1/users", findAll);
 routes.get("/api/v1/users/cpf", findByCPF);
 routes.get("/api/v1/users/:id", findById);
@@ -48,14 +80,12 @@ routes.post("/api/v1/users", create);
 routes.delete("/api/v1/users/:id", remove);
 routes.put("/api/v1/users/:id", update);
 
-// Routes for Dishes
 routes.get("/api/v1/dishes", _findAll);
 routes.get("/api/v1/dishes/:id", _findById);
 routes.post("/api/v1/dishes", _create);
 routes.delete("/api/v1/dishes/:id", _remove);
 routes.put("/api/v1/dishes/:id", _update);
 
-// Routes for Demands
 routes.get("/api/v1/demands", __findAll);
 routes.get("/api/v1/demands/:id", __findById);
 routes.get("/api/v1/demands/user", __findByUser);

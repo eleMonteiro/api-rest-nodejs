@@ -4,7 +4,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import cors from "cors";
 import acl from "express-acl";
 import routes from "./routes/routes.js";
-import { config, responseObject } from "./config/acl.js";
+import { config, responseObject } from "./config/acl.js"; 
 
 const app = express();
 
@@ -25,7 +25,7 @@ const options = {
       description: 'Documentação da API usando Swagger',
     },
   },
-  apis: ['./routes/*.js'],
+  apis: ['./routes/routes.js'],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
