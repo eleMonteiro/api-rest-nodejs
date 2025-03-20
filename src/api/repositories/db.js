@@ -10,6 +10,7 @@ export const sequelize = new Sequelize(
   {
     dialect: "mysql",
     host: process.env.MYSQL_HOST,
+    logging: false,
   }
 );
 
@@ -20,8 +21,6 @@ export const define = (modelName, attributes) => {
 (async () => {
   try {
     await sequelize.authenticate();
-    console.log("Conexão com o banco de dados estabelecida com sucesso.");
-  } catch (error) {
-    console.error("Erro ao conectar ao banco de dados:", error);
-  }
+    await sequelize.sync();
+  } catch (error) { }
 })();

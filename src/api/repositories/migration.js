@@ -6,7 +6,5 @@
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
-  } catch (error) {
-    /* empty */
-  }
+  } catch (error) { }
 })();
