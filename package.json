@@ -31,6 +31,8 @@
     "module-alias": "^2.2.3",
     "mysql2": "^3.9.2",
     "sequelize": "^6.37.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "validar-cpf": "^3.0.0",
     "validator": "^13.11.0",
     "yup": "^1.4.0"
