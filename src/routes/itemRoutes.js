@@ -27,7 +27,7 @@ const itemRoutes = Router();
  *               items:
  *                 $ref: '#/components/schemas/Item'
  */
-itemRoutes.get("/api/v1/items", findAll);
+itemRoutes.get("/", findAll);
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ itemRoutes.get("/api/v1/items", findAll);
  *       404:
  *         description: Item não encontrado
  */
-itemRoutes.get("/api/v1/items/:id", findById);
+itemRoutes.get("/:id", findById);
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ itemRoutes.get("/api/v1/items/:id", findById);
  *       400:
  *         description: Erro de validação
  */
-itemRoutes.post("/api/v1/items", create);
+itemRoutes.post("/", create);
 
 /**
  * @swagger
@@ -107,7 +107,7 @@ itemRoutes.post("/api/v1/items", create);
  *               items:
  *                 $ref: '#/components/schemas/Item'
  */
-itemRoutes.get("/api/v1/items/:demand", findByDemand);
+itemRoutes.get("/:demand", findByDemand);
 
 /**
  * @swagger
@@ -130,6 +130,6 @@ itemRoutes.get("/api/v1/items/:demand", findByDemand);
  *       404:
  *         description: Item não encontrado
  */
-itemRoutes.delete("/api/v1/items/:id", remove);
+itemRoutes.delete("/:id", remove);
 
 export default itemRoutes;

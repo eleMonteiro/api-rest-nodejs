@@ -41,6 +41,6 @@ const authRoutes = Router();
  *       401:
  *         description: Credenciais inválidas
  */
-authRoutes.post("/api/v1/login", login);
+authRoutes.post("/", login);
 
 export default authRoutes;

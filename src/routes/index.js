@@ -8,6 +8,7 @@ import { verifyToken } from "../middlewares/auth.js";
 import { authorize } from "express-acl";
 
 const routes = Router();
+
 /**
  * @swagger
  * tags:
@@ -30,12 +31,9 @@ routes.get("/api/v1/", (_req, res) => {
 
 routes.use("/api/v1/login", loginRoutes);
 
-routes.use(verifyToken);
-routes.use(authorize);
-
-routes.use("/api/v1/users", userRoutes);
-routes.use("/api/v1/dishes", dishRoutes);
-routes.use("/api/v1/demands", demandRoutes);
-routes.use("/api/v1/items", itemRoutes);
+routes.use("/api/v1/users", verifyToken, authorize, userRoutes);
+routes.use("/api/v1/dishes", verifyToken, authorize, dishRoutes);
+routes.use("/api/v1/demands", verifyToken, authorize, demandRoutes);
+routes.use("/api/v1/items", verifyToken, authorize, itemRoutes);
 
 export default routes;

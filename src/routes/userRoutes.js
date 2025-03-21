@@ -28,7 +28,7 @@ const userRoutes = Router();
  *               items:
  *                 $ref: "#/components/schemas/User"
  */
-userRoutes.get("/api/v1/users", findAll);
+userRoutes.get("/", findAll);
 
 /**
  * @swagger
@@ -55,7 +55,7 @@ userRoutes.get("/api/v1/users", findAll);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.get("/api/v1/users/cpf", findByCPF);
+userRoutes.get("/cpf", findByCPF);
 
 /**
  * @swagger
@@ -82,7 +82,7 @@ userRoutes.get("/api/v1/users/cpf", findByCPF);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.get("/api/v1/users/:id", findById);
+userRoutes.get("/:id", findById);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ userRoutes.get("/api/v1/users/:id", findById);
  *             schema:
  *               $ref: "#/components/schemas/User"
  */
-userRoutes.post("/api/v1/users", create);
+userRoutes.post("/", create);
 
 /**
  * @swagger
@@ -129,7 +129,7 @@ userRoutes.post("/api/v1/users", create);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.delete("/api/v1/users/:id", remove);
+userRoutes.delete("/:id", remove);
 
 /**
  * @swagger
@@ -162,6 +162,6 @@ userRoutes.delete("/api/v1/users/:id", remove);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.put("/api/v1/users/:id", update);
+userRoutes.put("/:id", update);
 
 export default userRoutes;

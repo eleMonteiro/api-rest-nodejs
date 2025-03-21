@@ -27,7 +27,7 @@ const dishRoutes = new Router();
  *              items:
  *                $ref: "#/components/schemas/Dish"
  */
-dishRoutes.get("/api/v1/dishes", findAll);
+dishRoutes.get("/", findAll);
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ dishRoutes.get("/api/v1/dishes", findAll);
  *      404:
  *        description: Prato não encontrado
  */
-dishRoutes.get("/api/v1/dishes/:id", findById);
+dishRoutes.get("/:id", findById);
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ dishRoutes.get("/api/v1/dishes/:id", findById);
  *      400:
  *        description: Requisição inválida
  */
-dishRoutes.post("/api/v1/dishes", create);
+dishRoutes.post("/", create);
 
 /**
  * @swagger
@@ -103,7 +103,7 @@ dishRoutes.post("/api/v1/dishes", create);
  *      404:
  *        description: Prato não encontrado
  */
-dishRoutes.delete("/api/v1/dishes/:id", remove);
+dishRoutes.delete("/:id", remove);
 
 /**
  * @swagger
@@ -136,6 +136,6 @@ dishRoutes.delete("/api/v1/dishes/:id", remove);
  *      404:
  *        description: Prato não encontrado
  */
-dishRoutes.put("/api/v1/dishes/:id", update);
+dishRoutes.put("/:id", update);
 
 export default dishRoutes;

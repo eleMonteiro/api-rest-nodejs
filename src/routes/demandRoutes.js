@@ -27,7 +27,7 @@ const demandRoutes = new Router();
  *              items:
  *                $ref: "#/components/schemas/Demand"
  */
-demandRoutes.get("/api/v1/demands", findAll);
+demandRoutes.get("/", findAll);
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ demandRoutes.get("/api/v1/demands", findAll);
  *      404:
  *        description: Demanda não encontrada
  */
-demandRoutes.get("/api/v1/demands/:id", findById);
+demandRoutes.get("/:id", findById);
 
 /**
  * @swagger
@@ -74,7 +74,7 @@ demandRoutes.get("/api/v1/demands/:id", findById);
  *              items:
  *                $ref: "#/components/schemas/Demand"
  */
-demandRoutes.get("/api/v1/demands/user", findByUser);
+demandRoutes.get("/user", findByUser);
 
 /**
  * @swagger
@@ -98,7 +98,7 @@ demandRoutes.get("/api/v1/demands/user", findByUser);
  *            schema:
  *              $ref: "#/components/schemas/Demand"
  */
-demandRoutes.post("/api/v1/demands", create);
+demandRoutes.post("/", create);
 
 /**
  * @swagger
@@ -119,6 +119,6 @@ demandRoutes.post("/api/v1/demands", create);
  *      204:
  *        description: Demanda removida com sucesso
  */
-demandRoutes.delete("/api/v1/demands/:id", remove);
+demandRoutes.delete("/:id", remove);
 
 export default demandRoutes;
