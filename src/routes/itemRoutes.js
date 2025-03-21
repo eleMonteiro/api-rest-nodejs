@@ -91,7 +91,7 @@ itemRoutes.post("/api/v1/items", create);
  *     summary: Lista itens por demanda
  *     description: Retorna uma lista de itens de acordo com a demanda.
  *     parameters:
- *       - in: path
+ *       - in: query
  *         name: demand
  *         required: true
  *         description: Demanda do item
