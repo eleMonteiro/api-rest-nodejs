@@ -11,4 +11,7 @@ module.exports = {
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
   },
+  transform: {
+    "^.+\\.js$": "babel-jest"
+  },
 };

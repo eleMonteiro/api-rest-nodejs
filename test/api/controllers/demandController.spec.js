@@ -1,7 +1,20 @@
-import request from "supertest";
-import express, { json } from "express";
-import { create, remove, findAll, findByUser, findById } from "@controllers/demandController";
-import { create as _create, remove as _remove, findAll as _findAll, findByUser as _findByUser, findById as _findById } from "@services/demandService";
+const request = require("supertest");
+const express = require("express");
+const { json } = require("express");
+const {
+  create,
+  remove,
+  findAll,
+  findByUser,
+  findById,
+} = require("../../../src/api/controllers/demandController");
+const {
+  create: _create,
+  remove: _remove,
+  findAll: _findAll,
+  findByUser: _findByUser,
+  findById: _findById,
+} = require("../../../src/api/services/demandService");
 
 const app = express();
 app.use(json());
@@ -12,7 +25,7 @@ app.get("/demand", findAll);
 app.get("/demand/user", findByUser);
 app.get("/demand/:id", findById);
 
-jest.mock("@services/demandService");
+jest.mock("../../../src/api/services/demandService");
 
 const mockDemand = {
   total: 7.5,
@@ -30,9 +43,7 @@ describe("Demand Controller", () => {
   test("POST /demand - Should create a demand", async () => {
     _create.mockResolvedValue(mockDemand);
 
-    const response = await request(app)
-      .post("/demand")
-      .send(mockDemand);
+    const response = await request(app).post("/demand").send(mockDemand);
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual(mockDemand);

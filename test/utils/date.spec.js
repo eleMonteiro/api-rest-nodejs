@@ -1,4 +1,4 @@
-import { formatDate, reverse, addDays, addMonth } from "../../src/utils/date";
+const { formatDate, reverse, addDays, addMonth } = require("../../src/utils/date");
 
 describe("Date Utils Test Suite", () => {
   test("Should format the date correctly", () => {
