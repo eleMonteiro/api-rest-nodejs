@@ -6,7 +6,7 @@ import {
   findById as _findById,
   findByCFP,
   findByEmail as _findByEmail,
-} from "../repositories/user/userRepository.js";
+} from "../repositories/userRepository.js";
 import { validCPF, validRole, validEmail } from "../../utils/validatorUser.js";
 import { createValidationError } from "../../utils/responses.js";
 import { formatDate, reverse } from "../../utils/date.js";

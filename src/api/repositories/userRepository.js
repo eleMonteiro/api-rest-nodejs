@@ -1,12 +1,12 @@
-import User from "../../models/user.js";
-import { encrypt as _encrypt } from "../../../utils/encrypt.js";
+import User from "../models/user.js";
+import { encrypt as _encrypt } from "../../utils/encrypt.js";
 
-import { find } from "../../repositories/role/roleRepository.js";
-import { create as __create } from "../../repositories/address/addressRepository.js";
+import { find } from "./roleRepository.js";
+import { create as __create } from "./addressRepository.js";
 import {
   create as ___create,
   getRoles,
-} from "../../repositories/role/roleUsersRepository.js";
+} from "./roleUsersRepository.js";
 
 export const findAll = async () => {
   const users = await User.findAll();

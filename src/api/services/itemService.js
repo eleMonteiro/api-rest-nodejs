@@ -4,7 +4,7 @@ import {
   findAll as _findAll,
   findByDemand as _findByDemand,
   findById as _findById,
-} from "../repositories/item/itemRepository.js";
+} from "../repositories/itemRepository.js";
 import { createValidationError } from "../../utils/responses.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;

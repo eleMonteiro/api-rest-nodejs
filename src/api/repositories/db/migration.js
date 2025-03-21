@@ -1,7 +1,7 @@
 (async () => {
   const sequelize = require("./db");
-  require("../models/user.js");
-  require("../models/dish.js");
+  require("../../models/user.js");
+  require("../../models/dish.js");
 
   try {
     await sequelize.authenticate();

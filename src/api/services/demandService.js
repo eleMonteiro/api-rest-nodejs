@@ -4,7 +4,7 @@ import {
   remove as _remove,
   findAll as _findAll,
   findByUser as _findByUser,
-} from "../repositories/demand/demandRepository.js";
+} from "../repositories/demandRepository.js";
 import { validPriceDemand } from "../../utils/validatorDemand.js";
 import { createValidationError } from "../../utils/responses.js";
 

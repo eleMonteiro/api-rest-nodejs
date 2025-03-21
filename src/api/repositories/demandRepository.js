@@ -1,7 +1,7 @@
-import Demand from "../../models/demand.js";
-import { create as __create } from "../item/itemRepository.js";
-import { findById as _findById } from "../user/userRepository.js";
-import { findById as __findById } from "../dish/dishRepository.js";
+import Demand from "../models/demand.js";
+import { create as __create } from "./itemRepository.js";
+import { findById as _findById } from "./userRepository.js";
+import { findById as __findById } from "./dishRepository.js";
 
 export const findAll = async () => {
   const demands = await Demand.findAll({ include: ["itens"] });

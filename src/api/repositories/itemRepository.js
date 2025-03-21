@@ -1,4 +1,4 @@
-import Item from "../../models/item.js";
+import Item from "../models/item.js";
 
 export const findAll = async () => {
   const itens = await Item.findAll({ include: ["dishes"] });

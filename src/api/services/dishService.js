@@ -4,7 +4,7 @@ import {
   update as _update,
   findAll as _findAll,
   findById as _findById,
-} from "../repositories/dish/dishRepository.js";
+} from "../repositories/dishRepository.js";
 import { createValidationError } from "../../utils/responses.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;

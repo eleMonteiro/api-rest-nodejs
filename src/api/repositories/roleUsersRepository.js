@@ -1,4 +1,4 @@
-import RoleUser from "../../models/roleUsers.js";
+import RoleUser from "../models/roleUsers.js";
 
 export const create = async (roleUsers) => {
   const _roleUsers = await RoleUser.create(roleUsers);
