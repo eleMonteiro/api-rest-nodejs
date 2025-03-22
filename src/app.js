@@ -1,14 +1,20 @@
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import morgan from "morgan";
 import cors from "cors";
 import acl from "express-acl";
 import routes from "./routes/index.js";
 import { options } from "./docs/docs.js";
 import { config, responseObject } from "./config/acl.js";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
+
+app.use(morgan("dev"));
 
 app.use(cookieParser());
 
@@ -22,6 +28,8 @@ app.use(
 
 const swaggerSpec = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app.use("/uploads", express.static(process.env.UPLOADS_FOLDER || "uploads/"));
 
 app.use(express.json());
 app.use(routes);

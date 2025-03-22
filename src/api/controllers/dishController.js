@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import {
   create as _create,
   remove as _remove,
@@ -6,9 +7,19 @@ import {
   findById as _findById,
 } from "../services/dishService.js";
 
+dotenv.config();
+
 export const create = async (req, res) => {
   try {
-    const dish = await _create(req.body);
+    const { name, description, price } = req.body;
+    const imageUrl = `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
+
+    const dish = await _create({
+      name,
+      description,
+      price,
+      image: imageUrl,
+    });
     return res.status(201).json(dish);
   } catch (error) {
     return res
@@ -30,7 +41,17 @@ export const remove = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    await _update(req.params.id, req.body);
+    const { id, name, description, price } = req.body;
+    const imageUrl = `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
+
+    await _update(req.params.id, {
+      id,
+      name,
+      description,
+      price,
+      image: imageUrl,
+    });
+
     return res.status(204).send();
   } catch (error) {
     return res
