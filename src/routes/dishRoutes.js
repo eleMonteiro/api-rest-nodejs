@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { upload } from "../middlewares/upload.js";
 import {
   findAll,
   findById,
@@ -80,7 +81,7 @@ dishRoutes.get("/:id", findById);
  *      400:
  *        description: Requisição inválida
  */
-dishRoutes.post("/", create);
+dishRoutes.post("/", upload.single("image"), create);
 
 /**
  * @swagger
@@ -136,6 +137,6 @@ dishRoutes.delete("/:id", remove);
  *      404:
  *        description: Prato não encontrado
  */
-dishRoutes.put("/:id", update);
+dishRoutes.put("/:id", upload.single("image"), update);
 
 export default dishRoutes;

@@ -84,7 +84,7 @@ itemRoutes.post("/", create);
 
 /**
  * @swagger
- * /api/v1/items/{demand}:
+ * /api/v1/items/demand:
  *   get:
  *     tags:
  *       - Itens
@@ -107,7 +107,7 @@ itemRoutes.post("/", create);
  *               items:
  *                 $ref: '#/components/schemas/Item'
  */
-itemRoutes.get("/:demand", findByDemand);
+itemRoutes.get("/demand", findByDemand);
 
 /**
  * @swagger

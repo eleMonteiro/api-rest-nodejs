@@ -64,6 +64,13 @@ demandRoutes.get("/:id", findById);
  *      - Demandas
  *    summary: Retorna todas as demandas de um usuário
  *    description: Retorna uma lista de todas as demandas cadastradas de um usuário.
+ *    parameters:
+ *       - in: query
+ *         name: user
+ *         required: true
+ *         description: ID do usuário
+ *         schema:
+ *           type: integer
  *    responses:
  *      200:
  *        description: Lista de demandas retornada com sucesso
