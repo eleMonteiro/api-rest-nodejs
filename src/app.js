@@ -6,8 +6,11 @@ import acl from "express-acl";
 import routes from "./routes/index.js";
 import { options } from "./docs/docs.js";
 import { config, responseObject } from "./config/acl.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(
   cors({

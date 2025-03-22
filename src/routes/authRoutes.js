@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login } from "../api/controllers/loginController.js";
+import { login, logout } from "../api/controllers/loginController.js";
 
 const authRoutes = Router();
 
@@ -42,5 +42,23 @@ const authRoutes = Router();
  *         description: Credenciais inválidas
  */
 authRoutes.post("/", login);
+
+/**
+ * @swagger
+ * /api/v1/logout:
+ *   post:
+ *     tags:
+ *       - Autenticação
+ *     summary: Desloga um usuário
+ *     description: Invalida o token de autenticação do usuário.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Deslogado com sucesso
+ *       401:
+ *         description: Token inválido
+ */
+authRoutes.post("/logout", logout);
 
 export default authRoutes;

@@ -3,12 +3,15 @@ const { sign } = pkg;
 
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
 import { findByEmail } from "../services/userService.js";
-import { createValidationError, ValidationError } from "../../utils/responses.js";
+import {
+  createValidationError,
+  ValidationError,
+} from "../../utils/responses.js";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "your-secret-key";
 
 export const login = async (data) => {
-  const { email, password } = data;
+  const { email, password, stayConnected } = data;
 
   if (!email || !password) {
     throw createValidationError("FIELD_NOT_SPECIFIED", {
@@ -29,7 +32,7 @@ export const login = async (data) => {
     }
 
     const token = sign({ userId: user.id, role: user.role }, JWT_SECRET_KEY, {
-      expiresIn: "5h",
+      expiresIn: stayConnected ? "30d" : "5h",
     });
 
     return {
