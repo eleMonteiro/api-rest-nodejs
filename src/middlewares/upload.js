@@ -6,7 +6,7 @@ import fs from "fs";
 dotenv.config();
 
 const UPLOADS_FOLDER = process.env.UPLOADS_FOLDER || "uploads/";
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.resolve();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
