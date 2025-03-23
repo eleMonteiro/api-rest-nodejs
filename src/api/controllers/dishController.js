@@ -9,10 +9,24 @@ import {
 
 dotenv.config();
 
+const filePath = (req, existingDish) => {
+  if (req.file) {
+    return `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
+  }
+
+  if (existingDish) {
+    return existingDish.image;
+  }
+
+  return null;
+};
+
 export const create = async (req, res) => {
   try {
     const { name, description, price } = req.body;
-    const imageUrl = `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
+
+    const existingDish = await _findById(req.params.id);
+    const imageUrl = filePath(req, existingDish);
 
     const dish = await _create({
       name,
@@ -42,7 +56,9 @@ export const remove = async (req, res) => {
 export const update = async (req, res) => {
   try {
     const { id, name, description, price } = req.body;
-    const imageUrl = `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
+
+    const existingDish = await _findById(req.params.id);
+    const imageUrl = filePath(req, existingDish);
 
     await _update(req.params.id, {
       id,

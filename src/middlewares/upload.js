@@ -6,7 +6,6 @@ import fs from "fs";
 dotenv.config();
 
 const UPLOADS_FOLDER = process.env.UPLOADS_FOLDER || "uploads/";
-
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const storage = multer.diskStorage({
@@ -25,8 +24,10 @@ const storage = multer.diskStorage({
     cb(null, uploadsPath);
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${uniqueSuffix}${path.extname(file.originalname)}`);
+    if (file) {
+      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      cb(null, `${uniqueSuffix}${path.extname(file.originalname)}`);
+    }
   },
 });
 
