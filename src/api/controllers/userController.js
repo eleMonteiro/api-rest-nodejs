@@ -5,6 +5,7 @@ import {
   findAll as _findAll,
   findById as _findById,
   findByCPF as _findByCPF,
+  register as _register,
 } from "../services/userService.js";
 
 export const create = async (req, res) => {
@@ -76,5 +77,16 @@ export const findByCPF = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Error fetching user by CPF", error: error.message });
+  }
+};
+
+export const register = async (req, res) => {
+  try {
+    const user = await _register(req.body);
+    return res.status(201).json(user);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error registering user", error: error.message });
   }
 };

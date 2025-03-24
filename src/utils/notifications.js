@@ -5,6 +5,7 @@ export const messages = {
     OBJECT_UNDEFINED: "Object was not reported",
     PRICE_DEMAND_INCORRECT:
       "Order price is less than the total value of the items",
+    OBJECT_ALREADY_EXISTS: "Object already exists",
   },
   database: {
     OBJECT_NOT_FOUND: "The requested object could not be found in the database",

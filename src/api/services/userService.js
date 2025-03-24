@@ -4,8 +4,10 @@ import {
   update as _update,
   findAll as _findAll,
   findById as _findById,
-  findByCFP,
+  findByCPF as _findByCPF,
   findByEmail as _findByEmail,
+  register as _register,
+  findByNameOrEmailOrCPF,
 } from "../repositories/userRepository.js";
 import { validCPF, validRole, validEmail } from "../../utils/validatorUser.js";
 import { createValidationError } from "../../utils/responses.js";
@@ -13,12 +15,22 @@ import { formatDate, reverse } from "../../utils/date.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
-const validateUserFields = (user) => {
+const validateUserFields = async (user) => {
   if (isEmptyObject(user)) {
     throw createValidationError("OBJECT_UNDEFINED");
   }
 
   const { addresses, roles, ..._user } = user;
+
+  const exist = await findByNameOrEmailOrCPF({
+    email: _user?.email,
+    name: _user?.name,
+    cpf: _user?.cpf,
+  });
+
+  if (exist) {
+    throw createValidationError("OBJECT_ALREADY_EXISTS");
+  }
 
   if (!addresses)
     throw createValidationError("FIELD_NOT_SPECIFIED", { field: "Addresses" });
@@ -34,6 +46,7 @@ const validateUserFields = (user) => {
 
 export const adjustDate = (user) => {
   const { dataValues } = user;
+  if (!dataValues.dateOfBirth) return user;
   dataValues.dateOfBirth = formatDate(dataValues.dateOfBirth, "DD/MM/YYYY");
   return user;
 };
@@ -68,7 +81,7 @@ export const findById = async (id) => {
 };
 
 export const findByCPF = async (cpf) => {
-  const user = await findByCFP(cpf);
+  const user = await _findByCPF(cpf);
   if (user) adjustDate(user);
   return user || null;
 };
@@ -77,4 +90,18 @@ export const findByEmail = async (email) => {
   const user = await _findByEmail(email);
   if (user) adjustDate(user);
   return user || null;
+};
+
+export const register = async (user) => {
+  const existUser = await findByNameOrEmailOrCPF({
+    email: user?.email,
+    name: user?.name,
+    cpf: user?.cpf,
+  });
+
+  if (existUser) {
+    throw createValidationError("OBJECT_ALREADY_EXISTS");
+  }
+
+  return await _register(user);
 };

@@ -22,5 +22,7 @@ export const define = (modelName, attributes) => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
-  } catch (error) { }
+  } catch (error) {
+    throw new Error("Error connecting to the database");
+  }
 })();

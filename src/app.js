@@ -35,7 +35,6 @@ const UPLOADS_FOLDER = process.env.UPLOADS_FOLDER || "uploads";
 const uploadsPath = path.join(__dirname, UPLOADS_FOLDER);
 
 app.use("/uploads", express.static(uploadsPath));
-console.log("Arquivos estáticos servidos de:", uploadsPath); // Depuração
 
 app.use(express.json());
 app.use(routes);

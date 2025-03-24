@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { login, logout } from "../api/controllers/loginController.js";
+import { register } from "../api/controllers/userController.js";
+import { verifyToken } from "../middlewares/auth.js";
 
 const authRoutes = Router();
 
@@ -41,7 +43,7 @@ const authRoutes = Router();
  *       401:
  *         description: Credenciais inválidas
  */
-authRoutes.post("/", login);
+authRoutes.post("/login", login);
 
 /**
  * @swagger
@@ -60,5 +62,45 @@ authRoutes.post("/", login);
  *         description: Token inválido
  */
 authRoutes.post("/logout", logout);
+
+/**
+ * @swagger
+ * /api/v1/register:
+ *   post:
+ *     tags:
+ *       - Usuários
+ *     summary: Cria um novo usuário
+ *     description: Cria um novo usuário no sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nome do usuário
+ *                 example: "Usuário Exemplo"
+ *               email:
+ *                 type: string
+ *                 description: E-mail do usuário
+ *                 example: "email@gmail.com"
+ *               password:
+ *                 type: string
+ *                 description: Senha do usuário
+ *                 example: "senha123"
+ *     responses:
+ *       201:
+ *         description: Usuário criado com sucesso
+ *         content: {}
+ *       400:
+ *         description: Dados inválidos
+ */
+authRoutes.post("/register", register);
+
+authRoutes.get("/validate-token", verifyToken, (req, res) => {
+  res.json({ valid: true, user: req.user });
+});
 
 export default authRoutes;

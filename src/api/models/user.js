@@ -18,11 +18,11 @@ const User = define("users", {
   },
   cpf: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   dateOfBirth: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   password: {
     type: DataTypes.STRING,

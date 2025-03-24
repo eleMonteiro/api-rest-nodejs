@@ -25,10 +25,10 @@ export const login = async (req, res) => {
     return res.status(status).json({
       user: {
         name: user.name,
-        cpf: user.cpf,
-        dateOfBirth: user.dateOfBirth,
+        cpf: user?.cpf,
+        dateOfBirth: user?.dateOfBirth,
         email: user.email,
-        role: user.role,
+        role: user?.role,
       },
     });
   } catch (error) {

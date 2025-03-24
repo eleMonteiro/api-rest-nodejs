@@ -25,15 +25,7 @@ const routes = Router();
  *
  */
 
-routes.get("/api/v1/validate-token", verifyToken, (req, res) => {
-  res.json({ valid: true, user: req.user });
-});
-
-routes.get("/api/v1/", (_req, res) => {
-  return res.json({ message: "Hello from API" });
-});
-
-routes.use("/api/v1/login", loginRoutes);
+routes.use("/api/v1/", loginRoutes);
 
 routes.use("/api/v1/users", verifyToken, authorize, userRoutes);
 routes.use("/api/v1/dishes", verifyToken, authorize, dishRoutes);

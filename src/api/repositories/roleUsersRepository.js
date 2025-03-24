@@ -1,4 +1,5 @@
 import RoleUser from "../models/roleUsers.js";
+import { ADMIN, CLIENTE } from "../../utils/roles.js";
 
 export const create = async (roleUsers) => {
   const _roleUsers = await RoleUser.create(roleUsers);
@@ -18,9 +19,8 @@ export const findByUser = async (userId) => {
 
 export const getRoles = async (user) => {
   const roles = await findByUser(user.id);
-  for (let i = 0; i < roles.length; i++) {
-    const element = roles[i];
-    if (element.roleId == "admin") return element.roleId;
-    if (element.roleId == "cliente") return element.roleId;
-  }
+  const role = roles.find(
+    (element) => element.roleId === ADMIN || element.roleId === CLIENTE
+  );
+  return role?.roleId;
 };

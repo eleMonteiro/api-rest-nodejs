@@ -6,5 +6,7 @@
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
-  } catch (error) { }
+  } catch (error) {
+    throw new Error("Error connecting to the database");
+  }
 })();

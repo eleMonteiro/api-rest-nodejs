@@ -1,3 +1,3 @@
-export const ADMIN = "admin";
-export const CLIENTE = "cliente";
-export const AUTH = "auth";
+export const ADMIN = "ADMIN";
+export const CLIENTE = "CLIENTE";
+export const AUTH = "AUTH";
