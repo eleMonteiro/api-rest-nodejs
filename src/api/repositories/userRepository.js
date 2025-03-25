@@ -56,7 +56,9 @@ export const create = async (user) => {
 };
 
 export const findById = async (id) => {
-  const user = await User.findByPk(id);
+  const user = await User.findByPk(id, {
+    include: ["addresses"],
+  });
   return user;
 };
 
