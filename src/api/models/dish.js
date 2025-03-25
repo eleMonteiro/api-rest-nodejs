@@ -25,6 +25,11 @@ const Dish = define("dishes", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 Dish.hasMany(Item);

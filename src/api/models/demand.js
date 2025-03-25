@@ -21,6 +21,11 @@ const Demand = define("demands", {
     type: DataTypes.DATE,
     allowNull: false,
   },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 Demand.hasMany(Item);

@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import Sequelize from "sequelize";
+import path from "path";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 export const sequelize = new Sequelize(
   process.env.MYSQL_DB,

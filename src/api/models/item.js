@@ -16,6 +16,11 @@ const Item = define("itens", {
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 export default Item;

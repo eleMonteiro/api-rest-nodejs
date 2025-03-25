@@ -1,30 +1,32 @@
 import User from "../models/user.js";
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
 
-import { find } from "./roleRepository.js";
 import { create as __create } from "./addressRepository.js";
-import { create as ___create, getRoles } from "./roleUsersRepository.js";
 
 import { Op } from "sequelize";
 
 export const findByNameOrEmailOrCPF = async ({ name, email, cpf }) => {
-  const whereClause = {};
+  const conditions = [];
 
-  if (name) {
-    whereClause.name = { [Op.iLike]: `%${name}%` };
+  if (typeof name === "string" && name.trim() !== "") {
+    conditions.push({ name: { [Op.like]: `%${name}%` } });
   }
 
-  if (email) {
-    whereClause.email = { [Op.iLike]: `%${email}%` };
+  if (typeof email === "string" && email.trim() !== "") {
+    conditions.push({ email: { [Op.like]: `%${email}%` } });
   }
 
-  if (cpf) {
-    whereClause.cpf = { [Op.iLike]: `%${cpf}%` };
+  if (typeof cpf === "string" && cpf.trim() !== "") {
+    conditions.push({ cpf: { [Op.like]: `%${cpf}%` } });
+  }
+
+  if (conditions.length === 0) {
+    return null;
   }
 
   const user = await User.findOne({
     where: {
-      [Op.or]: Object.values(whereClause),
+      [Op.or]: conditions,
     },
   });
 
@@ -32,7 +34,7 @@ export const findByNameOrEmailOrCPF = async ({ name, email, cpf }) => {
 };
 
 export const findAll = async () => {
-  const users = await User.findAll();
+  const users = await User.findAll({ where: { active: true } });
   return users;
 };
 
@@ -43,31 +45,23 @@ export const addAddress = async (user, addresses) => {
   });
 };
 
-export const addRoles = async (user, roles) => {
-  roles.forEach(async (element) => {
-    const role = await find(element);
-    await ___create({ userId: user.id, roleId: role.id });
-  });
-};
-
 export const create = async (user) => {
-  const { roles, addresses, ..._user } = user;
+  const { addresses, ..._user } = user;
   _user.password = _encrypt(_user.password);
 
-  const _user_ = await User.create(_user);
-  await addRoles(_user_, roles);
+  const _user_ = await User.create({ ..._user, active: true });
   await addAddress(_user_, addresses);
 
   return _user_;
 };
 
 export const findById = async (id) => {
-  const user = await user.findByPk(id);
+  const user = await User.findByPk(id);
   return user;
 };
 
 export const findByCPF = async (cpf) => {
-  const user = await User.findOne({ where: { cpf: cpf } });
+  const user = await User.findOne({ where: { cpf: cpf, active: true } });
   return user;
 };
 
@@ -76,29 +70,24 @@ export const findByEmail = async (email) => {
     includeIgnoreAttributes: false,
     where: { email: email },
   });
-  const role = await getRoles(user);
-  user.role = role;
   return user;
 };
 
 export const remove = async (id) => {
   const user = await findById(id);
-  await user.destroy();
+  await user.update({ active: false });
 };
 
 export const update = async (id, user) => {
   const _user = await findById(id);
   user.password = _user.password;
   user.email = _user.email;
-  await _user.update({ ...user });
+  await _user.update({ ...user, active: true });
 };
 
 export const register = async (user) => {
-  const { roles, ..._user } = user;
+  const { ..._user } = user;
   _user.password = _encrypt(_user.password);
-
   const _user_ = await User.create(_user);
-  await addRoles(_user_, roles);
-
   return _user_;
 };
