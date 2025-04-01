@@ -28,6 +28,19 @@ const Address = define("addresses", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  number: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  complement: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  active: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
 });
 
 export default Address;
