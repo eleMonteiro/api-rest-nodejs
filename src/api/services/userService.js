@@ -20,25 +20,13 @@ const validateUserFields = async (user) => {
     throw createValidationError("OBJECT_UNDEFINED");
   }
 
-  const { addresses, roles, ..._user } = user;
-
-  const exist = await findByNameOrEmailOrCPF({
-    email: _user?.email,
-    name: _user?.name,
-    cpf: _user?.cpf,
-  });
-
-  if (exist) {
-    throw createValidationError("OBJECT_ALREADY_EXISTS");
-  }
+  const { addresses, ..._user } = user;
 
   if (!addresses)
     throw createValidationError("FIELD_NOT_SPECIFIED", { field: "Addresses" });
-  if (!roles)
-    throw createValidationError("FIELD_NOT_SPECIFIED", { field: "Roles" });
   if (!validCPF(_user.cpf))
     throw createValidationError("INVALID_FIELD", { field: "CPF" });
-  if (!roles.every((role) => validRole(role.id)))
+  if (!validRole(_user?.role))
     throw createValidationError("INVALID_FIELD", { field: "Role" });
   if (!validEmail(_user.email))
     throw createValidationError("INVALID_FIELD", { field: "Email" });
@@ -53,6 +41,17 @@ export const adjustDate = (user) => {
 
 export const create = async (user) => {
   validateUserFields(user);
+
+  const exist = await findByNameOrEmailOrCPF({
+    email: user?.email,
+    name: user?.name,
+    cpf: user?.cpf,
+  });
+
+  if (exist) {
+    throw createValidationError("OBJECT_ALREADY_EXISTS");
+  }
+
   return await _create(user);
 };
 
