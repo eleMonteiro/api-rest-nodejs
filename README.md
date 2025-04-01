@@ -25,7 +25,7 @@
 >        "createdAt": "",
 >        "updatedAt": "",
 >        "addresses": [],
->        "roles": [ ]
+>        "role": ""
 >    }
 > ]
 > ```
@@ -47,7 +47,7 @@
 >        "createdAt": "",
 >        "updatedAt": "",
 >        "addresses": [],
->        "roles": [ ]
+>        "role": ""
 >    }
 > ```
 >
@@ -68,7 +68,7 @@
 >        "createdAt": "",
 >        "updatedAt": "",
 >        "addresses": [],
->        "roles": [ ]
+>        "role": ""
 >    }
 > ```
 >
@@ -97,11 +97,7 @@
 >               "uf": ""
 >           }
 >         ],
->        "roles": [
->           {
->              "id": "ADMIN"
->            }
->          ]
+>        "role": "ADMIN"
 >    }
 > ```
 >
@@ -130,11 +126,7 @@
 >               "uf": ""
 >           }
 >         ],
->        "roles": [
->           {
->              "id": "ADMIN"
->            }
->          ]
+>        "role": "ADMIN"
 >    }
 > ```
 >
