@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { login, logout } from "../api/controllers/loginController.js";
 import { register } from "../api/controllers/userController.js";
-import { verifyToken } from "../middlewares/auth.js";
+import { resetPassword } from "../api/controllers/passwordController.js";
+import { verifyToken, verifyResetToken } from "../middlewares/auth.js";
+import { sendResetEmail } from "../middlewares/email.js";
 
 const authRoutes = Router();
 
@@ -102,5 +104,11 @@ authRoutes.post("/register", register);
 authRoutes.get("/validate-token", verifyToken, (req, res) => {
   res.json({ valid: true, user: req.user });
 });
+
+authRoutes.get("/reset-password", verifyResetToken);
+
+authRoutes.post("/reset-password", resetPassword);
+
+authRoutes.post("/forgot-password", sendResetEmail);
 
 export default authRoutes;
