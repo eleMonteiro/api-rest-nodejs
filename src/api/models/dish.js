@@ -17,6 +17,10 @@ const Dish = define("dishes", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   price: {
     type: DataTypes.DOUBLE,
     allowNull: false,
