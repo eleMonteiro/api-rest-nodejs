@@ -46,12 +46,12 @@ export const createOrUpdate = async (user, addresses) => {
     if (address.id) {
       await update(address.id, {
         ...address,
-        userId: user.id,
+        userId: user?.id,
       });
     } else {
       await create({
         ...address,
-        userId: user.id,
+        userId: user?.id,
       });
     }
   }

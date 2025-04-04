@@ -22,13 +22,13 @@ const validateUserFields = async (user) => {
 
   const { addresses, ..._user } = user;
 
-  if (!addresses)
+  if (!addresses || addresses.length === 0)
     throw createValidationError("FIELD_NOT_SPECIFIED", { field: "Addresses" });
-  if (!validCPF(_user.cpf))
+  if (!validCPF(_user?.cpf))
     throw createValidationError("INVALID_FIELD", { field: "CPF" });
   if (!validRole(_user?.role))
     throw createValidationError("INVALID_FIELD", { field: "Role" });
-  if (!validEmail(_user.email))
+  if (!validEmail(_user?.email))
     throw createValidationError("INVALID_FIELD", { field: "Email" });
 };
 
@@ -52,6 +52,7 @@ export const create = async (user) => {
     throw createValidationError("OBJECT_ALREADY_EXISTS");
   }
 
+  user.dateOfBirth = new Date(reverse(user.dateOfBirth));
   return await _create(user);
 };
 
