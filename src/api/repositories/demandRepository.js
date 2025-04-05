@@ -40,7 +40,7 @@ export const addClient = async (userId, demand) => {
 
 export const create = async (demand) => {
   const { itens, ..._demand } = demand;
-  const _demand_ = await Demand.create({ ..._demand, active: true });
+  const _demand_ = await Demand.create({ active: true, ..._demand});
   await addClient(demand.user.id, _demand_);
   await addItem(itens, _demand_);
   return _demand_;

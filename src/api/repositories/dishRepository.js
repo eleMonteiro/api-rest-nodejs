@@ -1,7 +1,7 @@
 import Dish from "../models/dish.js";
 
 export const create = async (dish) => {
-  const _dish = await Dish.create({ ...dish, active: true });
+  const _dish = await Dish.create({ active: true, ...dish });
   return _dish;
 };
 
@@ -12,7 +12,7 @@ export const remove = async (id) => {
 
 export const update = async (id, dish) => {
   const _dish = await findById(id);
-  await _dish.update({ ...dish, active: true });
+  await _dish.update({ active: true, ...dish });
 };
 
 export const findAll = async () => {

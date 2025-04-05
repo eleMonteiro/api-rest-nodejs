@@ -21,7 +21,7 @@ export const findById = async (id) => {
 };
 
 export const create = async (item) => {
-  const _item = await Item.create({ ...item, active: true });
+  const _item = await Item.create({ active: true, ...item });
   return _item;
 };
 

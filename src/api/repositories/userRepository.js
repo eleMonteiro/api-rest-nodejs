@@ -2,7 +2,7 @@ import User from "../models/user.js";
 import Address from "../models/address.js";
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
 
-import { createOrUpdate, removeByUser } from "./addressRepository.js";
+import { createOrUpdate, syncAddresses } from "./addressRepository.js";
 
 import { Op } from "sequelize";
 
@@ -42,7 +42,7 @@ export const findAll = async () => {
 export const create = async (user) => {
   const { addresses = [], ..._user } = user;
   _user.password = _encrypt(_user.password);
-  const _user_ = await User.create({ ..._user, active: true });
+  const _user_ = await User.create({ active: true, ..._user });
   await createOrUpdate(_user_, addresses);
   return _user_;
 };
@@ -83,15 +83,14 @@ export const update = async (id, userData) => {
   const _user = await findById(id);
 
   const updatedUser = await _user.update({
+    active: true,
     ...userData,
     password: _user.password,
     email: _user.email,
-    active: true,
   });
 
   if (userData.addresses) {
-    await createOrUpdate(updatedUser, userData.addresses);
-    await removeByUser(updatedUser, userData.addresses);
+    await syncAddresses(updatedUser, userData.addresses);
   }
 };
 

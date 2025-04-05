@@ -1,7 +1,7 @@
 import Address from "../models/address.js";
 
 export const create = async (address) => {
-  const _address = await Address.create({ ...address, active: true });
+  const _address = await Address.create({ active: true, ...address });
   return _address;
 };
 
@@ -64,5 +64,29 @@ export const removeByUser = async (user, addresses) => {
 
   for (const address of toRemove) {
     await remove(address.id);
+  }
+};
+
+export const syncAddresses = async (user, addresses) => {
+  const current = await findByUserId(user.id);
+  const incomingIds = addresses.filter((a) => a.id).map((a) => a.id);
+
+  const toRemove = current.filter((a) => !incomingIds.includes(a.id));
+  for (const address of toRemove) {
+    await remove(address.id);
+  }
+
+  for (const address of addresses) {
+    if (address.id) {
+      await update(address.id, {
+        ...address,
+        userId: user.id,
+      });
+    } else {
+      await create({
+        ...address,
+        userId: user.id,
+      });
+    }
   }
 };
