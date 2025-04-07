@@ -1,3 +1,11 @@
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import {
+  successResponse,
+  notFoundResponse,
+  createdResponse,
+  noContentResponse,
+  existsEntityResponse,
+} from "../../helpers/apiResponse.js";
 import {
   create as _create,
   remove as _remove,
@@ -6,87 +14,107 @@ import {
   findById as _findById,
   findByCPF as _findByCPF,
   register as _register,
+  findByEmailOrCPF as _findByEmailOrCPF,
 } from "../services/userService.js";
+import { logger } from "../../config/logger.js";
+import {
+  validateUser,
+  validateUserRegister,
+} from "../../validators/userValidator.js";
 
-export const create = async (req, res) => {
-  try {
-    const user = await _create(req.body);
-    return res.status(201).json(user);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error creating user", error: error.message });
-  }
-};
+export const create = [
+  validateUser,
+  asyncHandler(async (req, res) => {
+    const user = req.body;
+    const exists = _findByEmailOrCPF(user);
 
-export const remove = async (req, res) => {
-  try {
-    await _remove(req.params.id);
-    return res.status(204).send();
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error removing user", error: error.message });
-  }
-};
-
-export const update = async (req, res) => {
-  try {
-    await _update(req.params.id, req.body);
-    return res.status(204).send();
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error updating user", error: error.message });
-  }
-};
-
-export const findAll = async (_req, res) => {
-  try {
-    const users = await _findAll();
-    return res.status(200).json(users);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching users", error: error.message });
-  }
-};
-
-export const findById = async (req, res) => {
-  try {
-    const user = await _findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (exists) {
+      return existsEntityResponse(
+        res,
+        "User with this email or CPF already exists"
+      );
     }
-    return res.status(200).json(user);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching user", error: error.message });
-  }
-};
 
-export const findByCPF = async (req, res) => {
-  try {
-    const user = await _findByCPF(req.query.cpf);
-    if (!user) {
-      return res.status(404).json({ message: "User not found by CPF" });
+    const _user = await _create(user);
+    logger.info(`User created: ${_user.id}`);
+
+    return createdResponse(res, _user, "User created successfully");
+  }),
+];
+
+export const remove = asyncHandler(async (req, res) => {
+  const user = await _findById(req.params.id);
+
+  if (!user) {
+    return notFoundResponse(res, "user");
+  }
+
+  await _remove(req.params.id);
+  logger.info(`User removed: ${user.id}`);
+  return noContentResponse(res);
+});
+
+export const update = [
+  validateUser,
+  asyncHandler(async (req, res) => {
+    const existingUser = await _findById(req.params.id);
+
+    if (!existingUser) {
+      return notFoundResponse(res, "user");
     }
-    return res.status(200).json(user);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching user by CPF", error: error.message });
-  }
-};
 
-export const register = async (req, res) => {
-  try {
-    const user = await _register(req.body);
-    return res.status(201).json(user);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error registering user", error: error.message });
+    const user = req.body;
+    const exists = _findByEmailOrCPF(user);
+    if (exists) {
+      return existsEntityResponse(
+        res,
+        "User with this email or CPF already exists"
+      );
+    }
+
+    const id = req.params.id;
+    await _update(id, user);
+    logger.info(`User updated: ${id}`);
+    return successResponse(res, null, "User updated successfully");
+  }),
+];
+
+export const findAll = asyncHandler(async (_req, res) => {
+  const users = await _findAll();
+  return successResponse(res, users);
+});
+
+export const findById = asyncHandler(async (req, res) => {
+  const user = await _findById(req.params.id);
+  if (!user) {
+    return notFoundResponse(res, "User");
   }
-};
+
+  return successResponse(res, user);
+});
+
+export const findByCPF = asyncHandler(async (req, res) => {
+  const user = await _findByCPF(req.query.cpf);
+  if (!user) {
+    return notFoundResponse(res, "User not found by CPF");
+  }
+
+  return successResponse(res, user);
+});
+
+export const register = [
+  validateUserRegister,
+  asyncHandler(async (req, res) => {
+    const user = req.body;
+    const existingUser = await _findByEmailOrCPF(user);
+    if (existingUser) {
+      return existsEntityResponse(
+        res,
+        "User with this email or CPF already exists"
+      );
+    }
+    const _user = await _register(user);
+    logger.info(`User registered: ${_user.id}`);
+    return createdResponse(res, _user, "User registered successfully");
+  }),
+];

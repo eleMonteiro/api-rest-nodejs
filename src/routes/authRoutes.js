@@ -4,6 +4,8 @@ import { register } from "../api/controllers/userController.js";
 import { resetPassword } from "../api/controllers/passwordController.js";
 import { verifyToken, verifyResetToken } from "../middlewares/auth.js";
 import { sendResetEmail } from "../middlewares/email.js";
+import { validateUserRegister } from "../validators/userValidator.js";
+import { validateLogin } from "../validators/loginValidator.js";
 
 const authRoutes = Router();
 
@@ -45,7 +47,7 @@ const authRoutes = Router();
  *       401:
  *         description: Credenciais inválidas
  */
-authRoutes.post("/login", login);
+authRoutes.post("/login", validateLogin, login);
 
 /**
  * @swagger
@@ -99,7 +101,7 @@ authRoutes.post("/logout", logout);
  *       400:
  *         description: Dados inválidos
  */
-authRoutes.post("/register", register);
+authRoutes.post("/register", validateUserRegister, register);
 
 authRoutes.get("/validate-token", verifyToken, (req, res) => {
   res.json({ valid: true, user: req.user });

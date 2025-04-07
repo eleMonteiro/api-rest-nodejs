@@ -3,8 +3,7 @@ import { validationErrorResponse } from "../helpers/apiResponse.js";
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 export const validateDish = (req, res, next) => {
-
-  if (isEmptyObject(demand)) {
+  if (isEmptyObject(req.body)) {
     return validationErrorResponse(res, ["Request body is empty"]);
   }
 

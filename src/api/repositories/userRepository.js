@@ -1,17 +1,12 @@
 import User from "../models/user.js";
 import Address from "../models/address.js";
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
-
 import { createOrUpdate, syncAddresses } from "./addressRepository.js";
 
 import { Op } from "sequelize";
 
-export const findByNameOrEmailOrCPF = async ({ name, email, cpf }) => {
+export const findByEmailOrCPF = async ({ email, cpf }) => {
   const conditions = [];
-
-  if (typeof name === "string" && name.trim() !== "") {
-    conditions.push({ name: { [Op.like]: `%${name}%` } });
-  }
 
   if (typeof email === "string" && email.trim() !== "") {
     conditions.push({ email: { [Op.like]: `%${email}%` } });

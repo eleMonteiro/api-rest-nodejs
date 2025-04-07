@@ -12,23 +12,25 @@ import "../../models/item.js";
 
 (async () => {
   try {
-    console.log(`🔄 Iniciando migração para ${process.env.DB_TYPE || 'mysql'}...`);
-    
+    console.log(
+      `🔄 Iniciando migração para ${process.env.DB_TYPE || "mysql"}...`
+    );
+
     await sequelize.authenticate();
-    console.log('✅ Conexão com o banco de dados estabelecida com sucesso');
-    
+    console.log("✅ Conexão com o banco de dados estabelecida com sucesso");
+
     const syncOptions = {
       alter: true,
-      logging: console.log 
+      logging: console.log,
     };
-    
+
     await sequelize.sync(syncOptions);
-    console.log('🔄 Modelos sincronizados com sucesso');
-    
+    console.log("🔄 Modelos sincronizados com sucesso");
+
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erro durante a migração:', error.message);
-    console.error('Detalhes:', error);
-    process.exit(1); 
+    console.error("❌ Erro durante a migração:", error.message);
+    console.error("Detalhes:", error);
+    process.exit(1);
   }
 })();

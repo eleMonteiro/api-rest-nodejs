@@ -11,8 +11,7 @@ import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import { corsOptions } from "./config/cors.js";
-import { logger, httpLogger } from './config/logger.js';
-
+import { logger, httpLogger } from "./config/logger.js";
 
 dotenv.config();
 
@@ -21,6 +20,7 @@ const app = express();
 app.use(httpLogger);
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(express.json());
 
 const swaggerSpec = swaggerJsdoc(options);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -34,28 +34,32 @@ if (!fs.existsSync(uploadsPath)) {
 }
 
 app.use("/uploads", express.static(uploadsPath));
-app.use(express.json());
 app.use(routes);
-
-app.use((err, req, res, next) => {
-  logger.error('Error:', {
-    message: err.message,
-    stack: err.stack,
-    path: req.path,
-    method: req.method
-  });
-  
-  res.status(500).json({ 
-    success: false, 
-    message: 'Internal server error' 
-  });
-
-  next();
-});
 
 app.use((req, res, next) => {
   logger.warn(`Route not found: ${req.method} ${req.originalUrl}`);
-  next();
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+app.use((err, req, res, next) => {
+  logger.error("Error:", {
+    message: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method,
+  });
+
+  const status = err.status || 500;
+  const message = err.message || "Internal server error";
+
+  res.status(status).json({
+    success: false,
+    message,
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
+  });
 });
 
 acl.config(config, responseObject);

@@ -3,28 +3,38 @@ export const createdResponse = (res, data = null, message = "Created") => {
     success: true,
     message,
     data,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
-}
+};
 
-export const successResponse = (res, data = null, status = 200, message = "Success") => {
+export const successResponse = (
+  res,
+  data = null,
+  status = 200,
+  message = "Success"
+) => {
   res.status(status).json({
     success: true,
     message,
     data,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 };
 
-export const errorResponse = (res, message = "An error occurred", error = null, status = 500) => {
+export const errorResponse = (
+  res,
+  message = "An error occurred",
+  error = null,
+  status = 500
+) => {
   const response = {
     success: false,
     message,
     status,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   };
 
-  if (process.env.NODE_ENV === 'development' && error) {
+  if (process.env.NODE_ENV === "development" && error) {
     response.error = error.message;
     response.stack = error.stack;
   }
@@ -42,4 +52,8 @@ export const validationErrorResponse = (res, errors) => {
 
 export const noContentResponse = (res) => {
   errorResponse(res, "No content", null, 204);
-}
+};
+
+export const existsEntityResponse = (res, message) => {
+  return errorResponse(res, message, null, 409);
+};

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { validateUser } from "../validators/userValidator.js";
 import {
   findAll,
   findByCPF,
@@ -111,7 +112,7 @@ userRoutes.get("/:id", findById);
  *             schema:
  *               $ref: "#/components/schemas/User"
  */
-userRoutes.post("/", create);
+userRoutes.post("/", validateUser, create);
 
 /**
  * @swagger
@@ -167,7 +168,7 @@ userRoutes.delete("/:id", remove);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.put("/:id", update);
+userRoutes.put("/:id", validateUser, update);
 
 /**
  * @swagger
