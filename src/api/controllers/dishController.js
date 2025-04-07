@@ -1,4 +1,11 @@
 import dotenv from "dotenv";
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import {
+  successResponse,
+  notFoundResponse,
+  createdResponse,
+  noContentResponse,
+} from "../../helpers/apiResponse.js";
 import {
   create as _create,
   remove as _remove,
@@ -6,60 +13,43 @@ import {
   findAll as _findAll,
   findById as _findById,
 } from "../services/dishService.js";
+import { logger } from "../../config/logger.js";
+import { validateDish } from "../../validators/dishValidator.js";
 
 dotenv.config();
 
-const filePath = (req, existingDish) => {
+const getImagePath = (req, existingDish) => {
   if (req.file) {
+    logger.info(`Uploaded dish image: ${req.file.filename}`);
     return `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
   }
-
-  if (existingDish) {
-    return existingDish.image;
-  }
-
-  return null;
+  return existingDish?.image || null;
 };
 
-export const create = async (req, res) => {
-  try {
+export const create = [
+  validateDish,
+  asyncHandler(async (req, res) => {
     const { name, description, price } = req.body;
+    const imageUrl = getImagePath(req, null);
 
-    const existingDish = await _findById(req.params.id);
-    const imageUrl = filePath(req, existingDish);
+    const dish = await _create({ name, description, price, image: imageUrl });
 
-    const dish = await _create({
-      name,
-      description,
-      price,
-      image: imageUrl,
-    });
-    return res.status(201).json(dish);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error creating dish", error: error.message });
-  }
-};
+    logger.info(`Dish created: ${dish.id}`);
+    return createdResponse(res, dish, "Dish created successfully");
+  }),
+];
 
-export const remove = async (req, res) => {
-  try {
-    await _remove(req.params.id);
-    return res.status(204).send();
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error removing dish", error: error.message });
-  }
-};
-
-export const update = async (req, res) => {
-  try {
+export const update = [
+  validateDish,
+  asyncHandler(async (req, res) => {
     const { id, name, description, price } = req.body;
-
     const existingDish = await _findById(req.params.id);
-    const imageUrl = filePath(req, existingDish);
 
+    if (!existingDish) {
+      return notFoundResponse(res, "Dish");
+    }
+
+    const imageUrl = getImagePath(req, existingDish);
     await _update(req.params.id, {
       id,
       name,
@@ -68,35 +58,32 @@ export const update = async (req, res) => {
       image: imageUrl,
     });
 
-    return res.status(204).send();
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error updating dish", error: error.message });
-  }
-};
+    logger.info(`Dish updated: ${req.params.id}`);
+    return successResponse(res, null, "Dish updated successfully");
+  }),
+];
 
-export const findAll = async (_req, res) => {
-  try {
-    const dishes = await _findAll();
-    return res.status(200).json(dishes);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching dishes", error: error.message });
-  }
-};
+export const remove = asyncHandler(async (req, res) => {
+  const dish = await _findById(req.params.id);
 
-export const findById = async (req, res) => {
-  try {
-    const dish = await _findById(req.params.id);
-    if (!dish) {
-      return res.status(404).json({ message: "Dish not found" });
-    }
-    return res.status(200).json(dish);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching dish", error: error.message });
+  if (!dish) {
+    return notFoundResponse(res, "Dish");
   }
-};
+
+  await _remove(req.params.id);
+  logger.info(`Dish deleted: ${req.params.id}`);
+  return noContentResponse(res);
+});
+
+export const findAll = asyncHandler(async (_req, res) => {
+  const dishes = await _findAll();
+  return successResponse(res, dishes);
+});
+
+export const findById = asyncHandler(async (req, res) => {
+  const dish = await _findById(req.params.id);
+  if (!dish) {
+    return notFoundResponse(res, "Dish");
+  }
+  return successResponse(res, dish);
+});

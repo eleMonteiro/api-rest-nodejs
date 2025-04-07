@@ -5,14 +5,8 @@ import {
   findAll as _findAll,
   findById as _findById,
 } from "../repositories/dishRepository.js";
-import { createValidationError } from "../../utils/responses.js";
-
-const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 export const create = async (dish) => {
-  if (isEmptyObject(dish)) {
-    throw createValidationError("OBJECT_UNDEFINED");
-  }
   return await _create(dish);
 };
 
@@ -21,18 +15,15 @@ export const remove = async (id) => {
 };
 
 export const update = async (id, dish) => {
-  if (isEmptyObject(dish)) {
-    throw createValidationError("OBJECT_UNDEFINED");
-  }
   await _update(id, dish);
 };
 
 export const findAll = async () => {
   const dishes = await _findAll();
-  return dishes ? dishes : [];
+  return dishes || [];
 };
 
 export const findById = async (id) => {
   const dish = await _findById(id);
-  return dish ? dish : [];
+  return dish || null;
 };

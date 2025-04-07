@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { upload } from "../middlewares/upload.js";
+import { validateDish } from '../validators/dishValidator.js';
 import {
   findAll,
   findById,
@@ -8,7 +9,7 @@ import {
   update,
 } from "../api/controllers/dishController.js";
 
-const dishRoutes = new Router();
+const dishRoutes = Router();
 
 /**
  * @swagger
@@ -64,13 +65,28 @@ dishRoutes.get("/:id", findById);
  *    tags:
  *      - Pratos
  *    summary: Cria um prato
- *    description: Cria um novo prato.
+ *    description: Cria um novo prato com imagem.
+ *    consumes:
+ *      - multipart/form-data
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *          schema:
- *            $ref: "#/components/schemas/Dish"
+ *            type: object
+ *            properties:
+ *              image:
+ *                type: string
+ *                format: binary
+ *              name:
+ *                type: string
+ *              description:
+ *                type: string
+ *              price:
+ *                type: number
+ *            required:
+ *              - name
+ *              - price
  *    responses:
  *      201:
  *        description: Prato criado com sucesso
@@ -79,9 +95,16 @@ dishRoutes.get("/:id", findById);
  *            schema:
  *              $ref: "#/components/schemas/Dish"
  *      400:
- *        description: Requisição inválida
+ *        description: Dados inválidos
+ *      422:
+ *        description: Validação falhou
  */
-dishRoutes.post("/", upload.single("image"), create);
+dishRoutes.post(
+  "/", 
+  upload.single("image"), 
+  validateDish, 
+  create
+);
 
 /**
  * @swagger
@@ -114,6 +137,8 @@ dishRoutes.delete("/:id", remove);
  *      - Pratos
  *    summary: Atualiza um prato
  *    description: Atualiza um prato cadastrado com base no ID informado.
+ *    consumes:
+ *      - multipart/form-data
  *    parameters:
  *      - in: path
  *        name: id
@@ -124,9 +149,19 @@ dishRoutes.delete("/:id", remove);
  *    requestBody:
  *      required: true
  *      content:
- *        application/json:
+ *        multipart/form-data:
  *          schema:
- *            $ref: "#/components/schemas/Dish"
+ *            type: object
+ *            properties:
+ *              image:
+ *                type: string
+ *                format: binary
+ *              name:
+ *                type: string
+ *              description:
+ *                type: string
+ *              price:
+ *                type: number
  *    responses:
  *      200:
  *        description: Prato atualizado com sucesso
@@ -134,9 +169,18 @@ dishRoutes.delete("/:id", remove);
  *          application/json:
  *            schema:
  *              $ref: "#/components/schemas/Dish"
+ *      400:
+ *        description: Dados inválidos
  *      404:
  *        description: Prato não encontrado
+ *      422:
+ *        description: Validação falhou
  */
-dishRoutes.put("/:id", upload.single("image"), update);
+dishRoutes.put(
+  "/:id", 
+  upload.single("image"), 
+  validateDish, 
+  update
+);
 
 export default dishRoutes;
