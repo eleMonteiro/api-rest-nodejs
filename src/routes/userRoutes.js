@@ -9,11 +9,6 @@ import {
   update,
 } from "../api/controllers/userController.js";
 
-import {
-  remove as _remove,
-  update as _update,
-} from "../api/controllers/addressController.js";
-
 const userRoutes = Router();
 
 /**
@@ -169,61 +164,5 @@ userRoutes.delete("/:id", remove);
  *         description: Usuário não encontrado
  */
 userRoutes.put("/:id", validateUser, update);
-
-/**
- * @swagger
- * /api/v1/users/address/{addressId}:
- *   delete:
- *     tags:
- *       - Usuários
- *     summary: Remove o endereço de um usuário
- *     description: Remove o endereço de um usuário cadastrado com base no ID informado.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID do endereço que desejo remover
- *         schema:
- *           type: integer
- *     responses:
- *       204:
- *         description: Endereço removido com sucesso
- *       404:
- *         description: Endereço não encontrado
- */
-userRoutes.delete("/address/:id", _remove);
-
-/**
- * @swagger
- * /api/v1/users/address/{addressId}:
- *   put:
- *     tags:
- *       - Usuários
- *     summary: Atualiza o endereço de um usuário
- *     description: Atualiza o endereço de um usuário cadastrado com base no ID informado.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID do endereço que desejo atualizar
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: "#/components/schemas/Address"
- *     responses:
- *       200:
- *         description: Endereço atualizado com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               $ref: "#/components/schemas/Address"
- *       404:
- *         description: Endereço não encontrado
- */
-userRoutes.put("/address/:id", _update);
 
 export default userRoutes;

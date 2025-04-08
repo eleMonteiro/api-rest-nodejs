@@ -90,3 +90,13 @@ export const syncAddresses = async (user, addresses) => {
     }
   }
 };
+
+export const findById = async (id) => {
+  const address = await Address.findOne({
+    where: {
+      id: id,
+      active: true,
+    },
+  });
+  return address;
+};

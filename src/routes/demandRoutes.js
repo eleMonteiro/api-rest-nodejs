@@ -6,6 +6,7 @@ import {
   create,
   remove,
 } from "../api/controllers/demandController.js";
+import { validateDemand } from "../validators/demandValidator.js";
 
 const demandRoutes = new Router();
 
@@ -105,7 +106,7 @@ demandRoutes.get("/user", findByUser);
  *            schema:
  *              $ref: "#/components/schemas/Demand"
  */
-demandRoutes.post("/", create);
+demandRoutes.post("/", validateDemand, create);
 
 /**
  * @swagger

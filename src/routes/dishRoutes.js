@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { upload } from "../middlewares/upload.js";
-import { validateDish } from '../validators/dishValidator.js';
+import { validateDish } from "../validators/dishValidator.js";
 import {
   findAll,
   findById,
@@ -99,12 +99,7 @@ dishRoutes.get("/:id", findById);
  *      422:
  *        description: Validação falhou
  */
-dishRoutes.post(
-  "/", 
-  upload.single("image"), 
-  validateDish, 
-  create
-);
+dishRoutes.post("/", upload.single("image"), validateDish, create);
 
 /**
  * @swagger
@@ -176,11 +171,6 @@ dishRoutes.delete("/:id", remove);
  *      422:
  *        description: Validação falhou
  */
-dishRoutes.put(
-  "/:id", 
-  upload.single("image"), 
-  validateDish, 
-  update
-);
+dishRoutes.put("/:id", upload.single("image"), validateDish, update);
 
 export default dishRoutes;

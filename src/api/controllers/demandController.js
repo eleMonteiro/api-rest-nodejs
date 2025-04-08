@@ -5,69 +5,51 @@ import {
   findByUser as _findByUser,
   findById as _findById,
 } from "../services/demandService.js";
+import asyncHandler from "../../middlewares/asyncHandler.js";
+import { logger } from "../../config/logger.js";
+import { validateDemand } from "../../validators/demandValidator.js";
+import {
+  successResponse,
+  notFoundResponse,
+  noContentResponse,
+} from "../../helpers/apiResponse.js";
 
-export const create = async (req, res) => {
-  try {
+export const create = [
+  validateDemand,
+  asyncHandler(async (req, res) => {
     const demand = await _create(req.body);
-    return res.status(201).json(demand);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error creating demand", error: error.message });
-  }
-};
+    logger.info(`Demand created: ${demand.id}`);
+    return successResponse(res, demand, 201, "Demand created successfully");
+  }),
+];
 
-export const remove = async (req, res) => {
-  try {
-    await _remove(req.params.id);
-    return res.status(204).send();
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error removing demand", error: error.message });
+export const remove = asyncHandler(async (req, res) => {
+  const demand = await _findById(req.params.id);
+  if (!demand) {
+    return notFoundResponse(res, "Demand");
   }
-};
+  await _remove(req.params.id);
+  logger.info(`Demand removed: ${req.params.id}`);
+  return noContentResponse(res, "Demand removed successfully");
+});
 
-export const findAll = async (_req, res) => {
-  try {
-    const demands = await _findAll();
-    return res.status(200).json(demands);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching demands", error: error.message });
-  }
-};
+export const findAll = asyncHandler(async (_req, res) => {
+  const demands = await _findAll();
+  return successResponse(res, demands, 200, "Demands fetched successfully");
+});
 
-export const findByUser = async (req, res) => {
-  try {
-    if (!req.query.userId) {
-      return res
-        .status(400)
-        .json({ message: "'userId' parameter is required" });
-    }
-    const demands = await _findByUser(req.query.userId);
-    return res.status(200).json(demands);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({
-        message: "Error fetching demands by user",
-        error: error.message,
-      });
+export const findByUser = asyncHandler(async (req, res) => {
+  const demands = await _findByUser(req.query.userId);
+  if (!demands) {
+    return notFoundResponse(res, "Demands");
   }
-};
+  return successResponse(res, demands, 200, "Demands fetched successfully");
+});
 
-export const findById = async (req, res) => {
-  try {
-    const demand = await _findById(req.params.id);
-    if (!demand) {
-      return res.status(404).json({ message: "Demand not found" });
-    }
-    return res.status(200).json(demand);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error fetching demand", error: error.message });
+export const findById = asyncHandler(async (req, res) => {
+  const demand = await _findById(req.params.id);
+  if (!demand) {
+    return notFoundResponse(res, "Demand");
   }
-};
+  return successResponse(res, demand, 200, "Demand fetched successfully");
+});

@@ -6,6 +6,7 @@ import {
   findById,
   remove,
 } from "../api/controllers/itemController.js";
+import { validateItem } from "../validators/itemValidator.js";
 
 const itemRoutes = Router();
 
@@ -80,7 +81,7 @@ itemRoutes.get("/:id", findById);
  *       400:
  *         description: Erro de validação
  */
-itemRoutes.post("/", create);
+itemRoutes.post("/", validateItem, create);
 
 /**
  * @swagger

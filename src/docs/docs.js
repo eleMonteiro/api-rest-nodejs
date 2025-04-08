@@ -47,6 +47,11 @@ export const options = {
               description: "E-mail do usuário",
               example: "silva@example.com",
             },
+            role: {
+              type: "string",
+              description: "Papel do usuário",
+              example: "admin",
+            },
           },
         },
         Dish: {
@@ -169,28 +174,40 @@ export const options = {
             },
           },
         },
-        Role: {
+        AddressInput: {
           type: "object",
           properties: {
-            id: {
+            road: {
               type: "string",
-              description: "ID da função",
-              example: "admin",
+              example: "Rua das Flores",
             },
-          },
-        },
-        RoleUser: {
-          type: "object",
-          properties: {
-            userId: {
-              type: "integer",
-              description: "ID do usuário",
-              example: 1,
-            },
-            roleId: {
+            cep: {
               type: "string",
-              description: "ID da função",
-              example: "admin",
+              example: "12345-678",
+            },
+            neighborhood: {
+              type: "string",
+              example: "Centro",
+            },
+            city: {
+              type: "string",
+              example: "São Paulo",
+            },
+            uf: {
+              type: "string",
+              example: "SP",
+            },
+            number: {
+              type: "string",
+              example: "123",
+            },
+            complement: {
+              type: "string",
+              example: "Apto 101",
+            },
+            active: {
+              type: "boolean",
+              example: true,
             },
           },
         },
