@@ -76,7 +76,7 @@ authRoutes.post("/logout", logout);
  * /api/v1/register:
  *   post:
  *     tags:
- *       - Usuários
+ *       - Autenticação
  *     summary: Cria um novo usuário
  *     description: Cria um novo usuário no sistema.
  *     requestBody:
@@ -98,6 +98,10 @@ authRoutes.post("/logout", logout);
  *                 type: string
  *                 description: Senha do usuário
  *                 example: "senha123"
+ *               role:
+ *                 type: string
+ *                 description: Função do usuário
+ *                 example: "CLIENTE"
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso

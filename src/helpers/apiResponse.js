@@ -35,8 +35,29 @@ export const errorResponse = (
   };
 
   if (process.env.NODE_ENV === "development" && error) {
-    response.error = error.message;
-    response.stack = error.stack;
+    if (Array.isArray(error)) {
+      response.error = error.map((e) =>
+        typeof e === "string" ? e : e.message || String(e)
+      );
+      const stacks = error
+        .map((e) => (e && typeof e.stack === "string" ? e.stack : null))
+        .filter((s) => s);
+      if (stacks.length > 0) {
+        response.stack = stacks;
+      }
+    } else {
+      response.error = error.message || String(error);
+      if (error.stack) {
+        response.stack = error.stack;
+      }
+    }
+  } else if (Array.isArray(error)) {
+    response.error = error.map((e) =>
+      typeof e === "string" ? e : e.message || String(e)
+    );
+  } else {
+    response.error =
+      typeof error === "string" ? error : error?.message || error;
   }
 
   res.status(status).json(response);

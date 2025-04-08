@@ -66,34 +66,15 @@ dishRoutes.get("/:id", findById);
  *      - Pratos
  *    summary: Cria um prato
  *    description: Cria um novo prato com imagem.
- *    consumes:
- *      - multipart/form-data
  *    requestBody:
  *      required: true
  *      content:
- *        multipart/form-data:
+ *        application/json:
  *          schema:
- *            type: object
- *            properties:
- *              image:
- *                type: string
- *                format: binary
- *              name:
- *                type: string
- *              description:
- *                type: string
- *              price:
- *                type: number
- *            required:
- *              - name
- *              - price
+ *             $ref: "#/components/schemas/Dish"
  *    responses:
  *      201:
  *        description: Prato criado com sucesso
- *        content:
- *          application/json:
- *            schema:
- *              $ref: "#/components/schemas/Dish"
  *      400:
  *        description: Dados inválidos
  *      422:
@@ -132,8 +113,6 @@ dishRoutes.delete("/:id", remove);
  *      - Pratos
  *    summary: Atualiza um prato
  *    description: Atualiza um prato cadastrado com base no ID informado.
- *    consumes:
- *      - multipart/form-data
  *    parameters:
  *      - in: path
  *        name: id
@@ -141,22 +120,12 @@ dishRoutes.delete("/:id", remove);
  *        description: ID do prato
  *        schema:
  *          type: string
- *    requestBody:
+  *    requestBody:
  *      required: true
  *      content:
- *        multipart/form-data:
+ *        application/json:
  *          schema:
- *            type: object
- *            properties:
- *              image:
- *                type: string
- *                format: binary
- *              name:
- *                type: string
- *              description:
- *                type: string
- *              price:
- *                type: number
+ *             $ref: "#/components/schemas/Dish"
  *    responses:
  *      200:
  *        description: Prato atualizado com sucesso

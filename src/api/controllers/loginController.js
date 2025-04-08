@@ -21,8 +21,14 @@ export const login = asyncHandler(async (req, res) => {
     maxAge: stayConnected ? THIRTY_DAYS_MS : FIVE_HOURS_MS,
   });
 
+
+  if (process.env.NODE_ENV === "production") {
+    return successResponse(res, user, 200, "Login successful!");
+  }
+
   return successResponse(res, { token, user }, 200, "Login successful!");
 });
+
 
 export const logout = asyncHandler(async (req, res) => {
   res.clearCookie("token");

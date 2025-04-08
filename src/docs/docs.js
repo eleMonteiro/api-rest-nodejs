@@ -102,11 +102,23 @@ export const options = {
               description: "ID do endereço",
               example: 1,
             },
+            userId: {
+              type: "integer",
+              description: "ID do usuário",
+              example: 1,
+            },
             dateOfDemand: {
               type: "string",
               description: "Data do pedido",
               example: "2021-01-01",
             },
+            items: {
+              type: "array",
+              description: "Lista de itens do pedido",
+              items: {
+                $ref: "#/components/schemas/Item"
+              }
+            }
           },
         },
         Item: {

@@ -14,8 +14,10 @@ const addressRoutes = Router();
  * @swagger
  * /api/v1/addresses:
  *   post:
- *     summary: Create a new address
- *     tags: [Endereços]
+ *     tags: 
+ *       - Endereços
+ *     summary: Criar um novo endereço
+ *     description: Cria um novo endereço no sistema
  *     requestBody:
  *       required: true
  *       content:
@@ -24,9 +26,9 @@ const addressRoutes = Router();
  *             $ref: '#/components/schemas/Address'
  *     responses:
  *       201:
- *         description: Address created
+ *         description: Endereço criado com sucesso
  *       400:
- *         description: Validation error
+ *         description: Erro de validação
  */
 addressRoutes.post("/", validateAddress, create);
 
@@ -34,8 +36,10 @@ addressRoutes.post("/", validateAddress, create);
  * @swagger
  * /api/v1/addresses/{id}:
  *   put:
- *     summary: Update an address
- *     tags: [Endereços]
+ *     tags: 
+ *       - Endereços
+ *     summary: Atualizar um endereço
+ *     description: Atualiza um endereço existente pelo ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -50,11 +54,11 @@ addressRoutes.post("/", validateAddress, create);
  *             $ref: '#/components/schemas/Address'
  *     responses:
  *       200:
- *         description: Address updated
+ *         description: Endereço atualizado com sucesso
  *       400:
- *         description: Validation error
+ *         description: Erro de validação
  *       404:
- *         description: Not found
+ *         description: Endereço não encontrado
  */
 addressRoutes.put("/:id", validateAddress, update);
 
@@ -62,8 +66,10 @@ addressRoutes.put("/:id", validateAddress, update);
  * @swagger
  * /api/v1/addresses/{id}:
  *   delete:
- *     summary: Delete an address
- *     tags: [Endereços]
+ *     tags: 
+ *       - Endereços
+ *     summary: Excluir um endereço
+ *     description: Remove um endereço existente pelo ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -72,9 +78,9 @@ addressRoutes.put("/:id", validateAddress, update);
  *           type: integer
  *     responses:
  *       204:
- *         description: Deleted
+ *         description: Endereço excluído com sucesso
  *       404:
- *         description: Not found
+ *         description: Endereço não encontrado
  */
 addressRoutes.delete("/:id", remove);
 
@@ -82,11 +88,20 @@ addressRoutes.delete("/:id", remove);
  * @swagger
  * /api/v1/addresses/user:
  *   get:
- *     summary: Get addresses by user
- *     tags: [Endereços]
+ *     tags: 
+ *       - Endereços
+ *     summary: Listar endereços de um usuário
+ *     description: Retorna todos os endereços cadastrados para um usuário específico
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         required: true
+ *         description: ID do usuário
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
- *         description: List of addresses
+ *         description: Lista de endereços encontrados
  *         content:
  *           application/json:
  *             schema:
@@ -100,8 +115,10 @@ addressRoutes.get("/user", findByUserId);
  * @swagger
  * /api/v1/addresses/{id}:
  *   get:
- *     summary: Get address by ID
- *     tags: [Endereços]
+ *     tags: 
+ *       - Endereços
+ *     summary: Buscar endereço por ID
+ *     description: Retorna os dados de um endereço com base no ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -110,13 +127,13 @@ addressRoutes.get("/user", findByUserId);
  *           type: integer
  *     responses:
  *       200:
- *         description: Address
+ *         description: Endereço encontrado
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Address'
  *       404:
- *         description: Not found
+ *         description: Endereço não encontrado
  */
 addressRoutes.get("/:id", findById);
 

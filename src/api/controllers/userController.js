@@ -12,7 +12,7 @@ import {
   update as _update,
   findAll as _findAll,
   findById as _findById,
-  findByCPF as _findByCPF,
+  findByFilter as _findByFilter,
   register as _register,
   findByEmailOrCPF as _findByEmailOrCPF,
 } from "../services/userService.js";
@@ -20,6 +20,7 @@ import { logger } from "../../config/logger.js";
 import {
   validateUser,
   validateUserRegister,
+  validateFilter
 } from "../../validators/userValidator.js";
 
 export const create = [
@@ -93,14 +94,17 @@ export const findById = asyncHandler(async (req, res) => {
   return successResponse(res, user);
 });
 
-export const findByCPF = asyncHandler(async (req, res) => {
-  const user = await _findByCPF(req.query.cpf);
-  if (!user) {
-    return notFoundResponse(res, "User not found by CPF");
-  }
+export const findByFilter = [
+  validateFilter,
+  asyncHandler(async (req, res) => {
+    const user = await _findByFilter(req.body.filter);
+    if (!user) {
+      return notFoundResponse(res, "User not found by CPF");
+    }
 
-  return successResponse(res, user);
-});
+    return successResponse(res, user);
+  }),
+];
 
 export const register = [
   validateUserRegister,

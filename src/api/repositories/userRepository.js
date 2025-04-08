@@ -56,10 +56,19 @@ export const findById = async (id) => {
   return user;
 };
 
-export const findByCPF = async (cpf) => {
-  const user = await User.findOne({ where: { cpf: cpf, active: true } });
-  return user;
+export const findByFilter = async (filter) => {
+  const where = {};
+
+  for (const key in filter) {
+    if (filter[key] == null) continue;
+    where[key] = filter[key];
+  }
+
+  const user = await User.findOne({ where });
+ return user;
 };
+
+
 
 export const findByEmail = async (email) => {
   const user = await User.findOne({

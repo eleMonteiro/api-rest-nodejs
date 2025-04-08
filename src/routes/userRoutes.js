@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { validateUser } from "../validators/userValidator.js";
+import { validateUser, validateFilter } from "../validators/userValidator.js";
 import {
   findAll,
-  findByCPF,
+  findByFilter,
   findById,
   create,
   remove,
@@ -33,19 +33,26 @@ userRoutes.get("/", findAll);
 
 /**
  * @swagger
- * /api/v1/users/cpf:
- *   get:
+ * /api/v1/users/search:
+ *   post:
  *     tags:
  *       - Usuários
- *     summary: Retorna um usuário pelo CPF
- *     description: Retorna um usuário cadastrado com base no CPF informado.
- *     parameters:
- *       - in: query
- *         name: cpf
- *         required: true
- *         description: CPF do usuário
- *         schema:
- *           type: string
+ *     summary: Busca usuário com base em filtros
+ *     description: Retorna um usuário que combina com os campos passados no corpo da requisição.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               filter:
+ *                 type: object
+ *                 properties:
+ *                   email:
+ *                     type: string
+ *                   cpf:
+ *                     type: string
  *     responses:
  *       200:
  *         description: Usuário retornado com sucesso
@@ -56,7 +63,7 @@ userRoutes.get("/", findAll);
  *       404:
  *         description: Usuário não encontrado
  */
-userRoutes.get("/cpf", findByCPF);
+userRoutes.post("/search", validateFilter, findByFilter);
 
 /**
  * @swagger

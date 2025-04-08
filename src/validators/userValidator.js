@@ -5,6 +5,16 @@ import { validationErrorResponse } from "../helpers/apiResponse.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
+const isEmptyValue = (value) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === 'string' && value.trim() === '')
+  );
+};
+
+const isEmptyDeep = (obj) =>Object.values(obj).every(isEmptyValue);
+
 const validEmail = (email) => {
   return email && validator.isEmail(email);
 };
@@ -109,3 +119,14 @@ export const validateUserRegister = (req, res, next) => {
 
   next();
 };
+
+export const validateFilter = (req, res, next) => {
+  const filter = req.body.filter;
+
+  if (!filter || isEmptyDeep(filter)) {
+    return validationErrorResponse(res, ["Filter is required"]);
+  }
+
+  next();
+};
+

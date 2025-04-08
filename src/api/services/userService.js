@@ -4,7 +4,7 @@ import {
   update as _update,
   findAll as _findAll,
   findById as _findById,
-  findByCPF as _findByCPF,
+  findByFilter as _findByFilter,
   findByEmail as _findByEmail,
   register as _register,
   findByEmailOrCPF as _findByEmailOrCPF,
@@ -44,8 +44,8 @@ export const findById = async (id) => {
   return user || null;
 };
 
-export const findByCPF = async (cpf) => {
-  const user = await _findByCPF(cpf);
+export const findByFilter = async (filter) => {
+  const user = await _findByFilter(filter);
   if (user) adjustDate(user);
   return user || null;
 };

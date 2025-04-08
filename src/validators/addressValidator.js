@@ -30,8 +30,8 @@ export const validate = (data, isAddressValidate = false) => {
     errors.push("UF must be 2 characters");
   }
 
-  if (cep.length !== 10) {
-    errors.push("CEP must be 10 characters");
+  if (cep.length !== 8) {
+    errors.push("CEP must be 8 characters");
   }
 
   if(isAddressValidate && !userId) {

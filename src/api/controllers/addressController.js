@@ -41,6 +41,7 @@ export const update = [
       return notFoundResponse(res, "Address");
     }
     await _update(req.params.id, req.body);
+    logger.info(`Address updated: ${req.params.id}`);
     return successResponse(res, null, 200, "Address updated successfully");
   }),
 ];
