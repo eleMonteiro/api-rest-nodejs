@@ -32,6 +32,10 @@ const authRoutes = Router();
  *                 type: string
  *                 description: Senha do usuário
  *                 example: "senha123"
+ *               stayConnected:
+ *                 type: boolean
+ *                 description: Manter o usuário conectado
+ *                 example: true
  *     responses:
  *       200:
  *         description: Autenticação bem-sucedida
