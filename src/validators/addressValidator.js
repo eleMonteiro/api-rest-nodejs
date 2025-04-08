@@ -2,8 +2,8 @@ import { validationErrorResponse } from "../helpers/apiResponse.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
-export const validate = (data) => {
-  const { road, cep, neighborhood, city, uf } = data;
+export const validate = (data, isAddressValidate = false) => {
+  const { road, cep, neighborhood, city, uf, userId } = data;
   const errors = [];
 
   if (!road) {
@@ -34,6 +34,10 @@ export const validate = (data) => {
     errors.push("CEP must be 10 characters");
   }
 
+  if(isAddressValidate && !userId) {
+    errors.push("User ID is required");
+  }
+
   return errors;
 };
 
@@ -42,7 +46,7 @@ export const validateAddress = (req, res, next) => {
     return validationErrorResponse(res, ["Request body is empty"]);
   }
 
-  const errors = validate(req.body);
+  const errors = validate(req.body, true);
 
   if (errors.length > 0) {
     return validationErrorResponse(res, errors);

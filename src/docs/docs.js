@@ -84,41 +84,6 @@ export const options = {
             },
           },
         },
-        Address: {
-          type: "object",
-          properties: {
-            id: {
-              type: "integer",
-              description: "ID do endereço",
-              example: 1,
-            },
-            road: {
-              type: "string",
-              description: "Nome da rua",
-              example: "Rua das Flores",
-            },
-            cep: {
-              type: "string",
-              description: "CEP do endereço",
-              example: "12345-678",
-            },
-            neighborhood: {
-              type: "string",
-              description: "Bairro",
-              example: "Centro",
-            },
-            city: {
-              type: "string",
-              description: "Cidade",
-              example: "São Paulo",
-            },
-            uf: {
-              type: "string",
-              description: "Unidade Federativa (UF)",
-              example: "SP",
-            },
-          },
-        },
         Demand: {
           type: "object",
           properties: {
@@ -174,9 +139,14 @@ export const options = {
             },
           },
         },
-        AddressInput: {
+        Address: {
           type: "object",
           properties: {
+            id: {
+              type: "integer",
+              description: "ID do endereço",
+              example: 1,
+            },
             road: {
               type: "string",
               example: "Rua das Flores",
@@ -205,9 +175,10 @@ export const options = {
               type: "string",
               example: "Apto 101",
             },
-            active: {
-              type: "boolean",
-              example: true,
+            userId: {
+              type: "integer",
+              description: "ID do usuário",
+              example: 1,
             },
           },
         },
