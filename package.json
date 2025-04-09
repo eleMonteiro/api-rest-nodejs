@@ -4,16 +4,6 @@
   "description": "",
   "main": "server.js",
   "type": "module",
-  "_moduleAliases": {
-    "@controllers": "./src/api/controllers",
-    "@services": "./src/api/services",
-    "@repositories": "./src/api/repositories",
-    "@models": "./src/api/models",
-    "@middlewares": "./src/middlewares",
-    "@config": "./src/config",
-    "@utils": "./src/utils",
-    "@routes": "./src/routes"
-  },
   "scripts": {
     "test": "jest --passWithNoTests",
     "start": "node src/server.js",
@@ -33,7 +23,6 @@
     "express-acl": "^2.0.9",
     "jsonwebtoken": "^9.0.2",
     "logform": "^2.7.0",
-    "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
     "mysql2": "^3.9.2",
