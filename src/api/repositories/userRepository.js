@@ -65,10 +65,8 @@ export const findByFilter = async (filter) => {
   }
 
   const user = await User.findOne({ where });
- return user;
+  return user;
 };
-
-
 
 export const findByEmail = async (email) => {
   const user = await User.findOne({

@@ -28,7 +28,7 @@ export const addItem = async (itens, demand) => {
     const item = await __create(element);
     await demand.addItens(item);
 
-    const dish = await __findById(element.dish.id);
+    const dish = await __findById(element.dishId);
     await dish.addItens(item);
   });
 };
@@ -39,14 +39,20 @@ export const addClient = async (userId, demand) => {
 };
 
 export const create = async (demand) => {
-  const { itens, ..._demand } = demand;
-  const _demand_ = await Demand.create({ active: true, ..._demand});
-  await addClient(demand.user.id, _demand_);
-  await addItem(itens, _demand_);
+  const { items, ..._demand } = demand;
+  const _demand_ = await Demand.create({ active: true, ..._demand });
+  await addClient(_demand.userId, _demand_);
+  await addItem(items, _demand_);
   return _demand_;
 };
 
 export const remove = async (id) => {
   const demand = await findById(id);
   await demand.update({ active: false });
+};
+
+export const update = async (id, demand) => {
+  const _demand = await findById(id);
+  await _demand.update({ ...demand });
+  return _demand;
 };

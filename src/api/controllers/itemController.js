@@ -35,7 +35,7 @@ export const remove = asyncHandler(async (req, res) => {
 
 export const findAll = asyncHandler(async (_req, res) => {
   const items = await _findAll();
-  return successResponse(res, items, 200, "Items fetched successfully");
+  return successResponse(res, items);
 });
 
 export const findByDemand = asyncHandler(async (req, res) => {

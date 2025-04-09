@@ -8,7 +8,7 @@ export const validateDemand = (req, res, next) => {
     return validationErrorResponse(res, "Request body is empty");
   }
 
-  const { total, address, dateOfDemand, itens } = req.body;
+  const { total, address, dateOfDemand, items } = req.body;
   const errors = [];
 
   if (
@@ -28,15 +28,15 @@ export const validateDemand = (req, res, next) => {
     errors.push("Date of demand is required");
   }
 
-  if (!itens || !Array.isArray(itens) || itens.length === 0) {
+  if (!items || !Array.isArray(items) || items.length === 0) {
     errors.push("Items are required");
   } else {
     let totalItens = 0;
 
-    itens.forEach((item, index) => {
-      const { errors: itemErrors, itemTotal } = validate(item, index);
+    items.forEach((item, index) => {
+      const { errors: itemErrors, totalPrice } = validate(item, index);
       errors.push(...itemErrors);
-      totalItens += itemTotal;
+      totalItens += totalPrice;
     });
 
     if (totalItens > total) {

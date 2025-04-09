@@ -20,15 +20,14 @@ import { logger } from "../../config/logger.js";
 import {
   validateUser,
   validateUserRegister,
-  validateFilter
+  validateFilter,
 } from "../../validators/userValidator.js";
 
 export const create = [
   validateUser,
   asyncHandler(async (req, res) => {
     const user = req.body;
-    const exists = _findByEmailOrCPF(user);
-
+    const exists = await _findByEmailOrCPF(user);
     if (exists) {
       return existsEntityResponse(
         res,
@@ -65,8 +64,8 @@ export const update = [
     }
 
     const user = req.body;
-    const exists = _findByEmailOrCPF(user);
-    if (exists) {
+    const exists = await _findByEmailOrCPF(user);
+    if (exists && exists.id !== existingUser.id) {
       return existsEntityResponse(
         res,
         "User with this email or CPF already exists"
@@ -76,7 +75,7 @@ export const update = [
     const id = req.params.id;
     await _update(id, user);
     logger.info(`User updated: ${id}`);
-    return successResponse(res, null, "User updated successfully");
+    return successResponse(res, null, 200, "User updated successfully");
   }),
 ];
 
@@ -91,7 +90,7 @@ export const findById = asyncHandler(async (req, res) => {
     return notFoundResponse(res, "User");
   }
 
-  return successResponse(res, user);
+  return successResponse(res, user, 200, "User fetched successfully");
 });
 
 export const findByFilter = [
@@ -102,7 +101,7 @@ export const findByFilter = [
       return notFoundResponse(res, "User not found by CPF");
     }
 
-    return successResponse(res, user);
+    return successResponse(res, user, 200, "User fetched successfully");
   }),
 ];
 

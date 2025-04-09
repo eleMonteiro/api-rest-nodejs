@@ -52,6 +52,13 @@ export const options = {
               description: "Papel do usuário",
               example: "admin",
             },
+            addresses: {
+              type: "array",
+              description: "Lista de endereços do usuário",
+              items: {
+                $ref: "#/components/schemas/Address",
+              },
+            },
           },
         },
         Dish: {
@@ -76,6 +83,11 @@ export const options = {
               type: "number",
               description: "Preço do prato",
               example: 29.99,
+            },
+            category: {
+              type: "string",
+              description: "Categoria do prato",
+              example: "Italiano",
             },
             image: {
               type: "string",
@@ -116,9 +128,9 @@ export const options = {
               type: "array",
               description: "Lista de itens do pedido",
               items: {
-                $ref: "#/components/schemas/Item"
-              }
-            }
+                $ref: "#/components/schemas/Item",
+              },
+            },
           },
         },
         Item: {

@@ -9,11 +9,11 @@ const isEmptyValue = (value) => {
   return (
     value === undefined ||
     value === null ||
-    (typeof value === 'string' && value.trim() === '')
+    (typeof value === "string" && value.trim() === "")
   );
 };
 
-const isEmptyDeep = (obj) =>Object.values(obj).every(isEmptyValue);
+const isEmptyDeep = (obj) => Object.values(obj).every(isEmptyValue);
 
 const validEmail = (email) => {
   return email && validator.isEmail(email);
@@ -69,7 +69,7 @@ export const validateUser = (req, res, next) => {
     errors.push(`Role must be one of: ${allowedRoles.join(", ")}`);
   }
 
-  if (!addresses || addresses.length === 0) {
+  if (!addresses) {
     errors.push("Addresses are required");
   }
 
@@ -129,4 +129,3 @@ export const validateFilter = (req, res, next) => {
 
   next();
 };
-

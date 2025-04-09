@@ -27,7 +27,7 @@ const Dish = define("dishes", {
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   active: {
     type: DataTypes.BOOLEAN,

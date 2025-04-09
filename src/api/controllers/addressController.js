@@ -47,7 +47,8 @@ export const update = [
 ];
 
 export const findByUserId = asyncHandler(async (req, res) => {
-  const addresses = await _findByUserId(req.params.id);
+  const userId = req.query.userId;
+  const addresses = await _findByUserId(userId);
   if (!addresses) {
     return notFoundResponse(res, "Addresses");
   }

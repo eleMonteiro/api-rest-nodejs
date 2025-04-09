@@ -29,10 +29,16 @@ const getImagePath = (req, existingDish) => {
 export const create = [
   validateDish,
   asyncHandler(async (req, res) => {
-    const { name, description, price } = req.body;
+    const { name, description, price, category } = req.body;
     const imageUrl = getImagePath(req, null);
 
-    const dish = await _create({ name, description, price, image: imageUrl });
+    const dish = await _create({
+      name,
+      description,
+      price,
+      category,
+      image: imageUrl,
+    });
 
     logger.info(`Dish created: ${dish.id}`);
     return createdResponse(res, dish, "Dish created successfully");
@@ -42,7 +48,7 @@ export const create = [
 export const update = [
   validateDish,
   asyncHandler(async (req, res) => {
-    const { id, name, description, price } = req.body;
+    const { id, name, description, price, category } = req.body;
     const existingDish = await _findById(req.params.id);
 
     if (!existingDish) {
@@ -55,11 +61,12 @@ export const update = [
       name,
       description,
       price,
+      category,
       image: imageUrl,
     });
 
     logger.info(`Dish updated: ${req.params.id}`);
-    return successResponse(res, null, "Dish updated successfully");
+    return successResponse(res, null, 200, "Dish updated successfully");
   }),
 ];
 
@@ -85,5 +92,5 @@ export const findById = asyncHandler(async (req, res) => {
   if (!dish) {
     return notFoundResponse(res, "Dish");
   }
-  return successResponse(res, dish);
+  return successResponse(res, dish, 200, "Dish fetched successfully");
 });

@@ -35,7 +35,7 @@ export const remove = asyncHandler(async (req, res) => {
 
 export const findAll = asyncHandler(async (_req, res) => {
   const demands = await _findAll();
-  return successResponse(res, demands, 200, "Demands fetched successfully");
+  return successResponse(res, demands);
 });
 
 export const findByUser = asyncHandler(async (req, res) => {
