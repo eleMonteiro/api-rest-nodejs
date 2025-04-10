@@ -5,7 +5,7 @@ import {
   update,
   remove,
   findById,
-  findByUserId,
+  findByFilter,
 } from "../api/controllers/addressController.js";
 
 const addressRoutes = Router();
@@ -14,7 +14,7 @@ const addressRoutes = Router();
  * @swagger
  * /api/v1/addresses:
  *   post:
- *     tags: 
+ *     tags:
  *       - Endereços
  *     summary: Criar um novo endereço
  *     description: Cria um novo endereço no sistema
@@ -36,7 +36,7 @@ addressRoutes.post("/", validateAddress, create);
  * @swagger
  * /api/v1/addresses/{id}:
  *   put:
- *     tags: 
+ *     tags:
  *       - Endereços
  *     summary: Atualizar um endereço
  *     description: Atualiza um endereço existente pelo ID
@@ -66,7 +66,7 @@ addressRoutes.put("/:id", validateAddress, update);
  * @swagger
  * /api/v1/addresses/{id}:
  *   delete:
- *     tags: 
+ *     tags:
  *       - Endereços
  *     summary: Excluir um endereço
  *     description: Remove um endereço existente pelo ID
@@ -86,19 +86,35 @@ addressRoutes.delete("/:id", remove);
 
 /**
  * @swagger
- * /api/v1/addresses/user:
- *   get:
- *     tags: 
+ * /api/v1/addresses/search:
+ *   post:
+ *     tags:
  *       - Endereços
  *     summary: Listar endereços de um usuário
- *     description: Retorna todos os endereços cadastrados para um usuário específico
- *     parameters:
- *       - in: query
- *         name: userId
- *         required: true
- *         description: ID do usuário
- *         schema:
- *           type: integer
+ *     description: Retorna todos os endereços ativos cadastrados para um usuário específico, com possibilidade de aplicar filtros adicionais.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *                 description: ID do usuário
+ *                 example: 1
+ *               city:
+ *                 type: string
+ *                 description: Nome da cidade
+ *                 example: "São Paulo"
+ *               uf:
+ *                 type: string
+ *                 description: Unidade federativa (UF)
+ *                 example: "SP"
+ *               neighborhood:
+ *                 type: string
+ *                 description: Bairro
+ *                 example: "Centro"
  *     responses:
  *       200:
  *         description: Lista de endereços encontrados
@@ -108,14 +124,20 @@ addressRoutes.delete("/:id", remove);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Address'
+ *       400:
+ *         description: Requisição inválida
+ *       404:
+ *         description: Nenhum endereço encontrado
+ *       500:
+ *         description: Erro interno no servidor
  */
-addressRoutes.get("/user", findByUserId);
+addressRoutes.post("/search", findByFilter);
 
 /**
  * @swagger
  * /api/v1/addresses/{id}:
  *   get:
- *     tags: 
+ *     tags:
  *       - Endereços
  *     summary: Buscar endereço por ID
  *     description: Retorna os dados de um endereço com base no ID

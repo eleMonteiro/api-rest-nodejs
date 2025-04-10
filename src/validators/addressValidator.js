@@ -1,5 +1,15 @@
 import { validationErrorResponse } from "../helpers/apiResponse.js";
 
+const isEmptyValue = (value) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === "string" && value.trim() === "")
+  );
+};
+
+const isEmptyDeep = (obj) => Object.values(obj).every(isEmptyValue);
+
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
 export const validate = (data, isAddressValidate = false) => {
@@ -34,7 +44,7 @@ export const validate = (data, isAddressValidate = false) => {
     errors.push("CEP must be 8 characters");
   }
 
-  if(isAddressValidate && !userId) {
+  if (isAddressValidate && !userId) {
     errors.push("User ID is required");
   }
 
@@ -50,6 +60,16 @@ export const validateAddress = (req, res, next) => {
 
   if (errors.length > 0) {
     return validationErrorResponse(res, errors);
+  }
+
+  next();
+};
+
+export const validateFilter = (req, res, next) => {
+  const filter = req.body.filter;
+
+  if (!filter || isEmptyDeep(filter)) {
+    return validationErrorResponse(res, ["Filter is required"]);
   }
 
   next();

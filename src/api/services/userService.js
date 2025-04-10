@@ -45,9 +45,12 @@ export const findById = async (id) => {
 };
 
 export const findByFilter = async (filter) => {
-  const user = await _findByFilter(filter);
-  if (user) adjustDate(user);
-  return user || null;
+  const users = await _findByFilter(filter);
+  if(!users) return null;
+  for (const user of users) {
+    adjustDate(user);
+  }
+  return users || null;
 };
 
 export const findByEmail = async (email) => {

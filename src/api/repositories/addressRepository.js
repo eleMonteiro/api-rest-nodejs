@@ -100,3 +100,17 @@ export const findById = async (id) => {
   });
   return address;
 };
+
+export const findByFilter = async (filter) => {
+  const where = {};
+
+  for (const key in filter) {
+    if (filter[key] == null) continue;
+    where[key] = filter[key];
+  }
+
+  where.active = true;
+
+  const addresses = await Address.findAll({ where });
+  return addresses;
+};

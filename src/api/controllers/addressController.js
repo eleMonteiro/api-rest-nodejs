@@ -3,9 +3,12 @@ import {
   update as _update,
   create as _create,
   findById as _findById,
-  findByUserId as _findByUserId,
+  findByFilter as _findByFilter,
 } from "../services/addressService.js";
-import { validateAddress } from "../../validators/addressValidator.js";
+import {
+  validateAddress,
+  validateFilter,
+} from "../../validators/addressValidator.js";
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import { logger } from "../../config/logger.js";
 import {
@@ -46,14 +49,16 @@ export const update = [
   }),
 ];
 
-export const findByUserId = asyncHandler(async (req, res) => {
-  const userId = req.query.userId;
-  const addresses = await _findByUserId(userId);
-  if (!addresses) {
-    return notFoundResponse(res, "Addresses");
-  }
-  return successResponse(res, addresses, 200, "Addresses found successfully");
-});
+export const findByFilter = [
+  validateFilter,
+  asyncHandler(async (req, res) => {
+    const addresses = await _findByFilter(req.body.filter);
+    if (!addresses) {
+      return notFoundResponse(res, "Addresses");
+    }
+    return successResponse(res, addresses, 200, "Addresses found successfully");
+  }),
+];
 
 export const findById = asyncHandler(async (req, res) => {
   const address = await _findById(req.params.id);

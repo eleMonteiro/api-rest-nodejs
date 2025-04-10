@@ -64,8 +64,10 @@ export const findByFilter = async (filter) => {
     where[key] = filter[key];
   }
 
-  const user = await User.findOne({ where });
-  return user;
+  where.active = true;
+
+  const users = await User.findAll({ where });
+  return users;
 };
 
 export const findByEmail = async (email) => {

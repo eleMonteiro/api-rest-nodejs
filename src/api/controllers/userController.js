@@ -96,12 +96,12 @@ export const findById = asyncHandler(async (req, res) => {
 export const findByFilter = [
   validateFilter,
   asyncHandler(async (req, res) => {
-    const user = await _findByFilter(req.body.filter);
-    if (!user) {
+    const users = await _findByFilter(req.body.filter);
+    if (!users) {
       return notFoundResponse(res, "User not found by CPF");
     }
 
-    return successResponse(res, user, 200, "User fetched successfully");
+    return successResponse(res, users, 200, "User fetched successfully");
   }),
 ];
 

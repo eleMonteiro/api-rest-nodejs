@@ -3,7 +3,7 @@ import {
   remove as _remove,
   update as _update,
   findById as _findById,
-  findByUserId as _findByUserId,
+  findByFilter as _findByFilter,
 } from "../repositories/addressRepository.js";
 
 export const create = async (address) => {
@@ -27,7 +27,7 @@ export const findById = async (id) => {
   return address;
 };
 
-export const findByUserId = async (id) => {
-  const addresses = await _findByUserId(id);
+export const findByFilter = async (id) => {
+  const addresses = await _findByFilter(id);
   return addresses;
 };
