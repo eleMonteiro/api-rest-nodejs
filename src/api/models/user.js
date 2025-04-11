@@ -20,7 +20,7 @@ const User = define("users", {
   },
   dateOfBirth: {
     type: DataTypes.DATE,
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
