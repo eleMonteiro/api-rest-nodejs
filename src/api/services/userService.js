@@ -28,7 +28,9 @@ export const remove = async (id) => {
 };
 
 export const update = async (id, user) => {
-  user.dateOfBirth = new Date(reverse(user.dateOfBirth));
+  if(user.dateOfBirth) {
+    user.dateOfBirth = new Date(reverse(user.dateOfBirth));
+  }
   await _update(id, user);
 };
 
