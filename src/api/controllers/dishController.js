@@ -31,7 +31,6 @@ export const create = [
   asyncHandler(async (req, res) => {
     const { name, description, price, category } = req.body;
     const imageUrl = getImagePath(req, null);
-
     const dish = await _create({
       name,
       description,
