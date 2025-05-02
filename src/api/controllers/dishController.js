@@ -81,8 +81,10 @@ export const remove = asyncHandler(async (req, res) => {
   return noContentResponse(res);
 });
 
-export const findAll = asyncHandler(async (_req, res) => {
-  const dishes = await _findAll();
+export const findAll = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  const dishes = await _findAll({ page, pageSize });
   return successResponse(res, dishes);
 });
 

@@ -15,11 +15,25 @@ export const update = async (id, dish) => {
   await _dish.update({ active: true, ...dish });
 };
 
-export const findAll = async () => {
-  const dishes = await Dish.findAll({
+export const findAll = async ({ page = 1, pageSize = 10 } = {}) => {
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize;
+
+  const { rows, count } = await Dish.findAndCountAll({
     where: { active: true },
+    limit,
+    offset,
   });
-  return dishes;
+
+  return {
+    dishes: rows,
+    pagination: {
+      total: count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(count / pageSize),
+    },
+  };
 };
 
 export const findById = async (id) => {
