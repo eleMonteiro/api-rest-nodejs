@@ -36,7 +36,7 @@ if (!fs.existsSync(uploadsPath)) {
 app.use("/uploads", express.static(uploadsPath));
 app.use(routes);
 
-app.use((req, res, next) => {
+app.use((req, res, _next) => {
   logger.warn(`Route not found: ${req.method} ${req.originalUrl}`);
   res.status(404).json({
     success: false,
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   });
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   logger.error("Error:", {
     message: err.message,
     stack: err.stack,

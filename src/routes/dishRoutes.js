@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { upload } from "../middlewares/upload.js";
+import { upload, resizeImage } from "../middlewares/upload.js";
 import { validateDish } from "../validators/dishValidator.js";
 import {
   findAll,
@@ -80,7 +80,7 @@ dishRoutes.get("/:id", findById);
  *      422:
  *        description: Validação falhou
  */
-dishRoutes.post("/", upload.single("image"), validateDish, create);
+dishRoutes.post("/", upload.single("image"), resizeImage, validateDish, create);
 
 /**
  * @swagger
@@ -120,7 +120,7 @@ dishRoutes.delete("/:id", remove);
  *        description: ID do prato
  *        schema:
  *          type: string
-  *    requestBody:
+ *    requestBody:
  *      required: true
  *      content:
  *        application/json:

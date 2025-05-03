@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import dotenv from "dotenv";
 import fs from "fs";
+import sharp from "sharp";
 
 dotenv.config();
 
@@ -32,3 +33,30 @@ const storage = multer.diskStorage({
 });
 
 export const upload = multer({ storage });
+
+export const resizeImage = async (req, res, next) => {
+  if (!req.file) return next();
+
+  try {
+    const filePath = req.file.path;
+    const resizedFilePath = filePath.replace(
+      path.extname(filePath),
+      `-resized${path.extname(filePath)}`
+    );
+
+    await sharp(filePath)
+      .resize({
+        height: 150,
+        fit: "contain",
+      })
+      .toFile(resizedFilePath);
+
+    fs.unlinkSync(filePath);
+    fs.renameSync(resizedFilePath, filePath);
+
+    req.file.path = filePath;
+    next();
+  } catch (err) {
+    next(err);
+  }
+};

@@ -29,6 +29,7 @@
     "nodemailer": "^6.10.0",
     "pg": "^8.14.1",
     "sequelize": "^6.37.1",
+    "sharp": "^0.34.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "validar-cpf": "^3.0.0",
