@@ -12,6 +12,33 @@ const itemRoutes = Router();
 
 /**
  * @swagger
+ * /api/v1/items/demand:
+ *   get:
+ *     tags:
+ *       - Itens
+ *     summary: Lista itens por demanda
+ *     description: Retorna uma lista de itens de acordo com a demanda.
+ *     parameters:
+ *       - in: query
+ *         name: demand
+ *         required: true
+ *         description: Demanda do item
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Lista de itens
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Item'
+ */
+itemRoutes.get("/demand", findByDemand);
+
+/**
+ * @swagger
  * /api/v1/items:
  *   get:
  *     tags:
@@ -82,33 +109,6 @@ itemRoutes.get("/:id", findById);
  *         description: Erro de validação
  */
 itemRoutes.post("/", validateItem, create);
-
-/**
- * @swagger
- * /api/v1/items/demand:
- *   get:
- *     tags:
- *       - Itens
- *     summary: Lista itens por demanda
- *     description: Retorna uma lista de itens de acordo com a demanda.
- *     parameters:
- *       - in: query
- *         name: demand
- *         required: true
- *         description: Demanda do item
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Lista de itens
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Item'
- */
-itemRoutes.get("/demand", findByDemand);
 
 /**
  * @swagger

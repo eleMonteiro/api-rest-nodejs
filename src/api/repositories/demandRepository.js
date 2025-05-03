@@ -11,11 +11,25 @@ export const findAll = async () => {
   return demands;
 };
 
-export const findByUser = async (userId) => {
-  const demands = await Demand.findOne({
+export const findByUser = async (userId, { page = 1, pageSize = 10 } = {}) => {
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize;
+
+  const { rows, count } = await Demand.findAndCountAll({
     where: { userId: userId, active: true },
+    limit,
+    offset,
   });
-  return demands;
+
+  return {
+    demands: rows,
+    pagination: {
+      total: count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(count / pageSize),
+    },
+  };
 };
 
 export const findById = async (id) => {

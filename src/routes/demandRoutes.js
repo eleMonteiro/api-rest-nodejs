@@ -12,6 +12,33 @@ const demandRoutes = new Router();
 
 /**
  * @swagger
+ * /api/v1/demands/user:
+ *  get:
+ *    tags:
+ *      - Demandas
+ *    summary: Retorna todas as demandas de um usuário
+ *    description: Retorna uma lista de todas as demandas cadastradas de um usuário.
+ *    parameters:
+ *       - in: query
+ *         name: user
+ *         required: true
+ *         description: ID do usuário
+ *         schema:
+ *           type: integer
+ *    responses:
+ *      200:
+ *        description: Lista de demandas retornada com sucesso
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: "#/components/schemas/Demand"
+ */
+demandRoutes.get("/user", findByUser);
+
+/**
+ * @swagger
  * /api/v1/demands:
  *  get:
  *    tags:
@@ -56,33 +83,6 @@ demandRoutes.get("/", findAll);
  *        description: Demanda não encontrada
  */
 demandRoutes.get("/:id", findById);
-
-/**
- * @swagger
- * /api/v1/demands/user:
- *  get:
- *    tags:
- *      - Demandas
- *    summary: Retorna todas as demandas de um usuário
- *    description: Retorna uma lista de todas as demandas cadastradas de um usuário.
- *    parameters:
- *       - in: query
- *         name: user
- *         required: true
- *         description: ID do usuário
- *         schema:
- *           type: integer
- *    responses:
- *      200:
- *        description: Lista de demandas retornada com sucesso
- *        content:
- *          application/json:
- *            schema:
- *              type: array
- *              items:
- *                $ref: "#/components/schemas/Demand"
- */
-demandRoutes.get("/user", findByUser);
 
 /**
  * @swagger

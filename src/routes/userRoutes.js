@@ -13,26 +13,6 @@ const userRoutes = Router();
 
 /**
  * @swagger
- * /api/v1/users:
- *   get:
- *     tags:
- *       - Usuários
- *     summary: Retorna todos os usuários
- *     description: Retorna uma lista de todos os usuários cadastrados.
- *     responses:
- *       200:
- *         description: Lista de usuários retornada com sucesso
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: "#/components/schemas/User"
- */
-userRoutes.get("/", findAll);
-
-/**
- * @swagger
  * /api/v1/users/search:
  *   post:
  *     tags:
@@ -64,6 +44,26 @@ userRoutes.get("/", findAll);
  *         description: Usuário não encontrado
  */
 userRoutes.post("/search", validateFilter, findByFilter);
+
+/**
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     tags:
+ *       - Usuários
+ *     summary: Retorna todos os usuários
+ *     description: Retorna uma lista de todos os usuários cadastrados.
+ *     responses:
+ *       200:
+ *         description: Lista de usuários retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/User"
+ */
+userRoutes.get("/", findAll);
 
 /**
  * @swagger

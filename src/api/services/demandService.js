@@ -19,8 +19,8 @@ export const findAll = async () => {
   return demands;
 };
 
-export const findByUser = async (userId) => {
-  const demands = await _findByUser(userId);
+export const findByUser = async (userId, { page, pageSize }) => {
+  const demands = await _findByUser(userId, { page, pageSize });
   return demands;
 };
 

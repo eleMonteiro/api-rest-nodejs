@@ -39,10 +39,9 @@ export const findAll = asyncHandler(async (_req, res) => {
 });
 
 export const findByUser = asyncHandler(async (req, res) => {
-  const demands = await _findByUser(req.query.userId);
-  if (!demands) {
-    return notFoundResponse(res, "Demands");
-  }
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  const demands = await _findByUser(req.query.userId, { page, pageSize });
   return successResponse(res, demands, 200, "Demands fetched successfully");
 });
 

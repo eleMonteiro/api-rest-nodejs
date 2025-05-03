@@ -21,6 +21,13 @@
         "action": "allow"
       },
       {
+        "resource": "demands/user",
+        "methods": [
+          "GET"
+        ],
+        "action": "allow"
+      },
+      {
         "resource": "itens/*",
         "methods": [
           "GET"
