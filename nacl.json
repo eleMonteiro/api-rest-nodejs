@@ -41,6 +41,14 @@
           "GET"
         ],
         "action": "allow"
+      },
+      {
+        "resource": "addresses/*",
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "action": "allow"
       }
     ]
   }

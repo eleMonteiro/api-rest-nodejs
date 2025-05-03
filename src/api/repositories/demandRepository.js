@@ -24,13 +24,13 @@ export const findById = async (id) => {
 };
 
 export const addItem = async (itens, demand) => {
-  itens.forEach(async (element) => {
-    const item = await __create(element);
+  for (const element of itens) {
+    const item = await __create({ ...element, demandId: demand.id });
     await demand.addItens(item);
 
     const dish = await __findById(element.dishId);
     await dish.addItens(item);
-  });
+  }
 };
 
 export const addClient = async (userId, demand) => {
