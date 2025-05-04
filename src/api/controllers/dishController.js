@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
+import fs from "fs";
+import path from "path";
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import {
   successResponse,
@@ -24,6 +26,24 @@ const getImagePath = (req, existingDish) => {
     return `${process.env.BASE_URL}${process.env.UPLOADS_FOLDER}${req.file.filename}`;
   }
   return existingDish?.image || null;
+};
+
+export const deleteImageFile = (imageUrl) => {
+  if (!imageUrl) return;
+
+  const imagePath = path.join(
+    process.cwd(),
+    process.env.UPLOADS_FOLDER,
+    path.basename(imageUrl)
+  );
+
+  fs.unlink(imagePath, (err) => {
+    if (err) {
+      logger.error(`Error deleting image: ${err.message}`);
+    } else {
+      logger.info(`Image deleted: ${imagePath}`);
+    }
+  });
 };
 
 export const create = [
@@ -55,6 +75,11 @@ export const update = [
     }
 
     const imageUrl = getImagePath(req, existingDish);
+
+    if (req.file && existingDish.image) {
+      deleteImageFile(existingDish.image);
+    }
+
     await _update(req.params.id, {
       id,
       name,
@@ -74,6 +99,10 @@ export const remove = asyncHandler(async (req, res) => {
 
   if (!dish) {
     return notFoundResponse(res, "Dish");
+  }
+
+  if (dish.image) {
+    deleteImageFile(dish.image);
   }
 
   await _remove(req.params.id);
