@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
-import Item from "./item.js";
 
 const Dish = define("dishes", {
   id: {
@@ -35,7 +34,5 @@ const Dish = define("dishes", {
     defaultValue: true,
   },
 });
-
-Dish.hasMany(Item);
 
 export default Dish;

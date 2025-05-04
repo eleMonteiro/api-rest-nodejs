@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
+import Dish from "./dish.js";
 
 const Item = define("itens", {
   id: {
@@ -20,6 +21,14 @@ const Item = define("itens", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true,
+  },
+  dishId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "dishes",
+      key: "id",
+    },
   },
 });
 

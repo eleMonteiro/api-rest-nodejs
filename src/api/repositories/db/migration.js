@@ -5,10 +5,9 @@ import { sequelize } from "./db.js";
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
 import "../../models/user.js";
-import "../../models/dish.js";
 import "../../models/address.js";
 import "../../models/demand.js";
-import "../../models/item.js";
+import "../../models/associations.js";
 
 (async () => {
   try {

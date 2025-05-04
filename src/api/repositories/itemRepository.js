@@ -1,4 +1,4 @@
-import Item from "../models/item.js";
+import { Item, Dish } from "../models/associations.js";
 import {
   findById as findByIdDemand,
   update as updateDemand,
@@ -12,7 +12,13 @@ export const findAll = async () => {
 };
 
 export const findByDemand = async (demandId) => {
-  const item = await Item.findOne({
+  const item = await Item.findAll({
+    include: [
+      {
+        model: Dish,
+        required: true,
+      },
+    ],
     where: { demandId: demandId, active: true },
   });
   return item;
