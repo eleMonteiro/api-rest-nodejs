@@ -27,7 +27,7 @@ const routes = Router();
  *    - name: Endereços
  *      description: Endpoints relacionados à gestão de endereços
  *    - name: Cartões
- *      description: Operações relacionadas aos cartões
+ *      description: Endpoints relacionadas à gestão de cartões
  */
 
 routes.use("/api/v1/", loginRoutes);
