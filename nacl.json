@@ -14,54 +14,42 @@
     "permissions": [
       {
         "resource": "demands/*",
-        "methods": [
-          "POST",
-          "GET"
-        ],
+        "methods": ["POST", "GET"],
         "action": "allow"
       },
       {
         "resource": "demands/user",
-        "methods": [
-          "GET"
-        ],
+        "methods": ["GET"],
         "action": "allow"
       },
       {
         "resource": "itens/*",
-        "methods": [
-          "GET"
-        ],
+        "methods": ["GET"],
         "action": "allow"
       },
       {
         "resource": "users/:id",
-        "methods": [
-          "GET",
-          "PUT"
-        ],
+        "methods": ["GET", "PUT"],
         "action": "allow"
       },
       {
         "resource": "dishes/*",
-        "methods": [
-          "GET"
-        ],
+        "methods": ["GET"],
         "action": "allow"
       },
       {
         "resource": "addresses/*",
-        "methods": [
-          "GET",
-          "POST"
-        ],
+        "methods": ["GET", "POST"],
         "action": "allow"
       },
       {
         "resource": "items/*",
-        "methods": [
-          "GET"
-        ],
+        "methods": ["GET"],
+        "action": "allow"
+      },
+      {
+        "resource": "cards/*",
+        "methods": ["GET", "POST"],
         "action": "allow"
       }
     ]
