@@ -1,5 +1,4 @@
-import User from "../models/user.js";
-import Address from "../models/address.js";
+import { User, Address } from "../models/associations.js";
 import { encrypt as _encrypt } from "../../utils/encrypt.js";
 import { createOrUpdate, syncAddresses } from "./addressRepository.js";
 
@@ -47,7 +46,6 @@ export const findById = async (id) => {
     include: [
       {
         model: Address,
-        as: "addresses",
         where: { active: true },
         required: false,
       },

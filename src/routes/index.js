@@ -5,6 +5,7 @@ import demandRoutes from "./demandRoutes.js";
 import loginRoutes from "./authRoutes.js";
 import itemRoutes from "./itemRoutes.js";
 import addressRoutes from "./addressRoutes.js";
+import cardRoutes from "./cardRoutes.js";
 import { verifyToken } from "../middlewares/auth.js";
 import { authorize } from "express-acl";
 
@@ -25,7 +26,8 @@ const routes = Router();
  *      description: Endpoints relacionados à gestão de itens
  *    - name: Endereços
  *      description: Endpoints relacionados à gestão de endereços
- *
+ *    - name: Cartões
+ *      description: Operações relacionadas aos cartões
  */
 
 routes.use("/api/v1/", loginRoutes);
@@ -35,5 +37,6 @@ routes.use("/api/v1/dishes", verifyToken, authorize, dishRoutes);
 routes.use("/api/v1/demands", verifyToken, authorize, demandRoutes);
 routes.use("/api/v1/items", verifyToken, authorize, itemRoutes);
 routes.use("/api/v1/addresses", verifyToken, authorize, addressRoutes);
+routes.use("/api/v1/cards", verifyToken, authorize, cardRoutes);
 
 export default routes;

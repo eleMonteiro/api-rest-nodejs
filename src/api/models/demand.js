@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
-import Item from "./item.js";
 
 const Demand = define("demands", {
   id: {
@@ -26,8 +25,14 @@ const Demand = define("demands", {
     allowNull: false,
     defaultValue: true,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "users",
+      key: "id",
+    },
+  },
 });
-
-Demand.hasMany(Item);
 
 export default Demand;

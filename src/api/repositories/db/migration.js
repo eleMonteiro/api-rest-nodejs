@@ -4,9 +4,6 @@ import { sequelize } from "./db.js";
 
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
-import "../../models/user.js";
-import "../../models/address.js";
-import "../../models/demand.js";
 import "../../models/associations.js";
 
 (async () => {

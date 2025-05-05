@@ -1,4 +1,4 @@
-import Address from "../models/address.js";
+import { Address } from "../models/associations.js";
 
 export const create = async (address) => {
   const _address = await Address.create({ active: true, ...address });

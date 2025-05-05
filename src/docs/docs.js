@@ -206,6 +206,36 @@ export const options = {
             },
           },
         },
+        Card: {
+          type: "object",
+          properties: {
+            id: {
+              type: "integer",
+              description: "ID do Card",
+              example: 1,
+            },
+            cardNumber: {
+              type: "string",
+              description: "Número do cartão",
+              example: "1234 5678 9012 3456",
+            },
+            cardHolderName: {
+              type: "string",
+              description: "Nome do titular do cartão",
+              example: "João Silva",
+            },            
+            brand: {
+              type: "string",
+              description: "Bandeira do cartão",
+              example: "Visa",
+            },
+            userId: {
+              type: "integer",
+              description: "ID do usuário",
+              example: 1,
+            },
+          }
+        }
       },
     },
   },

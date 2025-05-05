@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
-import Dish from "./dish.js";
 
 const Item = define("itens", {
   id: {
@@ -27,6 +26,14 @@ const Item = define("itens", {
     allowNull: false,
     references: {
       model: "dishes",
+      key: "id",
+    },
+  },
+  demandId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "demands",
       key: "id",
     },
   },

@@ -1,11 +1,15 @@
-import Demand from "../models/demand.js";
+import { Demand, Item } from "../models/associations.js";
 import { create as __create } from "./itemRepository.js";
 import { findById as _findById } from "./userRepository.js";
 import { findById as __findById } from "./dishRepository.js";
 
 export const findAll = async () => {
   const demands = await Demand.findAll({
-    include: ["itens"],
+    include: [
+      {
+        model: Item,
+      },
+    ],
     where: { active: true },
   });
   return demands;

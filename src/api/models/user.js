@@ -1,7 +1,5 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
-import Addresses from "./address.js";
-import Demand from "./demand.js";
 
 const User = define("users", {
   id: {
@@ -41,8 +39,5 @@ const User = define("users", {
     defaultValue: "CLIENTE",
   },
 });
-
-User.hasMany(Addresses);
-User.hasMany(Demand);
 
 export default User;

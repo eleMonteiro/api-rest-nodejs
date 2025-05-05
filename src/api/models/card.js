@@ -1,45 +1,23 @@
 import { DataTypes } from "sequelize";
 import { define } from "../repositories/db/db.js";
 
-const Address = define("addresses", {
+const Card = define("cards", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  road: {
+  cardNumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  cep: {
+  cardHolderName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  neighborhood: {
+  brand: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  uf: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  number: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  complement: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  active: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: true,
   },
   userId: {
     type: DataTypes.INTEGER,
@@ -51,4 +29,4 @@ const Address = define("addresses", {
   },
 });
 
-export default Address;
+export default Card;
