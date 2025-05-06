@@ -22,9 +22,15 @@ export const create = [
   validateCard,
   asyncHandler(async (req, res) => {
     const card = req.body;
+
+    const exists = await _findByFilter({ cardNumber: card.cardNumber });
+    if (exists && exists.length > 0) {
+      return existsEntityResponse(res, "Card with this number already exists");
+    }
+
     const _card = await _create(card);
     logger.info(`Card created: ${_card.id}`);
-    return createdResponse(res, _user, "Card created successfully");
+    return createdResponse(res, _card, "Card created successfully");
   }),
 ];
 
@@ -69,13 +75,12 @@ export const findById = asyncHandler(async (req, res) => {
 export const findByFilter = [
   validateFilter,
   asyncHandler(async (req, res) => {
-    const { filter } = req.query;
+    const { filter } = req.body;
     const cards = await _findByFilter(filter);
 
     if (!cards) {
       return notFoundResponse(res, "cards");
     }
-
-    return successResponse(res, cards, "Cards retrieved successfully");
+    return successResponse(res, cards, 200, "Cards retrieved successfully");
   }),
 ];

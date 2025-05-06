@@ -1,4 +1,4 @@
-import { Demand, Item, Card } from "../models/associations.js";
+import { Demand, Item, Payment } from "../models/associations.js";
 import { create as __create } from "./itemRepository.js";
 import { findById as _findById } from "./userRepository.js";
 import { findById as __findById } from "./dishRepository.js";
@@ -20,6 +20,11 @@ export const findByUser = async (userId, { page = 1, pageSize = 10 } = {}) => {
   const limit = pageSize;
 
   const { rows, count } = await Demand.findAndCountAll({
+    include: [
+      {
+        model: Payment,
+      },
+    ],
     where: { userId: userId, active: true },
     limit,
     offset,
@@ -56,13 +61,12 @@ export const addClient = async (userId, demand) => {
   await user.addDemands(demand);
 };
 
-export const addCard = async (card, demand) => {
-  const _card_ = await Card.create({
+export const addPayment = async (payment, demand) => {
+  const _payment_ = await Payment.create({
     demandId: demand.id,
-    ...card,
+    ...payment,
   });
-  await demand.addCard(_card_);
-  return _card_;
+  return _payment_;
 };
 
 export const create = async (demand) => {
@@ -70,7 +74,7 @@ export const create = async (demand) => {
   const _demand_ = await Demand.create({ active: true, ..._demand });
   await addClient(_demand.userId, _demand_);
   await addItem(items, _demand_);
-  await addCard(demand.card, _demand_);
+  await addPayment(demand.payment, _demand_);
   return _demand_;
 };
 

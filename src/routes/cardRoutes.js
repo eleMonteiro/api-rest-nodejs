@@ -42,7 +42,7 @@ const cardRoutes = Router();
  *       404:
  *         description: Cartão não encontrado
  */
-cardRoutes.get("/search", findByFilter);
+cardRoutes.post("/search", findByFilter);
 
 /**
  * @swagger

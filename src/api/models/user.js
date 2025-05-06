@@ -37,6 +37,9 @@ const User = define("users", {
     type: DataTypes.STRING,
     allowNull: false,
     defaultValue: "CLIENTE",
+    validate: {
+      isIn: [["CLIENTE", "ADMIN"]],
+    },
   },
 });
 

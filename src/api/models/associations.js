@@ -5,6 +5,7 @@ import Demand from "./demand.js";
 import Item from "./item.js";
 import Dish from "./dish.js";
 import Card from "./card.js";
+import Payment from "./payment.js";
 
 User.hasMany(Address, {
   foreignKey: "userId",
@@ -20,6 +21,13 @@ User.hasMany(Demand, {
 });
 Demand.belongsTo(User, { foreignKey: "userId" });
 
+User.hasMany(Card, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Card.belongsTo(User, { foreignKey: "userId" });
+
 Dish.hasMany(Item, {
   foreignKey: "dishId",
   onDelete: "SET NULL",
@@ -34,11 +42,18 @@ Demand.hasMany(Item, {
 });
 Item.belongsTo(Demand, { foreignKey: "demandId" });
 
-Demand.hasMany(Card, {
+Demand.hasOne(Payment, {
   foreignKey: "demandId",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-Card.belongsTo(Demand, { foreignKey: "demandId" });
+Payment.belongsTo(Demand, { foreignKey: "demandId" });
 
-export { User, Address, Demand, Item, Dish, Card, sequelize };
+Card.hasMany(Payment, {
+  foreignKey: "cardId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Payment.belongsTo(Card, { foreignKey: "cardId" });
+
+export { User, Address, Demand, Item, Dish, Card, Payment, sequelize };

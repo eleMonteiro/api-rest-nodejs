@@ -44,6 +44,8 @@ export const formatFields = (req, res, next) => {
     }
   }
 
-  req.body = body;
+  req.body = Object.fromEntries(
+    Object.entries(body).filter(([key, value]) => value !== "")
+  );
   next();
 };

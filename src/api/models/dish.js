@@ -19,6 +19,18 @@ const Dish = define("dishes", {
   category: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      isIn: [
+        [
+          "ENTRADA",
+          "PRATO_PRINCIPAL",
+          "SOBREMESA",
+          "BEBIDA",
+          "LANCHES",
+          "PETISCOS",
+        ],
+      ],
+    },
   },
   price: {
     type: DataTypes.DOUBLE,

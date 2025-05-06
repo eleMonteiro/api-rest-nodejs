@@ -2,6 +2,16 @@ import { validationErrorResponse } from "../helpers/apiResponse.js";
 
 const isEmptyObject = (obj) => Object.keys(obj).length === 0;
 
+const isEmptyValue = (value) => {
+  return (
+    value === undefined ||
+    value === null ||
+    (typeof value === "string" && value.trim() === "")
+  );
+};
+
+const isEmptyDeep = (obj) => Object.values(obj).every(isEmptyValue);
+
 export const validateCard = (req, res, next) => {
   if (isEmptyObject(req.body)) {
     return validationErrorResponse(res, ["Request body is empty"]);
@@ -22,8 +32,8 @@ export const validateCard = (req, res, next) => {
     errors.push("Brand is required");
   }
 
-  if (!demandId) {
-    errors.push("Demand ID is required");
+  if (!userId) {
+    errors.push("User ID is required");
   }
 
   if (errors.length > 0) {
