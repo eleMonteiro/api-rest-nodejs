@@ -22,8 +22,8 @@ export const validateCard = (req, res, next) => {
     errors.push("Brand is required");
   }
 
-  if (!userId) {
-    errors.push("User ID is required");
+  if (!demandId) {
+    errors.push("Demand ID is required");
   }
 
   if (errors.length > 0) {

@@ -223,19 +223,19 @@ export const options = {
               type: "string",
               description: "Nome do titular do cartão",
               example: "João Silva",
-            },            
+            },
             brand: {
               type: "string",
               description: "Bandeira do cartão",
               example: "Visa",
             },
-            userId: {
+            demandId: {
               type: "integer",
-              description: "ID do usuário",
+              description: "ID do pedido",
               example: 1,
             },
-          }
-        }
+          },
+        },
       },
     },
   },

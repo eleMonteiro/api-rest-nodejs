@@ -1,4 +1,4 @@
-import { Demand, Item } from "../models/associations.js";
+import { Demand, Item, Card } from "../models/associations.js";
 import { create as __create } from "./itemRepository.js";
 import { findById as _findById } from "./userRepository.js";
 import { findById as __findById } from "./dishRepository.js";
@@ -56,11 +56,21 @@ export const addClient = async (userId, demand) => {
   await user.addDemands(demand);
 };
 
+export const addCard = async (card, demand) => {
+  const _card_ = await Card.create({
+    demandId: demand.id,
+    ...card,
+  });
+  await demand.addCard(_card_);
+  return _card_;
+};
+
 export const create = async (demand) => {
   const { items, ..._demand } = demand;
   const _demand_ = await Demand.create({ active: true, ..._demand });
   await addClient(_demand.userId, _demand_);
   await addItem(items, _demand_);
+  await addCard(demand.card, _demand_);
   return _demand_;
 };
 

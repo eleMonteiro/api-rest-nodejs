@@ -19,11 +19,11 @@ const Card = define("cards", {
   brand: {
     type: DataTypes.STRING,
   },
-  userId: {
+  demandId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "users",
+      model: "demands",
       key: "id",
     },
   },

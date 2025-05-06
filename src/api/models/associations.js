@@ -13,13 +13,6 @@ User.hasMany(Address, {
 });
 Address.belongsTo(User, { foreignKey: "userId" });
 
-User.hasMany(Card, {
-  foreignKey: "userId",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-Card.belongsTo(User, { foreignKey: "userId" });
-
 User.hasMany(Demand, {
   foreignKey: "userId",
   onDelete: "CASCADE",
@@ -40,5 +33,12 @@ Demand.hasMany(Item, {
   onUpdate: "CASCADE",
 });
 Item.belongsTo(Demand, { foreignKey: "demandId" });
+
+Demand.hasMany(Card, {
+  foreignKey: "demandId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Card.belongsTo(Demand, { foreignKey: "demandId" });
 
 export { User, Address, Demand, Item, Dish, Card, sequelize };

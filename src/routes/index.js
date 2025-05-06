@@ -8,6 +8,7 @@ import addressRoutes from "./addressRoutes.js";
 import cardRoutes from "./cardRoutes.js";
 import { verifyToken } from "../middlewares/auth.js";
 import { authorize } from "express-acl";
+import { formatFields } from "../middlewares/formatFields.js";
 
 const routes = Router();
 
@@ -32,11 +33,12 @@ const routes = Router();
 
 routes.use("/api/v1/", loginRoutes);
 
-routes.use("/api/v1/users", verifyToken, authorize, userRoutes);
+routes.use("/api/v1/users", verifyToken, authorize, formatFields, userRoutes);
+routes.use("/api/v1/addresses", verifyToken, authorize, formatFields, addressRoutes);
+routes.use("/api/v1/cards", verifyToken, authorize, formatFields, cardRoutes);
+routes.use("/api/v1/demands", verifyToken, authorize, formatFields, demandRoutes);
 routes.use("/api/v1/dishes", verifyToken, authorize, dishRoutes);
-routes.use("/api/v1/demands", verifyToken, authorize, demandRoutes);
+routes.use("/api/v1/demands", verifyToken, authorize, formatFields, demandRoutes);
 routes.use("/api/v1/items", verifyToken, authorize, itemRoutes);
-routes.use("/api/v1/addresses", verifyToken, authorize, addressRoutes);
-routes.use("/api/v1/cards", verifyToken, authorize, cardRoutes);
 
 export default routes;

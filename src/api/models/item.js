@@ -23,7 +23,6 @@ const Item = define("itens", {
   },
   dishId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
       model: "dishes",
       key: "id",
@@ -31,7 +30,6 @@ const Item = define("itens", {
   },
   demandId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
       model: "demands",
       key: "id",
