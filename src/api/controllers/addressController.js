@@ -53,7 +53,7 @@ export const findByFilter = [
   validateFilter,
   asyncHandler(async (req, res) => {
     const addresses = await _findByFilter(req.body.filter);
-    if (!addresses) {
+    if (!addresses || addresses.length === 0) {
       return notFoundResponse(res, "Addresses");
     }
     return successResponse(res, addresses, 200, "Addresses found successfully");
