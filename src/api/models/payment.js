@@ -12,7 +12,7 @@ const Payment = define("payments", {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      isIn: [["DINHEIRO", "CREDITO", "DEBITO", "PIX"]],
+      isIn: [["DINHEIRO", "CREDITO", "DEBITO", "PIX", "BOLETO"]],
     },
   },
   amount: {
