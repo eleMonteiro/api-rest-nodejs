@@ -78,7 +78,7 @@ export const findByFilter = [
     const { filter } = req.body;
     const cards = await _findByFilter(filter);
 
-    if (!cards) {
+    if (!cards || cards.length === 0) {
       return notFoundResponse(res, "cards");
     }
     return successResponse(res, cards, 200, "Cards retrieved successfully");
