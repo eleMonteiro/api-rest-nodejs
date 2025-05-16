@@ -43,8 +43,15 @@ export const findByUserId = async (id) => {
 
 export const createOrUpdate = async (user, addresses) => {
   for (const address of addresses) {
-    if (address.id) {
-      await update(address.id, {
+    const existingAddress = await Address.findOne({
+      where: {
+        userId: user?.id,
+        cep: address.cep,
+      },
+    });
+
+    if (existingAddress) {
+      await update(existingAddress.id, {
         ...address,
         userId: user?.id,
       });
@@ -76,19 +83,7 @@ export const syncAddresses = async (user, addresses) => {
     await remove(address.id);
   }
 
-  for (const address of addresses) {
-    if (address.id) {
-      await update(address.id, {
-        ...address,
-        userId: user.id,
-      });
-    } else {
-      await create({
-        ...address,
-        userId: user.id,
-      });
-    }
-  }
+  createOrUpdate(user, addresses);
 };
 
 export const findById = async (id) => {
