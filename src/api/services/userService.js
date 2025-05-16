@@ -28,16 +28,17 @@ export const remove = async (id) => {
 };
 
 export const update = async (id, user) => {
-  if(user.dateOfBirth) {
+  if (user.dateOfBirth) {
     user.dateOfBirth = new Date(reverse(user.dateOfBirth));
   }
   await _update(id, user);
 };
 
-export const findAll = async () => {
-  const users = await _findAll();
-  users.forEach(adjustDate);
-  return users.length > 0 ? users : [];
+export const findAll = async ({ page, pageSize, sort, filter }) => {
+  const users = await _findAll({ page, pageSize, sort, filter });
+  if (users.users.length === 0) return [];
+  users.users.forEach(adjustDate);
+  return users;
 };
 
 export const findById = async (id) => {
@@ -48,7 +49,7 @@ export const findById = async (id) => {
 
 export const findByFilter = async (filter) => {
   const users = await _findByFilter(filter);
-  if(!users) return null;
+  if (!users) return null;
   for (const user of users) {
     adjustDate(user);
   }

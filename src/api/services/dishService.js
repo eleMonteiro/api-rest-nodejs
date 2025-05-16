@@ -18,8 +18,8 @@ export const update = async (id, dish) => {
   await _update(id, dish);
 };
 
-export const findAll = async ({ page, pageSize }) => {
-  const dishes = await _findAll({ page, pageSize });
+export const findAll = async ({ page, pageSize, sort, filter }) => {
+  const dishes = await _findAll({ page, pageSize, sort, filter });
   return dishes || [];
 };
 

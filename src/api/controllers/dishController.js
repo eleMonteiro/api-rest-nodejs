@@ -111,9 +111,8 @@ export const remove = asyncHandler(async (req, res) => {
 });
 
 export const findAll = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const pageSize = parseInt(req.query.pageSize) || 10;
-  const dishes = await _findAll({ page, pageSize });
+  const { page, pageSize, sort, filter } = req.query;
+  const dishes = await _findAll({ page, pageSize, sort, filter });
   return successResponse(res, dishes);
 });
 

@@ -1,4 +1,5 @@
 import { Dish } from "../models/associations.js";
+import { fiqlToSequelize } from "../../utils/fiql.js";
 
 export const create = async (dish) => {
   const _dish = await Dish.create({ active: true, ...dish });
@@ -15,12 +16,24 @@ export const update = async (id, dish) => {
   await _dish.update({ active: true, ...dish });
 };
 
-export const findAll = async ({ page = 1, pageSize = 10 } = {}) => {
+export const findAll = async ({
+  page = 1,
+  pageSize = 10,
+  sort = { field: "id", order: "asc" },
+  filter = null,
+} = {}) => {
   const offset = (page - 1) * pageSize;
   const limit = pageSize;
+  const { field, order } = sort;
+
+  const where = {
+    ...fiqlToSequelize(filter),
+    active: true,
+  };
 
   const { rows, count } = await Dish.findAndCountAll({
-    where: { active: true },
+    where,
+    order: [[field, order]],
     limit,
     offset,
   });

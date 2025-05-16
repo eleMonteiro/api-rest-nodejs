@@ -3,6 +3,7 @@ import { encrypt as _encrypt } from "../../utils/encrypt.js";
 import { createOrUpdate, syncAddresses } from "./addressRepository.js";
 
 import { Op } from "sequelize";
+import { fiqlToSequelize } from "../../utils/fiql.js";
 
 export const findByEmailOrCPF = async ({ email, cpf }) => {
   const conditions = [];
@@ -28,9 +29,37 @@ export const findByEmailOrCPF = async ({ email, cpf }) => {
   return user;
 };
 
-export const findAll = async () => {
-  const users = await User.findAll({ where: { active: true } });
-  return users;
+export const findAll = async ({
+  page = 1,
+  pageSize = 10,
+  sort = { field: "id", order: "asc" },
+  filter = null,
+} = {}) => {
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize;
+  const { field, order } = sort;
+
+  const where = {
+    ...fiqlToSequelize(filter),
+    active: true,
+  };
+
+  const { rows, count } = await User.findAndCountAll({
+    where,
+    order: [[field, order]],
+    limit,
+    offset,
+  });
+
+  return {
+    users: rows,
+    pagination: {
+      total: count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(count / pageSize),
+    },
+  };
 };
 
 export const create = async (user) => {
