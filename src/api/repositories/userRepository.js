@@ -35,8 +35,8 @@ export const findAll = async ({
   sort = { field: "id", order: "asc" },
   filter = null,
 } = {}) => {
-  const offset = (page - 1) * pageSize;
-  const limit = pageSize;
+  const offset = (parseInt(page) - 1) * parseInt(pageSize);
+  const limit = parseInt(pageSize);
   const { field, order } = sort;
 
   const where = {
