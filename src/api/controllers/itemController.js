@@ -43,7 +43,6 @@ export const findByDemand = asyncHandler(async (req, res) => {
   if (!items || items.length === 0) {
     return notFoundResponse(res, "Items");
   }
-  logger.info("Items fetched successfully", items);
   return successResponse(res, items, 200, "Items fetched successfully");
 });
 
