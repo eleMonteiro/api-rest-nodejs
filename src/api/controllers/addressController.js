@@ -54,7 +54,7 @@ export const findByFilter = [
   asyncHandler(async (req, res) => {
     const addresses = await _findByFilter(req.body.filter);
     if (!addresses || addresses.length === 0) {
-      return notFoundResponse(res, "Addresses");
+      return successResponse(res, null, 200, "Addresses found successfully");
     }
     return successResponse(res, addresses, 200, "Addresses found successfully");
   }),
