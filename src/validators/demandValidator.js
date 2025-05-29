@@ -8,7 +8,7 @@ export const validateDemand = (req, res, next) => {
     return validationErrorResponse(res, "Request body is empty");
   }
 
-  const { total, address, dateOfDemand, items } = req.body;
+  const { total, address, dateOfDemand, items, deliveryMethod } = req.body;
   const errors = [];
 
   if (
@@ -20,7 +20,11 @@ export const validateDemand = (req, res, next) => {
     errors.push("Total must be a valid number greater than 0");
   }
 
-  if (!address) {
+  if (!deliveryMethod || !["RETIRADA", "ENTREGA"].includes(deliveryMethod)) {
+    errors.push("Delivery method must be either 'RETIRADA' or 'ENTREGA'");
+  }
+
+  if (deliveryMethod === "ENTREGA" && !address) {
     errors.push("Address is required");
   }
 

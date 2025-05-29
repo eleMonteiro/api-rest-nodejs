@@ -14,7 +14,7 @@ const Demand = define("demands", {
   },
   address: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   dateOfDemand: {
     type: DataTypes.DATE,
@@ -24,6 +24,31 @@ const Demand = define("demands", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true,
+  },
+  deliveryMethod: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "RETIRADA",
+    validate: {
+      isIn: [["RETIRADA", "ENTREGA"]],
+    },
+  },
+  status: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "PENDENTE",
+    validate: {
+      isIn: [
+        [
+          "PENDENTE",
+          "RECEBIDO",
+          "EM_PREPARACAO",
+          "PRONTO_PARA_RETIRADA",
+          "PRONTO_PARA_ENTREGA",
+          "ENTREGUE",
+        ],
+      ],
+    },
   },
   userId: {
     type: DataTypes.INTEGER,

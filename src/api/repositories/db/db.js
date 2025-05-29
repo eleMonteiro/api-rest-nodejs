@@ -33,6 +33,7 @@ const sequelize = new Sequelize(
     ...commonConfig,
     dialect: DB_TYPE,
     host: DB_TYPE === "postgres" ? process.env.PG_HOST : process.env.MYSQL_HOST,
+    port: DB_TYPE === "postgres" ? process.env.PG_PORT : process.env.MYSQL_PORT,
     dialectModule: DB_TYPE === "postgres" ? pg : mysql2,
   }
 );
@@ -41,4 +42,4 @@ export const define = (modelName, attributes) => {
   return sequelize.define(modelName, attributes);
 };
 
-export { sequelize };
+export { sequelize, DB_TYPE };
