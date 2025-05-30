@@ -59,8 +59,22 @@ const processParsedNode = (node) => {
 };
 
 const convertComparison = (selector, operator, arg) => {
+  const parsedArg = parseDateIfValid(arg);
+
   switch (operator) {
     case "==":
+      if (parsedArg instanceof Date) {
+        const start = parsedArg;
+        const end = new Date(parsedArg);
+        end.setUTCDate(end.getUTCDate() + 1);
+
+        return {
+          [selector]: {
+            [Op.gte]: start,
+            [Op.lt]: end,
+          },
+        };
+      }
       return { [selector]: arg };
     case "!=":
       return { [selector]: { [Op.ne]: arg } };
@@ -87,4 +101,24 @@ const convertComparison = (selector, operator, arg) => {
     default:
       logger.error(`Operador FIQL não suportado: ${operator}`);
   }
+};
+
+const parseDateIfValid = (value) => {
+  if (typeof value !== "string") return value;
+
+  let match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (match) {
+    const [_, day, month, year] = match;
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (!isNaN(date.getTime())) return date;
+  }
+
+  match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (match) {
+    const [_, year, month, day] = match;
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (!isNaN(date.getTime())) return date;
+  }
+
+  return value;
 };
