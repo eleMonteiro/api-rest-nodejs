@@ -33,8 +33,9 @@ export const remove = asyncHandler(async (req, res) => {
   return noContentResponse(res, "Demand removed successfully");
 });
 
-export const findAll = asyncHandler(async (_req, res) => {
-  const demands = await _findAll();
+export const findAll = asyncHandler(async (req, res) => {
+  const { page, pageSize, sort, filter } = req.query;
+  const demands = await _findAll({ page, pageSize, sort, filter });
   return successResponse(res, demands);
 });
 

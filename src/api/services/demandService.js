@@ -14,8 +14,8 @@ export const remove = async (id) => {
   await _remove(id);
 };
 
-export const findAll = async () => {
-  const demands = await _findAll();
+export const findAll = async ({ page, pageSize, sort, filter }) => {
+  const demands = await _findAll({ page, pageSize, sort, filter });
   return demands;
 };
 

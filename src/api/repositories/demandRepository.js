@@ -2,17 +2,44 @@ import { Demand, Item, Payment } from "../models/associations.js";
 import { create as __create } from "./itemRepository.js";
 import { findById as _findById } from "./userRepository.js";
 import { findById as __findById } from "./dishRepository.js";
+import { fiqlToSequelize } from "../../utils/fiql.js";
 
-export const findAll = async () => {
-  const demands = await Demand.findAll({
+export const findAll = async ({
+  page = 1,
+  pageSize = 10,
+  sort = { field: "id", order: "asc" },
+  filter = null,
+}) => {
+  const offset = (parseInt(page) - 1) * parseInt(pageSize);
+  const limit = parseInt(pageSize);
+  const { field, order } = sort;
+
+  const where = {
+    ...fiqlToSequelize(filter),
+    active: true,
+  };
+
+  const { rows, count } = await Demand.findAndCountAll({
+    where,
+    order: [[field, order]],
+    limit,
+    offset,
     include: [
       {
         model: Item,
       },
     ],
-    where: { active: true },
   });
-  return demands;
+
+  return {
+    demands: rows,
+    pagination: {
+      total: count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(count / pageSize),
+    },
+  };
 };
 
 export const findByUser = async (userId, { page = 1, pageSize = 10 } = {}) => {
