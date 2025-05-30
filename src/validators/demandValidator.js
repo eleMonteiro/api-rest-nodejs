@@ -62,3 +62,39 @@ export const validateDemand = (req, res, next) => {
 
   next();
 };
+
+export const validateDemandEdition = (req, res, next) => {
+  if (isEmptyObject(req.body)) {
+    return validationErrorResponse(res, "Request body is empty");
+  }
+
+  const { total, address, dateOfDemand, deliveryMethod } = req.body;
+  const errors = [];
+
+  if (
+    total === undefined ||
+    total === null ||
+    isNaN(Number(total)) ||
+    total <= 0
+  ) {
+    errors.push("Total must be a valid number greater than 0");
+  }
+
+  if (!deliveryMethod || !["RETIRADA", "ENTREGA"].includes(deliveryMethod)) {
+    errors.push("Delivery method must be either 'RETIRADA' or 'ENTREGA'");
+  }
+
+  if (deliveryMethod === "ENTREGA" && !address) {
+    errors.push("Address is required");
+  }
+
+  if (!dateOfDemand) {
+    errors.push("Date of demand is required");
+  }
+
+  if (errors.length > 0) {
+    return validationErrorResponse(res, errors);
+  }
+
+  next();
+};

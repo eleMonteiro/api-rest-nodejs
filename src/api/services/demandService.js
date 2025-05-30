@@ -1,5 +1,6 @@
 import {
   create as _create,
+  update as _update,
   findById as _findById,
   remove as _remove,
   findAll as _findAll,
@@ -8,6 +9,10 @@ import {
 
 export const create = async (demand) => {
   return await _create(demand);
+};
+
+export const update = async (id, demand) => {
+  return await _update(id, demand);
 };
 
 export const remove = async (id) => {

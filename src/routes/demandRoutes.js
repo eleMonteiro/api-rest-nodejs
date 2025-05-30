@@ -4,9 +4,13 @@ import {
   findById,
   findByUser,
   create,
+  update,
   remove,
 } from "../api/controllers/demandController.js";
-import { validateDemand } from "../validators/demandValidator.js";
+import {
+  validateDemand,
+  validateDemandEdition,
+} from "../validators/demandValidator.js";
 
 const demandRoutes = new Router();
 
@@ -107,6 +111,39 @@ demandRoutes.get("/:id", findById);
  *              $ref: "#/components/schemas/Demand"
  */
 demandRoutes.post("/", validateDemand, create);
+
+/**
+ * @swagger
+ * /api/v1/demands/{id}:
+ *   put:
+ *     tags:
+ *       - Demandas
+ *     summary: Atualiza uma demanda pelo ID
+ *     description: Atualiza uma demanda cadastrada com base no ID informado.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID da demanda
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Demand"
+ *     responses:
+ *       200:
+ *         description: Demanda atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Demand"
+ *       404:
+ *         description: Demanda não encontrada
+ */
+demandRoutes.put("/:id", validateDemandEdition, update);
 
 /**
  * @swagger

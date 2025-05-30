@@ -1,5 +1,6 @@
 import {
   create as _create,
+  update as _update,
   remove as _remove,
   findAll as _findAll,
   findByUser as _findByUser,
@@ -7,7 +8,7 @@ import {
 } from "../services/demandService.js";
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import { logger } from "../../config/logger.js";
-import { validateDemand } from "../../validators/demandValidator.js";
+import { validateDemand, validateDemandEdition } from "../../validators/demandValidator.js";
 import {
   successResponse,
   notFoundResponse,
@@ -20,6 +21,21 @@ export const create = [
     const demand = await _create(req.body);
     logger.info(`Demand created: ${demand.id}`);
     return successResponse(res, demand, 201, "Demand created successfully");
+  }),
+];
+
+export const update = [
+  validateDemandEdition,
+  asyncHandler(async (req, res) => {
+    const existingDemand = await _findById(req.params.id);
+
+    if (!existingDemand) {
+      return notFoundResponse(res, "Demand");
+    }
+
+    const demand = await _update(req.params.id, req.body);
+    logger.info(`Demand created: ${demand.id}`);
+    return successResponse(res, demand, 201, "Demand updated successfully");
   }),
 ];
 

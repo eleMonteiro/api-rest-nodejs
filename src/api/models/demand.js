@@ -46,6 +46,7 @@ const Demand = define("demands", {
           "PRONTO_PARA_RETIRADA",
           "PRONTO_PARA_ENTREGA",
           "ENTREGUE",
+          "CANCELADO",
         ],
       ],
     },
