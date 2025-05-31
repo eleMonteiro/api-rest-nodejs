@@ -60,7 +60,6 @@ const processParsedNode = (node) => {
 
 const convertComparison = (selector, operator, arg) => {
   const parsedArg = parseDateIfValid(arg);
-
   switch (operator) {
     case "==":
       if (parsedArg instanceof Date) {

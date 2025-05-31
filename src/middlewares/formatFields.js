@@ -7,8 +7,35 @@ const formatCep = (cep) => {
   return cep.replace(/\D/g, "");
 };
 
+const removeAccents = (str) => {
+  if (!str) return str;
+  return String(str)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+};
+
+const sanitizeStringFields = (obj) => {
+  if (!obj) return obj;
+  const sanitized = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (typeof value === "string") {
+      sanitized[key] = removeAccents(value);
+    } else if (typeof value === "object" && value !== null) {
+      sanitized[key] = sanitizeStringFields(value);
+    } else {
+      sanitized[key] = value;
+    }
+  }
+  return sanitized;
+};
+
 export const formatFields = (req, res, next) => {
-  const body = { ...req.body };
+  if (req.query) {
+    req.query = sanitizeStringFields(req.query);
+  }
+
+  let body = { ...req.body };
+  body = sanitizeStringFields(body);
 
   if (body.cardNumber) {
     body.cardNumber = formatCardNumber(body.cardNumber);

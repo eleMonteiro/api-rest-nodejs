@@ -79,8 +79,8 @@ export const update = [
   }),
 ];
 
-export const findAll = asyncHandler(async (_req, res) => {
-  const { page, pageSize, sort, filter } = _req.query;
+export const findAll = asyncHandler(async (req, res) => {
+  const { page, pageSize, sort, filter } = req.query;
   const users = await _findAll({ page, pageSize, sort, filter });
   return successResponse(res, users);
 });
