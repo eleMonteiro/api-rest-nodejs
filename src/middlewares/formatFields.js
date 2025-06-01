@@ -16,14 +16,21 @@ const removeAccents = (str) => {
 
 const sanitizeStringFields = (obj) => {
   if (!obj) return obj;
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => sanitizeStringFields(item));
+  }
+
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
+  }
+
   const sanitized = {};
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "string") {
       sanitized[key] = removeAccents(value);
-    } else if (typeof value === "object" && value !== null) {
-      sanitized[key] = sanitizeStringFields(value);
     } else {
-      sanitized[key] = value;
+      sanitized[key] = sanitizeStringFields(value);
     }
   }
   return sanitized;
